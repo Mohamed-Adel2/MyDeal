@@ -1,8 +1,14 @@
 package com.mydeal.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name = "orderdetails")
 public class Orderdetail {
     @EmbeddedId
@@ -20,37 +26,4 @@ public class Orderdetail {
 
     @Column(name = "quantity")
     private Integer quantity;
-
-    public OrderdetailId getId() {
-        return id;
-    }
-
-    public void setId(OrderdetailId id) {
-        this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
 }

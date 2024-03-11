@@ -2,10 +2,16 @@ package com.mydeal.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Embeddable
 public class OrderdetailId implements Serializable {
     private static final long serialVersionUID = 3794838814064719086L;
@@ -14,22 +20,6 @@ public class OrderdetailId implements Serializable {
 
     @Column(name = "product_id", nullable = false)
     private Integer productId;
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -44,5 +34,4 @@ public class OrderdetailId implements Serializable {
     public int hashCode() {
         return Objects.hash(productId, orderId);
     }
-
 }
