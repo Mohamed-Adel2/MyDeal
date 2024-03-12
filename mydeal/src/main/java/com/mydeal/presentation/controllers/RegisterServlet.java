@@ -10,11 +10,21 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/register"})
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Get Register Called");
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Post in Register Called");
         UserDataModel userDataModel = new UserDataModel();
+        System.out.println("name in req : " + req.getParameter(RequestKey.RQ_UserName));
+        System.out.println("email in req : " + req.getParameter(RequestKey.RQ_Email));
+        System.out.println("password in req : " + req.getParameter(RequestKey.RQ_Password));
         userDataModel.setUserName(req.getParameter(RequestKey.RQ_UserName))
                 .setEmail(req.getParameter(RequestKey.RQ_Email))
                 .setPhoneNumber(req.getParameter(RequestKey.RQ_PhoneNumber))

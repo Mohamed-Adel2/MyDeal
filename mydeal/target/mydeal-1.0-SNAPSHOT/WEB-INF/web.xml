@@ -8,9 +8,18 @@
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>registerServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>registerServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
-        <url-pattern>/mydeal/login</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.html</welcome-file>
