@@ -1,4 +1,11 @@
-CREATE database mydeal;
+create database mydeal;
+CREATE TABLE Address(
+address_id INT AUTO_INCREMENT PRIMARY KEY,
+street VARCHAR(255),
+city VARCHAR(255),
+apartment INT,
+customer_id INT
+);
 CREATE TABLE Customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255),
@@ -7,20 +14,23 @@ CREATE TABLE Customers (
     date_of_birth DATE,
     password VARCHAR(255),
     credit_limit DECIMAL(10,2),
-    address VARCHAR(255),
-    is_admin BOOLEAN
+    address_id INT,
+       FOREIGN KEY (address_id) REFERENCES Address(address_id)
 );
-
+CREATE TABLE Categories(
+	category_id INT AUTO_INCREMENT PRIMARY KEY,
+    categoty_name VARCHAR(255)
+);
 CREATE TABLE Products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(255),
     description TEXT,
-    category VARCHAR(50),
     price DECIMAL(10,2),
     available_quantity INT,
-    average_rating DECIMAL(3,2)
+    average_rating DECIMAL(3,2),
+    category_id INT,
+     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
-
 CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
