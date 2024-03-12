@@ -42,14 +42,14 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Customercart> customercarts = new LinkedHashSet<>();
+    private Set<CustomerCart> customerCarts = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Orderdetail> orderdetails = new LinkedHashSet<>();
+    private Set<OrderDetails> orderdetails = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Productimage> productimages = new LinkedHashSet<>();
+    private Set<ProductImages> productimages = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private Set<Review> reviews = new LinkedHashSet<>();
+    private Set<Reviews> reviews = new LinkedHashSet<>();
 }

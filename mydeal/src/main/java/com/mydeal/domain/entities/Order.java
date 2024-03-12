@@ -28,5 +28,5 @@ public class Order {
     private LocalDate orderDate;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    private Set<Orderdetail> orderdetails = new LinkedHashSet<>();
+    private Set<OrderDetails> orderdetails = new LinkedHashSet<>();
 }

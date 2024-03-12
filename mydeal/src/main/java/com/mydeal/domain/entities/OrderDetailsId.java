@@ -13,10 +13,10 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Embeddable
-public class CustomercartId implements Serializable {
-    private static final long serialVersionUID = 5052567313434029995L;
-    @Column(name = "customer_id", nullable = false)
-    private Integer customerId;
+public class OrderDetailsId implements Serializable {
+    private static final long serialVersionUID = 3794838814064719086L;
+    @Column(name = "order_id", nullable = false)
+    private Integer orderId;
 
     @Column(name = "product_id", nullable = false)
     private Integer productId;
@@ -25,14 +25,13 @@ public class CustomercartId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomercartId entity = (CustomercartId) o;
+        OrderDetailsId entity = (OrderDetailsId) o;
         return Objects.equals(this.productId, entity.productId) &&
-                Objects.equals(this.customerId, entity.customerId);
+                Objects.equals(this.orderId, entity.orderId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, customerId);
+        return Objects.hash(productId, orderId);
     }
-
 }

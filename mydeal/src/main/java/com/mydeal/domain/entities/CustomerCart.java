@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Table(name = "customercart")
-public class Customercart {
+public class CustomerCart {
     @EmbeddedId
-    private CustomercartId id;
+    private CustomerCartId id;
 
     @MapsId("customerId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

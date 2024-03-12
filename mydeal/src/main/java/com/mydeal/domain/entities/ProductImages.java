@@ -9,25 +9,17 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name = "reviews")
-public class Review {
+@Table(name = "productimages")
+public class ProductImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id", nullable = false)
+    @Column(name = "image_id", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "stars")
-    private Integer stars;
-
-    @Lob
-    @Column(name = "description")
-    private String description;
+    @Column(name = "image")
+    private byte[] image;
 }

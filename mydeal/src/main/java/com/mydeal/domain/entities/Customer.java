@@ -44,11 +44,11 @@ public class Customer {
     private Address address;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private Set<Customercart> customercarts = new LinkedHashSet<>();
+    private Set<CustomerCart> customerCarts = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Order> orders = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private Set<Review> reviews = new LinkedHashSet<>();
+    private Set<Reviews> reviews = new LinkedHashSet<>();
 }
