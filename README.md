@@ -1,6 +1,6 @@
 # MyDeal
 
-## E-commerce website for all Hardware Categories .
+## E-commerce website for all Hardware Devices .
 
 - One of ITI Projects for Java Enterprise web development Track , intake 44 .
 
