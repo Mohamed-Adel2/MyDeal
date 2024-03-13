@@ -1,19 +1,19 @@
 package com.mydeal.presentation.controllers;
 
-import com.mydeal.domain.models.UserDataModel;
+import com.mydeal.domain.entities.Customer;
+import com.mydeal.domain.models.CustomerDataModel;
 import com.mydeal.domain.util.RequestKey;
-import com.mydeal.presentation.controllers.frontcontroller.Controller;
-import com.mydeal.presentation.controllers.frontcontroller.viewresolve.ViewResolver;
+import com.mydeal.repository.CustomerRepository;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 //@WebServlet("/register")
-public class RegisterServlet extends HttpServlet implements Controller {
+public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,18 +22,20 @@ public class RegisterServlet extends HttpServlet implements Controller {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDataModel userDataModel = new UserDataModel();
-        userDataModel.setUserName(req.getParameter(RequestKey.RQ_UserName))
-                .setEmail(req.getParameter(RequestKey.RQ_Email))
-                .setPhoneNumber(req.getParameter(RequestKey.RQ_PhoneNumber))
-                .setDob(req.getParameter(RequestKey.RQ_DOB))
-                .setPassword(req.getParameter(RequestKey.RQ_Password))
-                .setAddress(req.getParameter(RequestKey.RQ_Address))
-                .setIsAdmin(false);
+        System.out.println("Post in Register Called");
+        System.out.println("name in req : " + req.getParameter(RequestKey.RQ_CustomerUserName));
+        System.out.println("email in req : " + req.getParameter(RequestKey.RQ_CustomerEmail));
+        System.out.println("password in req : " + req.getParameter(RequestKey.RQ_CustomerPassword));
+        CustomerDataModel.getInstance().setUserName(req.getParameter(RequestKey.RQ_CustomerUserName))
+                .setEmail(req.getParameter(RequestKey.RQ_CustomerEmail))
+                .setPhoneNumber(req.getParameter(RequestKey.RQ_CustomerPhoneNumber))
+                .setDob(req.getParameter(RequestKey.RQ_CustomerDOB))
+                .setPassword(req.getParameter(RequestKey.RQ_CustomerPassword))
+                .setAddress(req.getParameter(RequestKey.RQ_CustomerAddress)).setCreditLimit(BigDecimal.ZERO);
+        System.out.println(CustomerDataModel.getInstance().toString());
+        CustomerRepository customerRepository = new CustomerRepository();
+        customerRepository.setEntityClass(Customer.class);
+        customerRepository.create(CustomerDataModel.getInstance().getEm(), CustomerDataModel.getInstance().convertToCustomerEntity());
     }
 
-    @Override
-    public ViewResolver resolve(HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
 }
