@@ -51,4 +51,21 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Reviews> reviews = new LinkedHashSet<>();
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", password='" + password + '\'' +
+                ", creditLimit=" + creditLimit +
+                ", address=" + address +
+                ", customerCarts=" + customerCarts +
+                ", orders=" + orders +
+                ", reviews=" + reviews +
+                '}';
+    }
 }

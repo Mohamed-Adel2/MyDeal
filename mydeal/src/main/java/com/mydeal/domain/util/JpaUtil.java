@@ -17,17 +17,19 @@ public class JpaUtil {
     }
 
     private static HikariDataSource createHikariCpDataSource() {
+//        AppConfig.load();
         HikariConfig config = new HikariConfig();
         HikariDataSource ds;
         config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
-        config.setUsername(AppConfig.DB_USER);
-        config.setPassword(AppConfig.DB_PASSWORD);
+//        config.setUsername(AppConfig.DB_USER);
+//        config.setPassword(AppConfig.DB_PASSWORD);
+        config.setUsername("root");
+        config.setPassword("1234");
         // max number of connections on database .
         config.setMaximumPoolSize(30);
         config.addDataSourceProperty("cachePrepStmts", true);
         // configurations exists in database .
         config.addDataSourceProperty("prepStmtCacheSize", 250);
-        //
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds = new HikariDataSource(config);
