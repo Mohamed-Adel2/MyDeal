@@ -22,11 +22,7 @@ public class RegisterServlet extends HttpServlet implements Controller {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Post in Register Called");
         UserDataModel userDataModel = new UserDataModel();
-        System.out.println("name in req : " + req.getParameter(RequestKey.RQ_UserName));
-        System.out.println("email in req : " + req.getParameter(RequestKey.RQ_Email));
-        System.out.println("password in req : " + req.getParameter(RequestKey.RQ_Password));
         userDataModel.setUserName(req.getParameter(RequestKey.RQ_UserName))
                 .setEmail(req.getParameter(RequestKey.RQ_Email))
                 .setPhoneNumber(req.getParameter(RequestKey.RQ_PhoneNumber))
@@ -34,7 +30,6 @@ public class RegisterServlet extends HttpServlet implements Controller {
                 .setPassword(req.getParameter(RequestKey.RQ_Password))
                 .setAddress(req.getParameter(RequestKey.RQ_Address))
                 .setIsAdmin(false);
-        System.out.println(userDataModel.toString());
     }
 
     @Override
