@@ -10,55 +10,32 @@ import java.time.LocalDate;
 
 @Data
 public class CustomerDataModel {
-    private EntityManager em = JpaUtil.createEntityManager();
-    // make this class singleton using getinstance method
-    private Integer id;
-    private String userName, email, phoneNumber, dob, address, password;
+    private Integer id, addressId;
+    private String userName, email, phoneNumber, dob, password;
     private BigDecimal creditLimit;
-    /**
-     * make this class Singleton .
-     */
-    private static CustomerDataModel instance;
+    private AddressDataModel addressDataModel;
 
-    private CustomerDataModel() {
-        // private constructor to prevent instantiation
+    public CustomerDataModel() {
+
     }
 
-    public static CustomerDataModel getInstance() {
-        if (instance == null) {
-            instance = new CustomerDataModel();
-        }
-        return instance;
+    public Integer getAddressId() {
+        return addressId;
     }
 
-    public Customer convertToCustomerEntity() {
-        Customer customer = new Customer();
-        customer.setId(this.id);
-        customer.setUsername(this.userName);
-        customer.setEmail(this.email);
-        customer.setPhoneNumber(this.phoneNumber);
-        LocalDate dob = LocalDate.parse(this.dob);
-        customer.setDateOfBirth(dob);
-        customer.setPassword(this.password);
-        customer.setCreditLimit(this.creditLimit);
-        return customer;
+    public CustomerDataModel setAddressId(Integer addressId) {
+        this.addressId = addressId;
+        return this;
     }
 
-    public CustomerDataModel(Customer customerEntity) {
-        this.id = customerEntity.getId();
-        this.userName = customerEntity.getUsername();
-        this.email = customerEntity.getEmail();
-        this.phoneNumber = customerEntity.getPhoneNumber();
-        this.dob = customerEntity.getDateOfBirth().toString();
-        this.address = customerEntity.getAddress().toString() == null ? "" : customerEntity.getAddress().toString();
-        this.password = customerEntity.getPassword();
-        this.creditLimit = customerEntity.getCreditLimit();
+    public AddressDataModel getAddressDataModel() {
+        return addressDataModel;
     }
 
-    public EntityManager getEm() {
-        return em;
+    public CustomerDataModel setAddressDataModel(AddressDataModel addressDataModel) {
+        this.addressDataModel = addressDataModel;
+        return this;
     }
-
 
     public String getPassword() {
         return password;
@@ -114,15 +91,6 @@ public class CustomerDataModel {
         return this;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public CustomerDataModel setAddress(String address) {
-        this.address = address;
-        return this;
-    }
-
     public BigDecimal getCreditLimit() {
         return creditLimit;
     }
@@ -136,13 +104,14 @@ public class CustomerDataModel {
     public String toString() {
         return "CustomerDataModel{" +
                 "id=" + id +
+                ", addressId=" + addressId +
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dob='" + dob + '\'' +
-                ", address='" + address + '\'' +
                 ", password='" + password + '\'' +
                 ", creditLimit=" + creditLimit +
+                ", addressDataModel=" + addressDataModel +
                 '}';
     }
 }

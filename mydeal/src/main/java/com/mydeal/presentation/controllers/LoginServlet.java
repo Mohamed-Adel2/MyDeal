@@ -26,9 +26,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter(RequestKey.RQ_CustomerEmail);
         String password = req.getParameter(RequestKey.RQ_CustomerPassword);
-        System.out.println("Email is : " + email + " password is : " + password);
         CustomerRepository customerRepository = new CustomerRepository();
-        System.out.println("Customer repo created ");
         CustomerDataModel customerDataModel = customerRepository.getCustomerByEmailAndPassword(email, password);
         System.out.println(customerDataModel.toString());
     }
