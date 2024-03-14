@@ -60,5 +60,6 @@ public class RegisterServlet extends HttpServlet {
         // Commit and close EntityManagers
         em.close();
         addressEm.close();
+        resp.sendRedirect("index.html");
     }
 }
