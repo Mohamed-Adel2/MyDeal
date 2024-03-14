@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 
 public class AddressRepository extends CrudRepository<Address>{
     public AddressRepository(EntityManager em) {
-        super(em);
         setEntityClass(Address.class);
     }
 }

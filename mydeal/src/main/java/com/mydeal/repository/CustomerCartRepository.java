@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 
 public class CustomerCartRepository extends CrudRepository<CustomerCart> {
     public CustomerCartRepository(EntityManager em) {
-        super(em);
         setEntityClass(CustomerCart.class);
     }
 }
