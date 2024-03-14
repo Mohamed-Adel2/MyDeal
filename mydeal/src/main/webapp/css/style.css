@@ -4829,7 +4829,7 @@ input:focus {
 
 /* line 1084, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_product.scss */
 .review_box .contact_form {
-  margin-top: 15px;
+  margin-top: 0px;
 }
 
 /* End Single Product Area css
@@ -5852,7 +5852,7 @@ input:focus {
   /* line 1943, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_product.scss */
   .login_part .login_part_text, .login_part .login_part_form {
     padding: 20px;
-    height: 400px;
+    height: 350px;
   }
 }
 
