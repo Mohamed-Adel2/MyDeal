@@ -1,8 +1,7 @@
 package com.mydeal.presentation.controllers;
 
 import com.mydeal.domain.util.RequestKey;
-import com.mydeal.presentation.controllers.frontcontroller.Controller;
-import com.mydeal.presentation.controllers.frontcontroller.viewresolve.ViewResolver;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +12,7 @@ import java.io.IOException;
 
 
 //@WebServlet("/login")
-public class LoginServlet extends HttpServlet implements Controller {
+public class LoginServlet extends HttpServlet  {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,8 +28,5 @@ public class LoginServlet extends HttpServlet implements Controller {
         // TODO fetch credentials from data base , set the details to UserDataModel Obj then navigate to home page .
     }
 
-    @Override
-    public ViewResolver resolve(HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
+
 }

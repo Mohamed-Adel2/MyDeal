@@ -4,8 +4,8 @@ import com.mydeal.domain.entities.Customer;
 import jakarta.persistence.EntityManager;
 
 public class CustomerRepository extends CrudRepository<Customer> {
-    public CustomerRepository(EntityManager em) {
-        super(em);
+    public CustomerRepository() {
+
         setEntityClass(Customer.class);
     }
 }

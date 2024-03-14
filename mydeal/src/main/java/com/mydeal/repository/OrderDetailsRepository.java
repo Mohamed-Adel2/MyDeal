@@ -4,8 +4,8 @@ import com.mydeal.domain.entities.OrderDetails;
 import jakarta.persistence.EntityManager;
 
 public class OrderDetailsRepository extends CrudRepository<OrderDetails>{
-    public OrderDetailsRepository(EntityManager em) {
-        super(em);
+    public OrderDetailsRepository() {
+
         setEntityClass(OrderDetails.class);
     }
 }
