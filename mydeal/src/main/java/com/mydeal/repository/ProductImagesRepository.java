@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManager;
 public class ProductImagesRepository extends CrudRepository<ProductImages>{
     public ProductImagesRepository(EntityManager em)
     {
-        super(em);
         setEntityClass(ProductImages.class);
     }
 }

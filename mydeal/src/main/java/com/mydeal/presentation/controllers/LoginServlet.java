@@ -31,6 +31,5 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Customer repo created ");
         CustomerDataModel customerDataModel = customerRepository.getCustomerByEmailAndPassword(email, password);
         System.out.println(customerDataModel.toString());
-        System.out.println("Email is : " + email + " & password is : " + password);
     }
 }
