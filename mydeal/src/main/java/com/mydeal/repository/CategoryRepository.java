@@ -4,7 +4,8 @@ import com.mydeal.domain.entities.Category;
 import jakarta.persistence.EntityManager;
 
 public class CategoryRepository extends CrudRepository<Category> {
-    public CategoryRepository(EntityManager em) {
+    public CategoryRepository() {
+
         setEntityClass(Category.class);
     }
 }

@@ -4,7 +4,8 @@ import com.mydeal.domain.entities.CustomerCart;
 import jakarta.persistence.EntityManager;
 
 public class CustomerCartRepository extends CrudRepository<CustomerCart> {
-    public CustomerCartRepository(EntityManager em) {
+    public CustomerCartRepository() {
+
         setEntityClass(CustomerCart.class);
     }
 }
