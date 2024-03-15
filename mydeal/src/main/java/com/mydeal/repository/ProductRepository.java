@@ -10,9 +10,11 @@ public class ProductRepository extends CrudRepository<Product> {
     public ProductRepository(EntityManager em) {
         setEntityClass(Product.class);
     }
-//    public List<Product> getAllProduct(){
-//        TypedQuery<Product> query = em.createQuery( "SELECT p FROM Product  p", Product.class );
-//        List<Product> data = query.getResultList();
-//        return data;
-//    }
+   public List<Product> getAllProduct(EntityManager em){
+        TypedQuery<Product> query = em.createQuery( "SELECT p FROM Product  p", Product.class );
+       query.setMaxResults(7);
+        List<Product> data = query.getResultList();
+        System.out.println(data.size());
+        return data;
+    }
 }

@@ -11,15 +11,20 @@ import java.util.List;
 
 public class ProductService {
 
-    public static List<ProductDataModel> getAllProducts(){
+    public  List<ProductDataModel> getAllProducts(){
         var em= JpaUtil.createEntityManager();
-        ProductRepository pr = new ProductRepository();
+        ProductRepository pr = new ProductRepository(em);
         List<Product> productsEntities = pr.getAllProduct(em);
         List<ProductDataModel> products = new ArrayList<>();
         ProductMap productMap = new ProductMap();
         for(Product p:productsEntities){
-            products.add(productMap.convertEntityToModel(p));
+            ProductDataModel productDataModel = productMap.convertEntityToModel(p);
+            products.add(productDataModel);
+            System.out.println(productDataModel.getImage().length);
+
         }
+        System.out.println("data reed from servlet");
+        System.out.println("Comment for prevent caching");
         em.close();
         return products;
     }

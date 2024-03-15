@@ -4,10 +4,12 @@ import com.mydeal.domain.entities.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-public class ProductDataModel {
+public class ProductDataModel implements Serializable {
     private Integer id;
 
 
@@ -26,8 +28,18 @@ public class ProductDataModel {
     private BigDecimal averageRating;
 
 
-    private Category category;
+   // private Category category;
 
-    private Byte[] image;
+    private byte[] image;
 
+
+    @Override
+    public String toString() {
+        return "ProductDataModel{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", availableQuantity=" + availableQuantity +
+                '}';
+    }
 }
