@@ -1,16 +1,15 @@
-create database mydeal;
-CREATE TABLE Address(
-address_id INT AUTO_INCREMENT PRIMARY KEY,
-street VARCHAR(255),
-city VARCHAR(255),
-apartment INT,
-customer_id INT
+-- create database mydeal;
+CREATE TABLE Address (
+	address_id INT AUTO_INCREMENT PRIMARY KEY,
+	street VARCHAR(255),
+	city VARCHAR(255),
+	apartment INT
 );
 CREATE TABLE Customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255),
-    email VARCHAR(255),
-    phone_number VARCHAR(20),
+    email VARCHAR(255) UNIQUE,
+    phone_number VARCHAR(11) UNIQUE,
     date_of_birth DATE,
     password VARCHAR(255),
     credit_limit DECIMAL(10,2),

@@ -32,4 +32,15 @@ public class CustomerRepository extends CrudRepository<Customer> {
             return null;
         }
     }
+
+    public String checkFieldAvailability(EntityManager em, String fieldName, String fieldValue) {
+        String jpql = "SELECT c." + fieldName + " FROM Customer c WHERE c." + fieldName + " = :fieldValue";
+        TypedQuery<String> query = em.createQuery(jpql, String.class);
+        query.setParameter("fieldValue", fieldValue);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
