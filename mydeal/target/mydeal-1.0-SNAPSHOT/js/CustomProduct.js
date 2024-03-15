@@ -36,9 +36,25 @@ function displayProducts(products) {
 
         // Create product image
         var productImage = document.createElement('img');
-      //  var base64String = btoa(String.fromCharCode.apply(null, product.image));
         var blob = new Blob([new Uint8Array(product.image)], { type: 'image/jpeg' });
         var imageUrl = URL.createObjectURL(blob);
+        productImage.onload = function() {
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+
+            canvas.width = 362;
+            canvas.height = 250;
+
+            // Draw the image onto the canvas with the desired dimensions
+            ctx.drawImage(productImage, 0, 0, 362, 250);
+
+            // Convert the canvas content to a resized image data URL
+            var resizedImageData = canvas.toDataURL('image/jpeg');
+
+            // Set the resized image data URL as the source of the product image
+            productImage.src = resizedImageData;
+        };
+
         productImage.src =  imageUrl;
         productImage.alt = 'Product Image';
         productImage.className = 'img-fluid';
@@ -64,9 +80,9 @@ function displayProducts(products) {
 
         // Append product container to product list
         productContainer.appendChild(productDiv);
-        console.log(product);
-    };
+    }
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log("start get");
     console.log("data start handel");
