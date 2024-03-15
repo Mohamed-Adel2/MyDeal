@@ -13,14 +13,13 @@ public class ProductService {
 
     public  List<ProductDataModel> getAllProducts(){
         var em= JpaUtil.createEntityManager();
-        ProductRepository pr = new ProductRepository(em);
+        ProductRepository pr = new ProductRepository();
         List<Product> productsEntities = pr.getAllProduct(em);
         List<ProductDataModel> products = new ArrayList<>();
         ProductMap productMap = new ProductMap();
         for(Product p:productsEntities){
             ProductDataModel productDataModel = productMap.convertEntityToModel(p);
             products.add(productDataModel);
-            System.out.println(productDataModel.getImage().length);
 
         }
         System.out.println("data reed from servlet");

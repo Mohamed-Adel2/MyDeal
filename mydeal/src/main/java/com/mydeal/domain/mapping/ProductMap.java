@@ -30,16 +30,13 @@ public class ProductMap {
         productDataModel.setDescription(product.getDescription());
         productDataModel.setPrice(product.getPrice());
         Set<ProductImages> arrImages = product.getProductimages();
-        byte arr[] ;
+        byte[] arr;
         for(ProductImages productImages:arrImages){
-            arr = productImages.getImage(); //will start by on image only
+            arr = productImages.getImage();
             productDataModel.setImage(arr);
             break;
         }
-
-       // productDataModel.setCategory(product.getCategory());
         productDataModel.setAvailableQuantity(product.getAvailableQuantity());
-
         return productDataModel;
     }
 }

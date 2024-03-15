@@ -14,11 +14,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.13</version>
+        </dependency>
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
@@ -112,7 +117,7 @@
                     <configuration>
                         <username>admin</username>
                         <password>admin</password>
-                        <url>http://localhost:8181/manager/text</url>
+                        <url>http://localhost:9090/manager/text</url>
                         <path>/mydeal</path>
                     </configuration>
                 </plugin>

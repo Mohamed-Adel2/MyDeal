@@ -1,6 +1,6 @@
 function getDataFromServlet() {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
 
@@ -19,10 +19,10 @@ function getDataFromServlet() {
 
     xhr.send();
 }
-function displayProducts(products) {
-    var productContainer = document.querySelector('.product_list .row');
-    productContainer.innerHTML = '';
 
+function displayProducts(products) {
+    var productContainer = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-8 > div > div.row.items")
+    productContainer.innerHTML = '';
     // Loop through the products and create HTML elements for each product
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
@@ -36,26 +36,9 @@ function displayProducts(products) {
 
         // Create product image
         var productImage = document.createElement('img');
-        var blob = new Blob([new Uint8Array(product.image)], { type: 'image/jpeg' });
+        var blob = new Blob([new Uint8Array(product.image)], {type: 'image/jpeg'});
         var imageUrl = URL.createObjectURL(blob);
-        productImage.onload = function() {
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-
-            canvas.width = 362;
-            canvas.height = 250;
-
-            // Draw the image onto the canvas with the desired dimensions
-            ctx.drawImage(productImage, 0, 0, 362, 250);
-
-            // Convert the canvas content to a resized image data URL
-            var resizedImageData = canvas.toDataURL('image/jpeg');
-
-            // Set the resized image data URL as the source of the product image
-            productImage.src = resizedImageData;
-        };
-
-        productImage.src =  imageUrl;
+        productImage.src = imageUrl;
         productImage.alt = 'Product Image';
         productImage.className = 'img-fluid';
 
@@ -83,7 +66,7 @@ function displayProducts(products) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log("start get");
     console.log("data start handel");
     getDataFromServlet();
