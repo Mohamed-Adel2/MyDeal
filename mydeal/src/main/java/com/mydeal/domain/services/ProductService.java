@@ -11,15 +11,17 @@ import java.util.List;
 
 public class ProductService {
 
-    public static List<ProductDataModel> getAllProducts(){
+    public  List<ProductDataModel> getAllProducts(){
         var em= JpaUtil.createEntityManager();
-//        ProductRepository pr = new ProductRepository();
-//        List<Product> productsEntities = pr.getAllProduct(em);
+        ProductRepository pr = new ProductRepository();
+        List<Product> productsEntities = pr.getAllProduct(em);
         List<ProductDataModel> products = new ArrayList<>();
         ProductMap productMap = new ProductMap();
-//        for(Product p:productsEntities){
-//            products.add(productMap.convertEntityToModel(p));
-//        }
+        for(Product p:productsEntities){
+            ProductDataModel productDataModel = productMap.convertEntityToModel(p);
+            products.add(productDataModel);
+
+        }
         em.close();
         return products;
     }

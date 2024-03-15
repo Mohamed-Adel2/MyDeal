@@ -12,4 +12,6 @@ public class AppConfig {
         DB_PASSWORD = System.getenv("1234");
         System.out.println("DB_PASSWORD : " + DB_PASSWORD);
     }
+
+
 }

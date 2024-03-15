@@ -7,12 +7,13 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class ProductRepository extends CrudRepository<Product> {
-    public ProductRepository(EntityManager em) {
+    public ProductRepository() {
         setEntityClass(Product.class);
     }
-//    public List<Product> getAllProduct(){
-//        TypedQuery<Product> query = em.createQuery( "SELECT p FROM Product  p", Product.class );
-//        List<Product> data = query.getResultList();
-//        return data;
-//    }
+
+    public List<Product> getAllProduct(EntityManager em) {
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product  p", Product.class);
+        query.setMaxResults(5);
+        return query.getResultList();
+    }
 }
