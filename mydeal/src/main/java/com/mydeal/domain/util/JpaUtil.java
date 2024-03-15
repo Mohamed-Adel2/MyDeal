@@ -23,8 +23,8 @@ public class JpaUtil {
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
             config.setUsername("root");
-            //config.setPassword("1234");
-            config.setPassword("Dola1234@");
+            config.setPassword("1234");
+//            config.setPassword("Dola1234@");
             config.setMaximumPoolSize(30);
             config.addDataSourceProperty("cachePrepStmts", true);
             config.addDataSourceProperty("prepStmtCacheSize", 250);

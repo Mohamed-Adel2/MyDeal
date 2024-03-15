@@ -24,8 +24,7 @@ public class CredentialValidatorServlet extends HttpServlet {
         } else if (phoneNumber != null) {
             ret = customerDataValidatorService.validatePhone(phoneNumber) ? "valid" : "invalid";
         }
-        // Set response content type to JSON
-        resp.setContentType("application/json");
+        resp.setContentType("text/plain");
         // Set response character encoding (optional)
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(ret);

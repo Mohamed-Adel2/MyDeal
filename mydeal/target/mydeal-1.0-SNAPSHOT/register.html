@@ -24,6 +24,15 @@
     <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-control.error {
+            border: 1px solid red !important;
+        }
+
+        #error-message {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -232,27 +241,35 @@
 <!--Logic Part -->
 <script>
     $(document).ready(function () {
+        $('#emailValidity').hide();
+        $('#phoneValidity').hide();
+
         $('#phoneNumber').on('blur', function () {
             var phoneNumber = $(this).val();
-            if(phoneNumber.length==0){
-                $('#phoneValidity').text(`You can't leave this Field Empty !!`);
-            }
-            else if (phoneNumber.length == 11) {
-                $('#phoneValidity').text(``);
+            if (phoneNumber.length == 0) {
+                $('#phoneValidity').show();
+                $('#phoneValidity').text(`You can't leave this Field Empty !!`).css("color", "red");
+            } else if (phoneNumber.length == 11) {
+                $('#phoneValidity').hide();
                 // this means that we need to check on
                 $.ajax({
                     url: 'validate', // Change this to the URL where you handle validation
                     type: 'POST',
                     data: {phone_number: phoneNumber},
                     success: function (response) {
-                        if (response == 'valid') {
-                            $('#phoneValidity').text('Phone Number is Valid');
+                        if (response.trim() == 'valid') {
+                            $('#phoneValidity').text('Phone Number is Valid ✅').css('color', 'green');
                         } else {
-                            $('#phoneValidity').text('This phone number is already exist !!');
+                            $('#phoneValidity').text('This phone number is already exist !!').css('color', 'red');
                         }
+                    },
+                    beforeSend: function () {
+                        $('#phoneValidity').show();
+                        $('#phoneValidity').text('Validating ...').css('color', 'grey');
                     }
                 });
             } else {
+                $('#phoneValidity').show();
                 $('#phoneValidity').text('It must be 11 Digit !!');
             }
         });
@@ -260,26 +277,61 @@
             var email = $(this).val();
             // check email  regex if it is valid :
             var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if(email.length==0){
+            if (email.length == 0) {
+                $('#emailValidity').show();
                 $('#emailValidity').text("You Can't leave this field empty !!");
-            }
-            else if (email.length != 0 && re.test(email)) {
-                $('#emailValidity').text('');
+            } else if (email.length != 0 && re.test(email)) {
+                $('#emailValidity').hide();
                 $.ajax({
                     url: 'validate', // Change this to the URL where you handle validation
                     type: 'POST',
                     data: {email: email},
+                    beforeSend: function () {
+                        $('#emailValidity').show();
+                        $('#emailValidity').text('Validating ...').css('color', 'grey');
+                    },
                     success: function (response) {
-                        if (response == 'valid') {
-                            $('#emailValidity').text('Valid');
+                        if (response.trim() == 'valid') {
+                            $('#emailValidity').show();
+                            $('#emailValidity').text('Email is Valid ✅').css('color', 'green');
                         } else {
-                            $('#emailValidity').text('This email is already exist !!');
+                            $('#emailValidity').show();
+                            $('#emailValidity').text('This email is already exist !!').css('color', 'red');
                         }
+                    },onerror:function(){
+                        $('#emailValidity').text('There is an error occurred').css('color', 'red');
                     }
                 });
-            }else{
+            } else {
+                $('#emailValidity').show();
                 $('#emailValidity').text("This is not valid email!!");
             }
+        });
+        $('form').on('submit', function (event) {
+            var isValid = true;
+
+            // Remove existing error messages
+            $('.error-message').remove();
+
+            // Validate each input field
+            $(this).find('input[required]').each(function () {
+                if (!$(this).val()) {
+                    isValid = false;
+                    $(this).addClass('error');
+                    $(this).after('<span class="error-message">You can\'t leave this field empty !!</span>');
+                } else {
+                    $(this).removeClass('error');
+                }
+            });
+            // Prevent form submission if validation fails
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+// Remove error message on input change
+        $('input[required]').on('input', function () {
+            $(this).removeClass('error');
+            $(this).next('.error-message').remove();
         });
     });
 </script>
@@ -295,6 +347,7 @@
                 confirmPassword.setCustomValidity('');
             }
         }
+
         password.onchange = validatePassword;
         confirmPassword.onkeyup = validatePassword;
     });
