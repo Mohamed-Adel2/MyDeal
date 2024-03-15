@@ -1,8 +1,11 @@
 package com.mydeal.domain.mapping;
 
 import com.mydeal.domain.entities.Product;
+import com.mydeal.domain.entities.ProductImages;
 import com.mydeal.domain.models.ProductDataModel;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class ProductMap {
@@ -26,8 +29,17 @@ public class ProductMap {
         productDataModel.setProductName(product.getProductName());
         productDataModel.setDescription(product.getDescription());
         productDataModel.setPrice(product.getPrice());
-        productDataModel.setCategory(product.getCategory());
+        Set<ProductImages> arrImages = product.getProductimages();
+        byte arr[] ;
+        for(ProductImages productImages:arrImages){
+            arr = productImages.getImage(); //will start by on image only
+            productDataModel.setImage(arr);
+            break;
+        }
+
+       // productDataModel.setCategory(product.getCategory());
         productDataModel.setAvailableQuantity(product.getAvailableQuantity());
+
         return productDataModel;
     }
 }

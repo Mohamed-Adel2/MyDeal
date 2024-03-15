@@ -11,27 +11,28 @@ import java.util.Map;
 
 public class JpaUtil {
     private static final EntityManagerFactory emf;
-    private static HikariDataSource ds;
 
     static {
-        ds = createHikariCpDataSource();
-        emf = Persistence.createEntityManagerFactory("mydeal", Map.of(AvailableSettings.DATASOURCE, ds));
+        emf = Persistence.createEntityManagerFactory("mydeal", Map.of(AvailableSettings.DATASOURCE, createHikariCpDataSource()));
     }
 
     private static HikariDataSource createHikariCpDataSource() {
-        if (ds == null) {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
-            config.setUsername("root");
-            config.setPassword("1234");
-//            config.setPassword("Dola1234@");
-            config.setMaximumPoolSize(30);
-            config.addDataSourceProperty("cachePrepStmts", true);
-            config.addDataSourceProperty("prepStmtCacheSize", 250);
-            config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
-            config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            ds = new HikariDataSource(config);
-        }
+//        AppConfig.load();
+        HikariConfig config = new HikariConfig();
+        HikariDataSource ds;
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
+//        config.setUsername(AppConfig.DB_USER);
+//        config.setPassword(AppConfig.DB_PASSWORD);
+        config.setUsername("root");
+        config.setPassword("1192001rrrrr");
+        // max number of connections on database .
+        config.setMaximumPoolSize(30);
+        config.addDataSourceProperty("cachePrepStmts", true);
+        // configurations exists in database .
+        config.addDataSourceProperty("prepStmtCacheSize", 250);
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        ds = new HikariDataSource(config);
         return ds;
     }
 
@@ -40,11 +41,7 @@ public class JpaUtil {
     }
 
     public static void closeEntityManagerFactory() {
-        if (emf != null) {
-            emf.close();
-        }
-        if (ds != null) {
-            ds.close();
-        }
+        closeEntityManagerFactory();
     }
+
 }
