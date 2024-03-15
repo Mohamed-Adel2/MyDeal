@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
@@ -16,13 +17,15 @@ public class RegisterServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Customer customer = new Customer();
         Utils.setCustomerAttributes(customer, req);
-
-        // TODO: validation on data
-
-        CustomerRegistrationService customerRegistrationService = new CustomerRegistrationService();
-        AddressService addressService = new AddressService();
-        addressService.createAddress(customer.getAddress());
-        customerRegistrationService.register(customer);
-        resp.sendRedirect("login.html");
+        try {
+            CustomerRegistrationService customerRegistrationService = new CustomerRegistrationService();
+            AddressService addressService = new AddressService();
+            addressService.createAddress(customer.getAddress());
+            customerRegistrationService.register(customer);
+            resp.sendRedirect("login.html");
+        }
+        catch (Exception e) {
+            resp.sendRedirect("register.html");
+        }
     }
 }

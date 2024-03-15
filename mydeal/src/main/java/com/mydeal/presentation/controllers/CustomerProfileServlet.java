@@ -1,8 +1,8 @@
 package com.mydeal.presentation.controllers;
 
 import com.mydeal.domain.entities.Customer;
+import com.mydeal.domain.services.AddressService;
 import com.mydeal.domain.services.CustomerUpdateInfoService;
-import com.mydeal.domain.util.RequestKey;
 import com.mydeal.presentation.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,13 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @WebServlet("/profile")
 public class CustomerProfileServlet extends HttpServlet {
-
-    //TODO: Make sure that you do not need any info from the old request
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getSession(false) == null)
@@ -34,7 +30,9 @@ public class CustomerProfileServlet extends HttpServlet {
         }
         Customer customer = (Customer) request.getSession().getAttribute("user");
         Utils.setCustomerAttributes(customer, request);
+        AddressService addressService = new AddressService();
         CustomerUpdateInfoService customerUpdateInfoService = new CustomerUpdateInfoService();
+        addressService.updateAddress(customer.getAddress());
         customerUpdateInfoService.updateCustomerInfo(customer);
         response.sendRedirect("index.html");
     }

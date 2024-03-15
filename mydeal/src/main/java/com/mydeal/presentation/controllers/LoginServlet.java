@@ -16,6 +16,8 @@ import java.util.Optional;
 //@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
+    // TODO: handle cookies and load cart from cookies
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getSession(false) != null)
