@@ -141,8 +141,7 @@
                     <div class="login_part_form_iner">
                         <h3>Nice to meet you ! <br>
                             Register now</h3>
-                        <form class="row contact_form" action="register" method="post"
-                              novalidate="novalidate">
+                        <form class="row contact_form" action="register" method="post">
                             <!-- User Name Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="name" name="username" value=""
@@ -244,10 +243,18 @@
         $('#emailValidity').hide();
         $('#phoneValidity').hide();
 
+        function checkFormValidity() {
+            if ($('#emailValidity').is(':visible') || $('#phoneValidity').is(':visible')) {
+                $('button[type="submit"]').prop('disabled', true);
+            } else {
+                $('button[type="submit"]').prop('disabled', false);
+            }
+        }
+
         $('#phoneNumber').on('blur', function () {
             var phoneNumber = $(this).val();
             if (phoneNumber.length == 0) {
-                $('#phoneValidity').show();
+                $('#phoneValidity').hide();
                 $('#phoneValidity').text(`You can't leave this Field Empty !!`).css("color", "red");
             } else if (phoneNumber.length == 11) {
                 $('#phoneValidity').hide();
@@ -258,9 +265,10 @@
                     data: {phone_number: phoneNumber},
                     success: function (response) {
                         if (response.trim() == 'valid') {
+                            $('#phoneValidity').hide();
                             $('#phoneValidity').text('Phone Number is Valid ✅').css('color', 'green');
                         } else {
-                            $('#phoneValidity').text('This phone number is already exist !!').css('color', 'red');
+                            $('#phoneValidity').text('   This phone number is already exist').css('color', 'red');
                         }
                     },
                     beforeSend: function () {
@@ -270,7 +278,7 @@
                 });
             } else {
                 $('#phoneValidity').show();
-                $('#phoneValidity').text('It must be 11 Digit !!');
+                $('#phoneValidity').text('phone number must be 11 Digit').css('color', 'red');
             }
         });
         $('#email').on('blur', function () {
@@ -278,7 +286,7 @@
             // check email  regex if it is valid :
             var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (email.length == 0) {
-                $('#emailValidity').show();
+                $('#emailValidity').hide();
                 $('#emailValidity').text("You Can't leave this field empty !!");
             } else if (email.length != 0 && re.test(email)) {
                 $('#emailValidity').hide();
@@ -292,11 +300,11 @@
                     },
                     success: function (response) {
                         if (response.trim() == 'valid') {
-                            $('#emailValidity').show();
+                            $('#emailValidity').hide();
                             $('#emailValidity').text('Email is Valid ✅').css('color', 'green');
                         } else {
                             $('#emailValidity').show();
-                            $('#emailValidity').text('This email is already exist !!').css('color', 'red');
+                            $('#emailValidity').text('   This email is already exist').css('color', 'red');
                         }
                     },onerror:function(){
                         $('#emailValidity').text('There is an error occurred').css('color', 'red');
@@ -304,10 +312,13 @@
                 });
             } else {
                 $('#emailValidity').show();
-                $('#emailValidity').text("This is not valid email!!");
+                $('#emailValidity').text("This email is invalid");
             }
         });
         $('form').on('submit', function (event) {
+            if ($('#emailValidity').is(':visible') || $('#phoneValidity').is(':visible')) {
+                event.preventDefault();
+            }
             var isValid = true;
 
             // Remove existing error messages
