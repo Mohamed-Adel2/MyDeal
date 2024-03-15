@@ -21,16 +21,15 @@ public class CustomerRepository extends CrudRepository<Customer> {
      * @param password
      * @return
      */
-    public CustomerDataModel getCustomerByEmailAndPassword(String email, String password) {
-        EntityManager em = JpaUtil.createEntityManager();
+    public Customer getCustomerByEmailAndPassword(EntityManager em, String email, String password) {
         String jpql = "SELECT c FROM Customer c WHERE c.email = :email AND c.password = :password";
         TypedQuery<Customer> query = em.createQuery(jpql, Customer.class);
         query.setParameter(RequestKey.RQ_CustomerEmail, email);
         query.setParameter(RequestKey.RQ_CustomerPassword, password);
         try {
-            return CustomerMapping.convertEntityToModel(query.getSingleResult());
+            return query.getSingleResult();
         } catch (NoResultException e) {
-            return null; // Handle the case where no customer is found with the provided email and password
+            return null;
         }
     }
 }

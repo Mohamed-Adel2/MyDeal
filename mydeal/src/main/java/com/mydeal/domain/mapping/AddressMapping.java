@@ -10,7 +10,6 @@ public class AddressMapping {
         addressDataModel.setStreet(address.getStreet());
         addressDataModel.setCity(address.getCity());
         addressDataModel.setApartment(address.getApartment());
-        addressDataModel.setCustomerId(address.getCustomerId());
         return addressDataModel;
     }
 
@@ -20,7 +19,6 @@ public class AddressMapping {
         address.setStreet(addressDataModel.getStreet());
         address.setCity(addressDataModel.getCity());
         address.setApartment(addressDataModel.getApartment());
-        address.setCustomerId(addressDataModel.getCustomerId());
         return address;
     }
 }

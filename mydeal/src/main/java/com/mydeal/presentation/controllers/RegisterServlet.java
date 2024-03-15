@@ -1,47 +1,26 @@
 package com.mydeal.presentation.controllers;
 
-import com.mydeal.domain.entities.Address;
 import com.mydeal.domain.entities.Customer;
-import com.mydeal.domain.mapping.AddressMapping;
-import com.mydeal.domain.mapping.CustomerMapping;
-import com.mydeal.domain.models.AddressDataModel;
-import com.mydeal.domain.models.CustomerDataModel;
-import com.mydeal.domain.util.JpaUtil;
-import com.mydeal.domain.util.RequestKey;
-import com.mydeal.repository.AddressRepository;
-import com.mydeal.repository.CustomerRepository;
-import jakarta.persistence.EntityManager;
+import com.mydeal.domain.services.CustomerRegistrationService;
+import com.mydeal.presentation.utils.Utils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-import java.math.BigDecimal;
 
 public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        EntityManager em = JpaUtil.createEntityManager();
-        CustomerDataModel customerDataModel = new CustomerDataModel();
-        customerDataModel
-                .setUserName(req.getParameter(RequestKey.RQ_CustomerUserName))
-                .setEmail(req.getParameter(RequestKey.RQ_CustomerEmail))
-                .setPassword(req.getParameter(RequestKey.RQ_CustomerPassword))
-                .setPhoneNumber(req.getParameter(RequestKey.RQ_CustomerPhoneNumber))
-                .setDob(req.getParameter(RequestKey.RQ_CustomerDOB))
-                .setAddressId(0)
-                .setAddressDataModel(new AddressDataModel())
-                .setId(null)
-                .setCreditLimit(BigDecimal.valueOf(0.0));
+        Customer customer = new Customer();
+        Utils.setCustomerAttributes(customer, req);
 
-        // Convert AddressDataModel to Address entity
-        Address addressEntity = AddressMapping.convertModelToEntity(customerDataModel.getAddressDataModel());
+        // TODO: validation on data
 
-        // Persist the Address entity
-        AddressRepository addressRepository = new AddressRepository();
-        EntityManager addressEm = JpaUtil.createEntityManager();
-        addressRepository.create(addressEm, addressEntity);
+        CustomerRegistrationService customerRegistrationService = new CustomerRegistrationService();
+        customerRegistrationService.register(customer);
+        /*AddressService addressService = new AddressService();
+
 
         // Associate the persisted Address entity with the CustomerDataModel
         customerDataModel.setAddressId(addressEntity.getId());
@@ -59,7 +38,9 @@ public class RegisterServlet extends HttpServlet {
 
         // Commit and close EntityManagers
         em.close();
-        addressEm.close();
-        resp.sendRedirect("index.html");
+        addressEm.close();*/
+        System.out.println("here");
+        resp.sendRedirect("login.html");
     }
+
 }

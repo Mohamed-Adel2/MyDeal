@@ -134,35 +134,55 @@
                             Register now</h3>
                         <form class="row contact_form" action="register" method="post"
                               novalidate="novalidate">
-                            <!--                           User Name Field -->
+                            <!-- User Name Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="name" name="username" value=""
-                                       placeholder="Username">
+                                       placeholder="Username" required>
                             </div>
-                            <!--                            Email Field -->
+                            <!-- Email Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="email" class="form-control" id="email" name="email" value=""
-                                       placeholder="Email">
+                                       placeholder="Email" required>
                             </div>
-                            <!--                            Phone Number Field -->
+                            <!-- Phone Number Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="number" class="form-control" id="phoneNumber" name="phone_number" value=""
-                                       placeholder="phoneNumber">
+                                <input type="tel" class="form-control" id="phoneNumber" name="phone_number" value=""
+                                       placeholder="Phone Number" pattern="(010|011|012|015)[0-9]{8}" required>
                             </div>
-                            <!--                            DOB Field -->
+                            <!-- DOB Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="date" class="form-control" id="dob" name="date_of_birth" value=""
-                                       placeholder="Date of Birth">
+                                       placeholder="Date of Birth" required>
                             </div>
-                            <!--                            Address Field -->
+                            <!-- Credit Limit Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="" class="form-control" id="address" name="address" value=""
-                                       placeholder="Address">
+                                <input type="number" class="form-control" id="creditLimit" name="credit_limit" value=""
+                                       placeholder="Credit Limit" step="0.01" min="1" required>
                             </div>
-                            <!--                            Password Field -->
+                            <!-- Street Field -->
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="street" name="street" value=""
+                                       placeholder="Street" required>
+                            </div>
+                            <!-- City Field -->
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="city" name="city" value=""
+                                       placeholder="City" required>
+                            </div>
+                            <!-- Apartment Field -->
+                            <div class="col-md-12 form-group p_star">
+                                <input type="number" class="form-control" id="apartment" name="apartment" value=""
+                                       placeholder="Apartment" min="1" max="100" required>
+                            </div>
+                            <!-- Password Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="password" class="form-control" id="password" name="password" value=""
-                                       placeholder="Password">
+                                       placeholder="Password" required>
+                            </div>
+                            <!-- Confirm Password Field -->
+                            <div class="col-md-12 form-group p_star">
+                                <input type="password" class="form-control" id="confirmPassword" name="confirm_password" value=""
+                                       placeholder="Confirm Password" required>
                             </div>
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit" class="btn_3">
@@ -204,6 +224,41 @@
 <script src="js/mail-script.js"></script>
 <!-- custom js -->
 <script src="js/custom.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var password = document.getElementById("password");
+        var confirmPassword = document.getElementById("confirmPassword");
+
+        function validatePassword() {
+            if (password.value != confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords don't match");
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirmPassword.onkeyup = validatePassword;
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dob = document.getElementById("dob");
+
+        function validateDOB() {
+            var enteredDOB = new Date(dob.value);
+            var today = new Date();
+            if (enteredDOB >= today) {
+                dob.setCustomValidity("Date of birth must be in the past");
+            } else {
+                dob.setCustomValidity('');
+            }
+        }
+
+        dob.onchange = validateDOB;
+    });
+</script>
 </body>
 
 </html>

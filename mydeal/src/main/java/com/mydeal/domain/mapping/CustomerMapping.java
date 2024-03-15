@@ -21,6 +21,7 @@ public class CustomerMapping {
         customerDataModel.setAddressDataModel(addressId.isPresent() ? AddressMapping.convertEntityToModel(customer.getAddress()) : null);
         customerDataModel.setPassword(customer.getPassword());
         customerDataModel.setCreditLimit(customer.getCreditLimit());
+        customerDataModel.setAddressDataModel(AddressMapping.convertEntityToModel(customer.getAddress()));
         return customerDataModel;
     }
 
@@ -34,6 +35,7 @@ public class CustomerMapping {
         customer.setAddress(AddressMapping.convertModelToEntity(customerDataModel.getAddressDataModel()));
         customer.setPassword(customerDataModel.getPassword());
         customer.setCreditLimit(customerDataModel.getCreditLimit());
+        customer.setAddress(customerDataModel.getAddressDataModel() != null ? AddressMapping.convertModelToEntity(customerDataModel.getAddressDataModel()) : null);
         return customer;
     }
 
