@@ -238,7 +238,7 @@
                 $('#phoneValidity').text(`You can't leave this Field Empty !!`);
             }
             else if (phoneNumber.length == 11) {
-                $('#phoneValidity').text(``);
+                $('#phoneValidity').hide();
                 // this means that we need to check on
                 $.ajax({
                     url: 'validate', // Change this to the URL where you handle validation
@@ -264,7 +264,7 @@
                 $('#emailValidity').text("You Can't leave this field empty !!");
             }
             else if (email.length != 0 && re.test(email)) {
-                $('#emailValidity').text('');
+                $('#emailValidity').hide();
                 $.ajax({
                     url: 'validate', // Change this to the URL where you handle validation
                     type: 'POST',
