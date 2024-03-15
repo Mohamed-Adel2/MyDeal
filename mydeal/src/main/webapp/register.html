@@ -24,6 +24,15 @@
     <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-control.error {
+            border: 1px solid red !important;
+        }
+
+        #error-message {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -134,45 +143,58 @@
                             Register now</h3>
                         <form class="row contact_form" action="register" method="post"
                               novalidate="novalidate">
-                            <!--                           User Name Field -->
+                            <!-- User Name Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="name" name="username" value=""
-                                       placeholder="Username">
+                                       placeholder="Username" required>
                             </div>
-                            <!--                            Email Field -->
+                            <!-- Email Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="email" class="form-control" id="email" name="email" value=""
-                                       placeholder="Email">
+                                       placeholder="Email" required>
+                                <label id="emailValidity"></label>
                             </div>
-                            <!--                            Phone Number Field -->
+                            <!-- Phone Number Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="number" class="form-control" id="phoneNumber" name="phone_number" value=""
-                                       placeholder="phoneNumber">
+                                <input type="tel" class="form-control" id="phoneNumber" name="phone_number" value=""
+                                       placeholder="Phone Number" pattern="(010|011|012|015)[0-9]{8}" required>
+                                <label id="phoneValidity"></label>
                             </div>
-                            <!--                            DOB Field -->
+                            <!-- DOB Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="date" class="form-control" id="dob" name="date_of_birth" value=""
-                                       placeholder="Date of Birth">
+                                       placeholder="Date of Birth" required>
                             </div>
-                            <!--                            Street Field -->
+                            <!-- Credit Limit Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="" class="form-control" id="street" name="street" value=""
-                                       placeholder="street">
+                                <input type="number" class="form-control" id="creditLimit" name="credit_limit" value=""
+                                       placeholder="Credit Limit" step="0.01" min="1" required>
                             </div>
-                            <!--                            City Field -->
+                            <!-- Street Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="" class="form-control" id="city" name="city" value=""
-                                       placeholder="city">
+                                <input type="text" class="form-control" id="street" name="street" value=""
+                                       placeholder="Street" required>
                             </div>
-                            <!--                            Apartment Field -->
+                            <!-- City Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="" class="form-control" id="apartment" name="apartment" value=""
-                                       placeholder="apartment">
+                                <input type="text" class="form-control" id="city" name="city" value=""
+                                       placeholder="City" required>
                             </div>
-                            <!--                            Password Field -->
+                            <!-- Apartment Field -->
+                            <div class="col-md-12 form-group p_star">
+                                <input type="number" class="form-control" id="apartment" name="apartment" value=""
+                                       placeholder="Apartment" min="1" max="100" required>
+                            </div>
+                            <!-- Password Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="password" class="form-control" id="password" name="password" value=""
-                                       placeholder="Password">
+                                       placeholder="Password" required>
+                            </div>
+                            <!-- Confirm Password Field -->
+                            <div class="col-md-12 form-group p_star">
+                                <input type="password" class="form-control" id="confirmPassword" name="confirm_password"
+                                       value=""
+                                       placeholder="Confirm Password" required>
                             </div>
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit" class="btn_3">
@@ -186,6 +208,7 @@
         </div>
     </div>
 </section>
+
 <!--================login_part end =================-->
 
 <!-- jquery plugins here-->
@@ -214,6 +237,138 @@
 <script src="js/mail-script.js"></script>
 <!-- custom js -->
 <script src="js/custom.js"></script>
+
+<!--Logic Part -->
+<script>
+    $(document).ready(function () {
+        $('#emailValidity').hide();
+        $('#phoneValidity').hide();
+
+        $('#phoneNumber').on('blur', function () {
+            var phoneNumber = $(this).val();
+            if (phoneNumber.length == 0) {
+                $('#phoneValidity').show();
+                $('#phoneValidity').text(`You can't leave this Field Empty !!`).css("color", "red");
+            } else if (phoneNumber.length == 11) {
+                $('#phoneValidity').hide();
+                // this means that we need to check on
+                $.ajax({
+                    url: 'validate', // Change this to the URL where you handle validation
+                    type: 'POST',
+                    data: {phone_number: phoneNumber},
+                    success: function (response) {
+                        if (response.trim() == 'valid') {
+                            $('#phoneValidity').text('Phone Number is Valid ✅').css('color', 'green');
+                        } else {
+                            $('#phoneValidity').text('This phone number is already exist !!').css('color', 'red');
+                        }
+                    },
+                    beforeSend: function () {
+                        $('#phoneValidity').show();
+                        $('#phoneValidity').text('Validating ...').css('color', 'grey');
+                    }
+                });
+            } else {
+                $('#phoneValidity').show();
+                $('#phoneValidity').text('It must be 11 Digit !!');
+            }
+        });
+        $('#email').on('blur', function () {
+            var email = $(this).val();
+            // check email  regex if it is valid :
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.length == 0) {
+                $('#emailValidity').show();
+                $('#emailValidity').text("You Can't leave this field empty !!");
+            } else if (email.length != 0 && re.test(email)) {
+                $('#emailValidity').hide();
+                $.ajax({
+                    url: 'validate', // Change this to the URL where you handle validation
+                    type: 'POST',
+                    data: {email: email},
+                    beforeSend: function () {
+                        $('#emailValidity').show();
+                        $('#emailValidity').text('Validating ...').css('color', 'grey');
+                    },
+                    success: function (response) {
+                        if (response.trim() == 'valid') {
+                            $('#emailValidity').show();
+                            $('#emailValidity').text('Email is Valid ✅').css('color', 'green');
+                        } else {
+                            $('#emailValidity').show();
+                            $('#emailValidity').text('This email is already exist !!').css('color', 'red');
+                        }
+                    },onerror:function(){
+                        $('#emailValidity').text('There is an error occurred').css('color', 'red');
+                    }
+                });
+            } else {
+                $('#emailValidity').show();
+                $('#emailValidity').text("This is not valid email!!");
+            }
+        });
+        $('form').on('submit', function (event) {
+            var isValid = true;
+
+            // Remove existing error messages
+            $('.error-message').remove();
+
+            // Validate each input field
+            $(this).find('input[required]').each(function () {
+                if (!$(this).val()) {
+                    isValid = false;
+                    $(this).addClass('error');
+                    $(this).after('<span class="error-message">You can\'t leave this field empty !!</span>');
+                } else {
+                    $(this).removeClass('error');
+                }
+            });
+            // Prevent form submission if validation fails
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+// Remove error message on input change
+        $('input[required]').on('input', function () {
+            $(this).removeClass('error');
+            $(this).next('.error-message').remove();
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var password = document.getElementById("password");
+        var confirmPassword = document.getElementById("confirmPassword");
+
+        function validatePassword() {
+            if (password.value != confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords don't match");
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirmPassword.onkeyup = validatePassword;
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dob = document.getElementById("dob");
+
+        function validateDOB() {
+            var enteredDOB = new Date(dob.value);
+            var today = new Date();
+            if (enteredDOB >= today) {
+                dob.setCustomValidity("Date of birth must be in the past");
+            } else {
+                dob.setCustomValidity('');
+            }
+        }
+
+        dob.onchange = validateDOB;
+    });
+</script>
 </body>
 
 </html>

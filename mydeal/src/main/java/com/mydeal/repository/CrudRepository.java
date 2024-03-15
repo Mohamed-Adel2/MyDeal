@@ -10,9 +10,7 @@ public abstract class CrudRepository<T> {
     }
 
     public void create(EntityManager em, T entity) {
-        em.getTransaction().begin();
         em.persist(entity);
-        em.getTransaction().commit();
     }
 
     public T read(EntityManager em, Object id) {
