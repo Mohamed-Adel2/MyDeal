@@ -8,7 +8,6 @@ import com.mydeal.repository.CustomerRepository;
 import jakarta.persistence.EntityManager;
 
 public class CustomerUpdateInfoService {
-    // TODO: update address info
     public void updateCustomerInfo(Customer customer) {
         EntityManager em = JpaUtil.createEntityManager();
         CustomerRepository customerRepository = new CustomerRepository();

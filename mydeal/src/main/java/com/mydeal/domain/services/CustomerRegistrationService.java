@@ -9,18 +9,9 @@ public class CustomerRegistrationService {
     public void register(Customer customer) {
         CustomerRepository customerRepository = new CustomerRepository();
         EntityManager em = JpaUtil.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            customerRepository.create(em, customer);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            System.err.println("Error during database operation: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
+        em.getTransaction().begin();
+        customerRepository.create(em, customer);
+        em.getTransaction().commit();
+        em.close();
     }
-}    
+}

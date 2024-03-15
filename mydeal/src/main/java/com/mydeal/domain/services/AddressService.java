@@ -12,7 +12,6 @@ public class AddressService {
         em.getTransaction().commit();
     }
 
-    // TODO: make sure you do not have to add customer id for the address
     public void createAddress(Address address) {
         EntityManager em = JpaUtil.createEntityManager();
         em.getTransaction().begin();
