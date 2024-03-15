@@ -12,6 +12,15 @@
         <servlet-name>registerServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>validationServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CredentialValidatorServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>validationServlet</servlet-name>
+        <url-pattern>/validate</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>registerServlet</servlet-name>

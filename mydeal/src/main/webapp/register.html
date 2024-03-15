@@ -143,7 +143,7 @@
                             <div class="col-md-12 form-group p_star">
                                 <input type="email" class="form-control" id="email" name="email" value=""
                                        placeholder="Email" required>
-                                <label id="#emailValidity"></label>
+                                <label id="emailValidity"></label>
                             </div>
                             <!-- Phone Number Field -->
                             <div class="col-md-12 form-group p_star">
@@ -234,12 +234,16 @@
     $(document).ready(function () {
         $('#phoneNumber').on('blur', function () {
             var phoneNumber = $(this).val();
-            if (phoneNumber.length == 11) {
+            if(phoneNumber.length==0){
+                $('#phoneValidity').text(`You can't leave this Field Empty !!`);
+            }
+            else if (phoneNumber.length == 11) {
+                $('#phoneValidity').text(``);
                 // this means that we need to check on
                 $.ajax({
                     url: 'validate', // Change this to the URL where you handle validation
                     type: 'POST',
-                    data: {phoneNumber: phoneNumber},
+                    data: {phone_number: phoneNumber},
                     success: function (response) {
                         if (response == 'valid') {
                             $('#phoneValidity').text('Phone Number is Valid');
@@ -252,31 +256,33 @@
                 $('#phoneValidity').text('It must be 11 Digit !!');
             }
         });
-    });
-
-    $('#email').on('blur', function () {
-        var email = $(this).val();
-        // check email  regex if it is valid :
-        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (re.test(email)) {
-            $.ajax({
-                url: 'validate', // Change this to the URL where you handle validation
-                type: 'POST',
-                data: {email: email},
-                success: function (response) {
-                    if (response == 'valid') {
-                        $('#emailValidity').text('Valid');
-                    } else {
-                        $('#emailValidity').text('This email is already exist !!');
+        $('#email').on('blur', function () {
+            var email = $(this).val();
+            // check email  regex if it is valid :
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(email.length==0){
+                $('#emailValidity').text("You Can't leave this field empty !!");
+            }
+            else if (email.length != 0 && re.test(email)) {
+                $('#emailValidity').text('');
+                $.ajax({
+                    url: 'validate', // Change this to the URL where you handle validation
+                    type: 'POST',
+                    data: {email: email},
+                    success: function (response) {
+                        if (response == 'valid') {
+                            $('#emailValidity').text('Valid');
+                        } else {
+                            $('#emailValidity').text('This email is already exist !!');
+                        }
                     }
-                }
-            });
-        } else {
-            alert("This is not valid Email !!");
-        }
+                });
+            }else{
+                $('#emailValidity').text("This is not valid email!!");
+            }
+        });
     });
 </script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var password = document.getElementById("password");
@@ -289,7 +295,6 @@
                 confirmPassword.setCustomValidity('');
             }
         }
-
         password.onchange = validatePassword;
         confirmPassword.onkeyup = validatePassword;
     });
