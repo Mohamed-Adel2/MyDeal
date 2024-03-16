@@ -14,4 +14,12 @@ public class CategoryService {
         em.close();
         return categories;
     }
+
+    public Integer getCategoryId(String category) {
+        EntityManager em = JpaUtil.createEntityManager();
+        CategoryRepository categoryRepository = new CategoryRepository();
+        Integer categoryId = categoryRepository.getCategoryByName(em, category);
+        em.close();
+        return categoryId;
+    }
 }

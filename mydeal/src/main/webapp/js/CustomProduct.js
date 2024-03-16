@@ -1,34 +1,50 @@
 let start = 0;
 let size = 6;
 let loadMore = document.getElementById('load-more');
+let category = "All";
+let minPrice = 0;
+let maxPrice = 1000;
+let searchKey = "";
 
-function getProductsFromServlet() {
+function getProductsFromServlet(newFilter) {
     var xhr = new XMLHttpRequest();
+    if (newFilter === true) {
+        category = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-4 > div > div:nth-child(2) > div > div.select_option_list > p").textContent;
+        minPrice = document.getElementById('min-price').value;
+        maxPrice = document.getElementById('max-price').value;
+        searchKey = document.getElementById('search-key').value;
+        start = 0;
+    }
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var products = JSON.parse(jsonResponse);
                 start += products.length;
-                displayProducts(products);
+                if (start % size !== 0 || products.length === 0) {
+                    loadMore.style.visibility = 'hidden';
+                } else {
+                    loadMore.style.visibility = 'visible';
+                }
+                displayProducts(products, newFilter);
             } else {
                 console.error('Request failed: ' + xhr.status);
             }
         }
     };
-
     var params = {
         startIdx: start,
-        limit: size
+        limit: size,
+        category: category,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        searchKey: searchKey
     };
-
-    // Convert parameters to URL query string
     var queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-
     xhr.open('GET', 'products?' + queryString, true);
-
     xhr.send();
 }
+
 
 function getCategoriesFromServlet() {
     var xhr = new XMLHttpRequest();
@@ -55,66 +71,68 @@ function displayCategories(categories) {
     categoryContainer.innerHTML = '';
     var categoryItem = document.createElement('p');
     categoryItem.textContent = 'All';
+    categoryItem.onclick = selectCategory;
+    categoryItem.style.cursor = 'pointer';
     categoryContainer.appendChild(categoryItem);
     for (var i = 0; i < categories.length; i++) {
         var category = categories[i];
         categoryItem = document.createElement('p');
+        categoryItem.onclick = selectCategory;
         categoryItem.textContent = category;
+        categoryItem.style.cursor = 'pointer';
         categoryContainer.appendChild(categoryItem);
     }
 }
 
 
-function displayProducts(products) {
+function displayProducts(products, newFilter) {
     var productContainer = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-8 > div > div.row.items")
-    // Loop through the products and create HTML elements for each product
+    if (newFilter === true) {
+        productContainer.innerHTML = '';
+    }
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
-        // Create product container
         var productDiv = document.createElement('div');
         productDiv.className = 'col-lg-6 col-sm-6';
 
-        // Create single product item
         var singleProductDiv = document.createElement('div');
         singleProductDiv.className = 'single_product_item';
 
-        // Create product image
         var productImage = document.createElement('img');
         var blob = new Blob([new Uint8Array(product.image)], {type: 'image/jpeg'});
-        var imageUrl = URL.createObjectURL(blob);
-        productImage.src = imageUrl;
+        productImage.src = URL.createObjectURL(blob);
         productImage.alt = 'Product Image';
         productImage.className = 'img-fluid';
 
-        // Create product name
         var productName = document.createElement('h3');
         var productLink = document.createElement('a');
-        productLink.href = 'single-product.html'; // Link to product details page
-        productLink.textContent = product.productName; // Assuming 'productName' is a property of the product
+        productLink.href = 'single-product.html';
+        productLink.textContent = product.productName;
         productName.appendChild(productLink);
 
-        // Create product price
         var productPrice = document.createElement('p');
-        productPrice.textContent = 'From $' + product.price; // Assuming 'price' is a property of the product
+        productPrice.textContent = 'From $' + product.price;
 
-        // Append elements to single product item
         singleProductDiv.appendChild(productImage);
         singleProductDiv.appendChild(productName);
         singleProductDiv.appendChild(productPrice);
 
-        // Append single product item to product container
         productDiv.appendChild(singleProductDiv);
 
-        // Append product container to product list
         productContainer.appendChild(productDiv);
-
-        if (start % size !== 0) {
-            loadMore.style.display = 'none';
-        }
     }
+}
+
+
+function selectCategory(event) {
+    var selectedCategory = event.target.textContent;
+    var selectOptionList = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-4 > div > div:nth-child(2) > div > div.select_option_list > p");
+    selectOptionList.textContent = selectedCategory;
+    var menu = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-4 > div > div:nth-child(2) > div > div.select_option_list");
+    menu.click();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     getCategoriesFromServlet();
-    getProductsFromServlet();
+    getProductsFromServlet(true);
 });
