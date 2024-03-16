@@ -2,6 +2,7 @@ package com.mydeal.domain.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class CustomerCartId implements Serializable {
     private static final long serialVersionUID = 5052567313434029995L;
