@@ -190,8 +190,7 @@
           <h2 class="contact-title">Get in Touch</h2>
         </div>
         <div class="col-lg-8">
-          <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm"
-            novalidate="novalidate">
+          <form class="form-contact contact_form" id="contactForm" novalidate="novalidate">
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -221,7 +220,7 @@
               </div>
             </div>
             <div class="form-group mt-3">
-              <a href="#" class="btn_3 button-contactForm">Send Message</a>
+              <button class="btn_3 button-contactForm" id="send-message">Send Message</button>
             </div>
           </form>
         </div>
@@ -229,21 +228,21 @@
           <div class="media contact-info">
             <span class="contact-info__icon"><i class="ti-home"></i></span>
             <div class="media-body">
-              <h3>Buttonwood, California.</h3>
-              <p>Rosemead, CA 91770</p>
+              <h3>Talbia, Faisal.</h3>
+              <p>clock square, CA 12554</p>
             </div>
           </div>
           <div class="media contact-info">
             <span class="contact-info__icon"><i class="ti-tablet"></i></span>
             <div class="media-body">
-              <h3>00 (440) 9865 562</h3>
+              <h3>+20 109 59 44 926</h3>
               <p>Mon to Fri 9am to 6pm</p>
             </div>
           </div>
           <div class="media contact-info">
             <span class="contact-info__icon"><i class="ti-email"></i></span>
             <div class="media-body">
-              <h3>support@colorlib.com</h3>
+              <h3>mydeal@gmail.com</h3>
               <p>Send us your query anytime!</p>
             </div>
           </div>
@@ -253,9 +252,9 @@
   </section>
   <!-- ================ contact section end ================= -->
 
-  <!--::footer_part start::-->
-  <footer class="footer_part">
-        <div class="footer_iner section_bg">
+    <!--::footer_part start::-->
+    <footer class="footer_part">
+        <div class="footer_iner">
             <div class="container">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-8">
@@ -275,28 +274,10 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="social_icon">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="copyright_part">
-            <div class="container">
-                <div class="row ">
-                    <div class="col-lg-12">
-                        <div class="copyright_text">
-                            <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></P>
-                            <div class="copyright_link">
-                                <a href="#">Turms & Conditions</a>
-                                <a href="#">FAQ</a>
-                            </div>
+                            <a href="https://www.facebook.com/profile.php?id=100012910928633"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/muhamed.adell_/"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/moadelsamir/"><i class="fab fa-google-plus-g"></i></a>
+                            <a href="https://www.linkedin.com/in/moadelsamir/"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </div>
@@ -331,6 +312,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/mail-script.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+<script>
+    var sendButton = document.getElementById('send-message');
+    sendButton.addEventListener('click', function() {
+        alert('Your message has been sent successfully');
+        window.location.href = 'index.html';
+    });
+</script>
 </body>
 
 </html>
