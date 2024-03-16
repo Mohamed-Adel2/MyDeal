@@ -17,14 +17,13 @@ public class ProductDetailMap {
         this.productDetailDataModel = new ProductDetailDataModel();
         productDetailDataModel.setId(product.getId());
         productDetailDataModel.setProductName(product.getProductName());
-        List<ProductImageModel> productImageModels = new ArrayList<>();
+    //    List<ProductImageModel> productImageModels = new ArrayList<>();
         Set<ProductImages> productImageEntity = product.getProductimages();
-        byte arr[][] = new byte[productImageEntity.size()][];
+        byte arr[][] = new byte[productImageEntity.size()+1][];
         int i =0;
         for (ProductImages entity : productImageEntity) {
                 arr[i] = entity.getImage();
                 i++;
-
         }
         productDetailDataModel.setImages(arr);
         productDetailDataModel.setDescription(product.getDescription());
