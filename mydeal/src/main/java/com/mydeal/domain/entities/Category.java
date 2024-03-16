@@ -19,8 +19,8 @@ public class Category {
     @Column(name = "category_id", nullable = false)
     private Integer id;
 
-    @Column(name = "categoty_name")
-    private String categotyName;
+    @Column(name = "category_name")
+    private String categoryName;
 
     @OneToMany(mappedBy = "category")
     private Set<Product> products = new LinkedHashSet<>();

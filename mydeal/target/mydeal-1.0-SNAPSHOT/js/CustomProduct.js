@@ -1,28 +1,72 @@
-function getDataFromServlet() {
+let start = 0;
+let size = 6;
+let loadMore = document.getElementById('load-more');
+
+function getProductsFromServlet() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-
                 var jsonResponse = xhr.responseText;
                 var products = JSON.parse(jsonResponse);
-                console.log(jsonResponse);
+                start += products.length;
                 displayProducts(products);
             } else {
-
                 console.error('Request failed: ' + xhr.status);
             }
         }
     };
 
-    xhr.open('GET', 'products', true);
+    var params = {
+        startIdx: start,
+        limit: size
+    };
+
+    // Convert parameters to URL query string
+    var queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+
+    xhr.open('GET', 'products?' + queryString, true);
 
     xhr.send();
 }
 
+function getCategoriesFromServlet() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var jsonResponse = xhr.responseText;
+                var categories = JSON.parse(jsonResponse);
+                console.log(jsonResponse);
+                displayCategories(categories);
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'categories', true);
+
+    xhr.send();
+}
+
+function displayCategories(categories) {
+    var categoryContainer = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-4 > div > div:nth-child(2) > div > div.select_option_dropdown");
+    categoryContainer.innerHTML = '';
+    var categoryItem = document.createElement('p');
+    categoryItem.textContent = 'All';
+    categoryContainer.appendChild(categoryItem);
+    for (var i = 0; i < categories.length; i++) {
+        var category = categories[i];
+        categoryItem = document.createElement('p');
+        categoryItem.textContent = category;
+        categoryContainer.appendChild(categoryItem);
+    }
+}
+
+
 function displayProducts(products) {
     var productContainer = document.querySelector("body > section.product_list.section_padding > div > div > div.col-md-8 > div > div.row.items")
-    productContainer.innerHTML = '';
     // Loop through the products and create HTML elements for each product
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
@@ -63,11 +107,14 @@ function displayProducts(products) {
 
         // Append product container to product list
         productContainer.appendChild(productDiv);
+
+        if (start % size !== 0) {
+            loadMore.style.display = 'none';
+        }
     }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("start get");
-    console.log("data start handel");
-    getDataFromServlet();
+    getCategoriesFromServlet();
+    getProductsFromServlet();
 });

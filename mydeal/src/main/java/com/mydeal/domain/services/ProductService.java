@@ -11,10 +11,10 @@ import java.util.List;
 
 public class ProductService {
 
-    public  List<ProductDataModel> getAllProducts(){
+    public  List<ProductDataModel> getAllProducts(int start, int limit){
         var em= JpaUtil.createEntityManager();
         ProductRepository pr = new ProductRepository();
-        List<Product> productsEntities = pr.getAllProduct(em);
+        List<Product> productsEntities = pr.getAllProduct(em, start, limit);
         List<ProductDataModel> products = new ArrayList<>();
         ProductMap productMap = new ProductMap();
         for(Product p:productsEntities){
@@ -25,4 +25,5 @@ public class ProductService {
         em.close();
         return products;
     }
+
 }

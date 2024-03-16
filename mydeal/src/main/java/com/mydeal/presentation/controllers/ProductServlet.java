@@ -18,18 +18,16 @@ import java.util.List;
 public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       //make request to database to get Products
+        int start = Integer.parseInt(req.getParameter("startIdx"));
+        int limit = Integer.parseInt(req.getParameter("limit"));
         ProductService productService = new ProductService();
-        System.out.println("data not cached");
-        System.out.println("data changed");
-       List<ProductDataModel> products =productService.getAllProducts();
+        List<ProductDataModel> products = productService.getAllProducts(start, limit);
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
                 .create();
 
         String jsonProducts = gson.toJson(products);
-        System.out.println("data fetched");
         resp.setContentType("application/json");
         resp.getWriter().write(jsonProducts);
     }

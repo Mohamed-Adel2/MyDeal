@@ -26,6 +26,17 @@
         <servlet-name>ProductServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.ProductServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/categories</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>registerServlet</servlet-name>
         <url-pattern>/register</url-pattern>
