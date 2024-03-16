@@ -32,6 +32,10 @@
         <servlet-class>com.mydeal.presentation.controllers.CategoryServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>ProductDetailServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.ProductDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CategoryServlet</servlet-name>
         <url-pattern>/categories</url-pattern>
@@ -50,6 +54,13 @@
         <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>ProductDetailServlet</servlet-name>
+        <url-pattern>/productDetail</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>login.html</welcome-file>
     </welcome-file-list>

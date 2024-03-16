@@ -26,4 +26,10 @@ public class ProductRepository extends CrudRepository<Product> {
         query.setMaxResults(filter.getLimit());
         return query.getResultList();
     }
+
+    public Product getProduct(EntityManager em , int id){
+        Product product = em.find(Product.class, id);
+        return product;
+    }
+
 }

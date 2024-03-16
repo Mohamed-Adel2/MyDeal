@@ -1,9 +1,11 @@
 package com.mydeal.domain.services;
 
 import com.mydeal.domain.entities.Product;
+import com.mydeal.domain.mapping.ProductDetailMap;
 import com.mydeal.domain.mapping.ProductMap;
 import com.mydeal.domain.models.FilterModel;
 import com.mydeal.domain.models.ProductDataModel;
+import com.mydeal.domain.models.ProductDetailDataModel;
 import com.mydeal.domain.util.JpaUtil;
 import com.mydeal.repository.ProductRepository;
 
@@ -25,6 +27,15 @@ public class ProductService {
         }
         em.close();
         return products;
+    }
+    public ProductDetailDataModel getProduct(int id){
+        var em = JpaUtil.createEntityManager();
+        ProductRepository pr = new ProductRepository();
+        Product product = pr.getProduct(em, id);
+        ProductDetailMap productMap = new ProductDetailMap();
+        ProductDetailDataModel productDataModel = productMap.convertEntityToModel(product);
+        em.close();
+        return productDataModel;
     }
 
 
