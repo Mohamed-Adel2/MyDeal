@@ -47,6 +47,7 @@ function getProductsFromServlet(newFilter) {
 
 
 function getCategoriesFromServlet() {
+    console.log("data appear");
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -106,7 +107,7 @@ function displayProducts(products, newFilter) {
 
         var productName = document.createElement('h3');
         var productLink = document.createElement('a');
-        productLink.href = 'single-product.html';
+        productLink.href = 'single-product.html'+'?'+product.id;
         productLink.textContent = product.productName;
         productName.appendChild(productLink);
 
@@ -133,6 +134,7 @@ function selectCategory(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("listener");
     getCategoriesFromServlet();
     getProductsFromServlet(true);
 });

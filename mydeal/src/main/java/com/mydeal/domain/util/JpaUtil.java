@@ -24,7 +24,7 @@ public class JpaUtil {
 //        config.setUsername(AppConfig.DB_USER);
 //        config.setPassword(AppConfig.DB_PASSWORD);
         config.setUsername("root");
-        config.setPassword("1234");
+        config.setPassword("1192001rrrrr");
         // max number of connections on database .
         config.setMaximumPoolSize(30);
         config.addDataSourceProperty("cachePrepStmts", true);
@@ -33,6 +33,8 @@ public class JpaUtil {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds = new HikariDataSource(config);
+        System.out.println(config.getUsername());
+        System.out.println(config.getPassword());
         return ds;
     }
 
