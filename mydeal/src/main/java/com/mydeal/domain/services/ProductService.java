@@ -12,13 +12,13 @@ import java.util.List;
 
 public class ProductService {
 
-    public  List<ProductDataModel> getAllProducts(FilterModel filter){
-        var em= JpaUtil.createEntityManager();
+    public List<ProductDataModel> getAllProducts(FilterModel filter) {
+        var em = JpaUtil.createEntityManager();
         ProductRepository pr = new ProductRepository();
         List<Product> productsEntities = pr.getAllProduct(em, filter);
         List<ProductDataModel> products = new ArrayList<>();
         ProductMap productMap = new ProductMap();
-        for(Product p:productsEntities){
+        for (Product p : productsEntities) {
             ProductDataModel productDataModel = productMap.convertEntityToModel(p);
             products.add(productDataModel);
 
@@ -27,6 +27,12 @@ public class ProductService {
         return products;
     }
 
-
+    public Integer getProductQuantity(int productId) {
+        var em = JpaUtil.createEntityManager();
+        ProductRepository pr = new ProductRepository();
+        Product product = pr.read(em, productId);
+        em.close();
+        return product.getAvailableQuantity();
+    }
 
 }
