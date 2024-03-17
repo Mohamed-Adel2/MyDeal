@@ -26,4 +26,33 @@ public class CustomerCartService {
         em.getTransaction().commit();
         em.close();
     }
+
+    public void removeProductFromCart(CartModel cartModel) {
+        CustomerCartId customerCartId = new CustomerCartId(cartModel.getCustomerId(), cartModel.getProductId());
+        CustomerCartRepository customerCartRepository = new CustomerCartRepository();
+        EntityManager em = JpaUtil.createEntityManager();
+        CustomerCart customerCart = customerCartRepository.read(em, customerCartId);
+        if (customerCart != null) {
+            em.getTransaction().begin();
+            customerCartRepository.delete(em, customerCart);
+            em.getTransaction().commit();
+        }
+        em.close();
+    }
+
+    public void updateProductQuantity(CartModel cartModel) {
+        CustomerCartId customerCartId = new CustomerCartId(cartModel.getCustomerId(), cartModel.getProductId());
+        CustomerCartRepository customerCartRepository = new CustomerCartRepository();
+        EntityManager em = JpaUtil.createEntityManager();
+        CustomerCart customerCart = customerCartRepository.read(em, customerCartId);
+        if (customerCart == null) {
+            return;
+        }
+        em.getTransaction().begin();
+        customerCart.setQuantity(Math.max(0, cartModel.getQuantity()));
+        customerCartRepository.update(em, customerCart);
+        em.getTransaction().commit();
+        em.close();
+
+    }
 }
