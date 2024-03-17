@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
 
-@WebServlet("/cart/update")
 public class CartUpdateServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String operation = request.getParameter("operation");
@@ -39,8 +38,9 @@ public class CartUpdateServlet extends HttpServlet {
             }
             updateOfflineCart(offlineCartModel, cart);
         } else {
-            deleteFromOfflineCart(new OfflineCartModel(), cart.getProductId());
+            deleteFromOfflineCart(offlineCartModel, cart.getProductId());
         }
+        System.out.println("last update: " + offlineCartModel);
         Cookie newCookie = new Cookie("cart", Base64.getEncoder().encodeToString(new Gson().toJson(offlineCartModel).getBytes()));
         newCookie.setMaxAge(60 * 60 * 24 * 30);
         response.addCookie(newCookie);

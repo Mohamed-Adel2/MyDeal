@@ -8,9 +8,10 @@ import java.util.List;
 @Data
 public class ProductDetailDataModel {
    private int id;
+
    private String productName;
 
-   private byte images[][];
+   private byte [][]images;
 
    private BigDecimal price;
 
@@ -19,4 +20,6 @@ public class ProductDetailDataModel {
     private Integer availableQuantity;
 
     private BigDecimal averageRating;
+
+    private Integer quantity;
 }

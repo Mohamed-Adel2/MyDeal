@@ -8,6 +8,28 @@
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.LoginServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CartItemsServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CartItemsServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CartUpdateServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CartUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CartUpdateServlet</servlet-name>
+        <url-pattern>/cartUpdate</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>CartItemsServlet</servlet-name>
+        <url-pattern>/cartItems</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>registerServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.RegisterServlet</servlet-class>
@@ -44,6 +66,7 @@
         <servlet-name>ProductDetailServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.ProductDetailServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>CategoryServlet</servlet-name>
         <url-pattern>/categories</url-pattern>

@@ -13,4 +13,11 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class OfflineCartModel {
     ArrayList<CartModel> cartItems = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "OfflineCartModel{" +
+                "cartItems=" + cartItems +
+                '}';
+    }
 }

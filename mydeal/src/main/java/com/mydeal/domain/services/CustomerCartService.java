@@ -8,6 +8,8 @@ import com.mydeal.domain.util.JpaUtil;
 import com.mydeal.repository.CustomerCartRepository;
 import jakarta.persistence.EntityManager;
 
+import java.util.ArrayList;
+
 
 public class CustomerCartService {
     public void addProductToCart(CartModel cartModel) {
@@ -54,5 +56,17 @@ public class CustomerCartService {
         em.getTransaction().commit();
         em.close();
 
+    }
+
+    public ArrayList<CartModel> getCustomerCartItems(int customerId) {
+        CustomerCartRepository customerCartRepository = new CustomerCartRepository();
+        EntityManager em = JpaUtil.createEntityManager();
+        ArrayList<CustomerCart> cart = customerCartRepository.getCustomerCart(em, customerId);
+        em.close();
+        ArrayList<CartModel> cartModels = new ArrayList<>();
+        for (CustomerCart c : cart) {
+            cartModels.add(CartMapping.mapToCartModel(c));
+        }
+        return cartModels;
     }
 }
