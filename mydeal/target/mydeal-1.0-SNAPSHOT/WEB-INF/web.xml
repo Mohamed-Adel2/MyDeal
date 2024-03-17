@@ -17,6 +17,14 @@
         <servlet-class>com.mydeal.presentation.controllers.CredentialValidatorServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>validationServlet</servlet-name>
         <url-pattern>/validate</url-pattern>

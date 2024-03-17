@@ -1,6 +1,35 @@
+// Get the "minus" and "plus" buttons
+
 document.addEventListener('DOMContentLoaded', function () {
     console.log("listener");
     getDetailFromServlet();
+    var quantity = 1;
+    // Get the input element
+    var inputElement = document.querySelector('.product_count_item.input-number');
+    var minusButton = document.querySelector('.product_count_item.inumber-decrement');
+    var plusButton = document.querySelector('.product_count_item.number-increment');
+// Add event listener for "minus" button
+    minusButton.addEventListener('click', function() {
+        if (parseInt(inputElement.value) > parseInt(inputElement.min)) {
+            quantity = parseInt(inputElement.value)-1;
+        }
+    });
+
+// Add event listener for "plus" button
+    plusButton.addEventListener('click', function() {
+        if (parseInt(inputElement.value) < parseInt(inputElement.max)) {
+            quantity = parseInt(inputElement.value)-1;
+        }
+    });
+    var addToCartBtn = document.getElementById('addToCartBtn');
+
+// Add event listener for Add to cart event
+    addToCartBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        console.log("quantity equal"+" "+quantity);
+        addToCart(quantity);
+    });
+
 });
 function getDetailFromServlet(){
     var xhr = new XMLHttpRequest();
@@ -63,6 +92,47 @@ async function displayProduct(product){
 //        productQuantity.setAttribute('max', product.availableQuantity);
     });
 }
+function addToCart(val){
+    console.log("function invoked");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var jsonResponse = xhr.responseText;
+                var product = JSON.parse(jsonResponse);
+                console.log(product.id+" "+product.productName);
+                showNotification('Item added to cart!');
+                setTimeout(hideNotification, 3000);
+
+            } else {
+                showNotification('Failed  added to cart!');
+                setTimeout(hideNotification, 3000);
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    var parms={
+        productId:getURLParameter("Id"),
+        quantity: val
+    }
+    var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
+    xhr.open('GET', 'cart?'+paramStr, true);
+    xhr.send();
+}
+function showNotification(message) {
+    var notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.style.display = 'block'; // Show the notification
+}
+
+// Function to hide the notification
+function hideNotification() {
+    var notification = document.getElementById('notification');
+    notification.style.display = 'none'; // Hide the notification
+}
+
+
 async function resizeImage(input, maxWidth, maxHeight) {
     return new Promise((resolve, reject) => {
         const img = new Image();

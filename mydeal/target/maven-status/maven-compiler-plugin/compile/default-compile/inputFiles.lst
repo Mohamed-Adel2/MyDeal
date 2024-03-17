@@ -1,6 +1,8 @@
+C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\services\CustomerCartService.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\services\CustomerLoginService.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\services\CustomerDataValidatorService.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\presentation\controllers\ProductDetailServlet.java
+C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\models\OfflineCartModel.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\Customer.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\ProductImages.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\Category.java
@@ -18,6 +20,7 @@ C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\m
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\services\CustomerUpdateInfoService.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\util\ImageResizer.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\CustomerCart.java
+C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\models\CartModel.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\repository\CrudRepository.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\Order.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\presentation\controllers\ProductServlet.java
@@ -41,6 +44,8 @@ C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\u
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\presentation\utils\ClientJSAlert.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\Address.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\repository\ProductRepository.java
+C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\mapping\CartMapping.java
+C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\presentation\controllers\CartServlet.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\repository\CustomerRepository.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\services\ProductService.java
 C:\Users\Rashida\Desktop\Project\MyDeal\mydeal\src\main\java\com\mydeal\domain\entities\Product.java
