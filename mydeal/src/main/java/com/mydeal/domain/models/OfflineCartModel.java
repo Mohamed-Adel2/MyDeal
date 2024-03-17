@@ -12,5 +12,5 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OfflineCartModel {
-    ArrayList<CartModel> cartItems;
+    ArrayList<CartModel> cartItems = new ArrayList<>();
 }

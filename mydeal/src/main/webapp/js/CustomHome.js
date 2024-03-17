@@ -25,7 +25,7 @@ function getProductsFromServlet() {
 }
 
 function displayProducts(products) {
-    var productContainer = document.querySelector("body > section.trending_items > div > div:nth-child(2)");
+    var productContainer = document.getElementById("trending-items");
     productContainer.innerHTML = '';
     for (var i = 0; i < products.length; i++) {
         var product = products[i];

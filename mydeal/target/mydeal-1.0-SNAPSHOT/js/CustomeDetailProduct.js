@@ -1,44 +1,23 @@
-// Get the "minus" and "plus" buttons
-
 document.addEventListener('DOMContentLoaded', function () {
     console.log("listener");
     getDetailFromServlet();
-    var quantity = 1;
-    // Get the input element
-    var inputElement = document.querySelector('.product_count_item.input-number');
-    var minusButton = document.querySelector('.product_count_item.inumber-decrement');
-    var plusButton = document.querySelector('.product_count_item.number-increment');
-// Add event listener for "minus" button
-    minusButton.addEventListener('click', function() {
-        if (parseInt(inputElement.value) > parseInt(inputElement.min)) {
-            quantity = parseInt(inputElement.value)-1;
-        }
-    });
-
-// Add event listener for "plus" button
-    plusButton.addEventListener('click', function() {
-        if (parseInt(inputElement.value) < parseInt(inputElement.max)) {
-            quantity = parseInt(inputElement.value)-1;
-        }
-    });
     var addToCartBtn = document.getElementById('addToCartBtn');
 
-// Add event listener for Add to cart event
-    addToCartBtn.addEventListener('click', function(event) {
+    addToCartBtn.addEventListener('click', function (event) {
         event.preventDefault();
-        console.log("quantity equal"+" "+quantity);
+        var quantity = parseInt(document.getElementById("product-quantity").value);
+        console.log("quantity equal" + " " + quantity);
         addToCart(quantity);
     });
-
 });
-function getDetailFromServlet(){
+
+function getDetailFromServlet() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var product = JSON.parse(jsonResponse);
-                console.log(product.id+" "+product.productName);
                 displayProduct(product);
             } else {
                 console.error('Request failed: ' + xhr.status);
@@ -47,52 +26,80 @@ function getDetailFromServlet(){
     };
     let paramValue = getURLParameter('Id');
     console.log(paramValue);
-    var parms={
-        Id:paramValue
+    var parms = {
+        Id: paramValue
     }
     var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
-    xhr.open('GET', 'productDetail?'+paramStr, true);
+    xhr.open('GET', 'productDetail?' + paramStr, true);
     xhr.send();
 }
+
 function getURLParameter(name) {
     // Get the URL parameters part
     let params = new URLSearchParams(window.location.search);
 
     return params.get(name);
 }
-async function displayProduct(product){
-    var productImgSlide = document.querySelector('.product_img_slide');
+
+async function displayProduct(product) {
+    var productImgSlide = document.getElementById('images-slide');
     var productName = document.querySelector('.single_product_text h3');
     var productDescription = document.querySelector('.single_product_text p');
-    var productPrice = document.querySelector('.product_count_area p span:first-child');
-    var productQuantityInput = document.querySelector('.product_count_item.input-number');
-    var productQuantityPrice = document.querySelector('.product_count_area p:last-child');
+    var productPrice = document.getElementById('product-price');
+    var productQuantityInput = document.getElementById('product-quantity');
+    var productQuantity = document.getElementById('available-quantity');
+    console.log(product);
     productName.innerText = product.productName;
     productDescription.innerText = product.description;
     var priceSpan = document.createElement('span');
-    priceSpan.textContent = '$' + product.price;
-    product.images.forEach(function(imageArray) {
+    priceSpan.textContent = 'Unit Price: $' + product.price;
 
-        var img = document.createElement('img');
-        //const resizedBlob =  resizeImage(new Blob([new Uint8Array(imageArray)], { type: 'image/jpeg' }), 300, 200, 'blob');
-        var blob = new Blob([new Uint8Array(imageArray)], {type: 'image/jpeg'});
-        img.src = URL.createObjectURL(blob);
+    $(productImgSlide).trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+    $(productImgSlide).find('.owl-stage-outer').children().unwrap();
 
+    var cnt = 1;
+    product.images.forEach(function (imageArray) {
+        if (cnt !== product.images.length) {
+            var img = document.createElement('img');
+            img.className = 'img-fluid';
+            var blob = new Blob([new Uint8Array(imageArray)], {type: 'image/jpeg'});
+            img.src = URL.createObjectURL(blob);
+            img.alt = "#";
 
+            var singleProductImg = document.createElement('div');
+            singleProductImg.className = 'single_product_img';
+            singleProductImg.appendChild(img);
 
-        var singleProductImg = document.createElement('div');
-        singleProductImg.classList.add('single_product_img');
-        singleProductImg.appendChild(img);
+            // Append the singleProductImg div to the productImgSlide div
+            productImgSlide.appendChild(singleProductImg);
+            cnt++;
+        }
+    });
+    productPrice.innerHTML = '';
+    productPrice.appendChild(priceSpan);
+    //Update the maximum quantity allowed
+    productQuantity.innerHTML = 'Available Quantity: ' + product.availableQuantity;
+    productQuantityInput.max = product.availableQuantity;
 
-
-        productImgSlide.appendChild(singleProductImg);
-        productPrice.innerHTML = '';
-        productPrice.appendChild(priceSpan);
-        //Update the maximum quantity allowed
-//        productQuantity.setAttribute('max', product.availableQuantity);
+    $(productImgSlide).addClass('owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        items: 1,
+        autoplay: true,
+        autoplayTimeout: 2000,
+        autoplayHoverPause: true
     });
 }
-function addToCart(val){
+
+document.getElementById('product-quantity').addEventListener('input', function (e) {
+    var max = parseInt(e.target.max);
+    var value = parseInt(e.target.value);
+    if (value < 0) e.target.value = 0;
+    if (value > max) e.target.value = max;
+});
+
+function addToCart(val) {
     console.log("function invoked");
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -100,26 +107,29 @@ function addToCart(val){
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var product = JSON.parse(jsonResponse);
-                console.log(product.id+" "+product.productName);
-                showNotification('Item added to cart!');
+                console.log(product);
+                if (product === "valid")
+                    showNotification('Item added to cart successfully!');
+                else
+                    showNotification('The requested quantity is unavailable now!');
                 setTimeout(hideNotification, 3000);
 
             } else {
-                showNotification('Failed  added to cart!');
+                showNotification('Failed adding to cart, please try again!');
                 setTimeout(hideNotification, 3000);
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };
 
-    var parms={
-        productId:getURLParameter("Id"),
+    var parms = {
+        productId: getURLParameter("Id"),
         quantity: val
     }
     var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
-    xhr.open('GET', 'cart?'+paramStr, true);
+    xhr.open('GET', 'cart?' + paramStr, true);
     xhr.send();
 }
+
 function showNotification(message) {
     var notification = document.getElementById('notification');
     notification.textContent = message;

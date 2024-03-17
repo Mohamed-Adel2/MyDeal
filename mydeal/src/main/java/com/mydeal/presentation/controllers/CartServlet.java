@@ -13,9 +13,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Base64;
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
+    // TODO: handle adding old quantity
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CartModel cart = extractCartItem(request);
@@ -29,10 +31,11 @@ public class CartServlet extends HttpServlet {
             OfflineCartModel offlineCartModel = new OfflineCartModel();
             Cookie cookie = getCartCookie(request);
             if (cookie != null) {
-                offlineCartModel = new Gson().fromJson(cookie.getValue(), OfflineCartModel.class);
+                offlineCartModel = new Gson().fromJson(new String(Base64.getDecoder().decode(cookie.getValue())), OfflineCartModel.class);
             }
             updateOfflineCart(offlineCartModel, cart);
-            Cookie newCookie = new Cookie("cart", new Gson().toJson(offlineCartModel));
+            Cookie newCookie = new Cookie("cart", Base64.getEncoder().encodeToString(new Gson().toJson(offlineCartModel).getBytes()));
+            System.out.println(newCookie.getValue());
             newCookie.setMaxAge(60 * 60 * 24 * 30);
             response.addCookie(newCookie);
         } else {
@@ -44,7 +47,8 @@ public class CartServlet extends HttpServlet {
 
     private CartModel extractCartItem(HttpServletRequest request) {
         CartModel cart = new CartModel();
-        cart.setCustomerId(((Customer) request.getSession(false).getAttribute("user")).getId());
+        if (request.getSession(false) != null)
+            cart.setCustomerId(((Customer) request.getSession(false).getAttribute("user")).getId());
         cart.setProductId(Integer.parseInt(request.getParameter("productId")));
         cart.setQuantity(Integer.parseInt(request.getParameter("quantity")));
         return cart;
