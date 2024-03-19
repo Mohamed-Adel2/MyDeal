@@ -1,0 +1,10 @@
+var isLoggedIn = false;
+var customerId = "";
+var customerName = "";
+var customerEmail = "";
+var customerPhone = "";
+var customerDOB;
+var customerStreet = "";
+var customerCity = "";
+var customerApartmentNumber = 0;
+var customerPassword = "";

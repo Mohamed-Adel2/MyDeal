@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class ProductDataModel implements Serializable {
     private Integer id;
 
-
     private String productName;
 
 
@@ -29,7 +28,7 @@ public class ProductDataModel implements Serializable {
 
    //private Category category;
 
-    private byte[] image;
+    private byte[][] image;
     @Override
     public String toString() {
         return "ProductDataModel{" +
