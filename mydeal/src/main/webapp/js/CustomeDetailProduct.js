@@ -80,6 +80,7 @@ async function displayProduct(product) {
     //Update the maximum quantity allowed
     productQuantity.innerHTML = 'Available Quantity: ' + product.availableQuantity;
     productQuantityInput.max = product.availableQuantity;
+    productQuantityInput.min = 1;
 
     $(productImgSlide).addClass('owl-carousel').owlCarousel({
         loop: true,
@@ -95,7 +96,7 @@ async function displayProduct(product) {
 document.getElementById('product-quantity').addEventListener('input', function (e) {
     var max = parseInt(e.target.max);
     var value = parseInt(e.target.value);
-    if (value < 0) e.target.value = 0;
+    if (value < 1) e.target.value = 1;
     if (value > max) e.target.value = max;
 });
 

@@ -13,16 +13,19 @@ public class ProductMap {
 
     ProductDataModel productDataModel;
 
-    public ProductMap(){
+    public ProductMap() {
 
     }
-   public ProductMap(Product product){
-        this.product= product;
+
+    public ProductMap(Product product) {
+        this.product = product;
     }
-    public ProductMap(ProductDataModel productDataModel){
+
+    public ProductMap(ProductDataModel productDataModel) {
         this.productDataModel = productDataModel;
     }
-   public ProductDataModel convertEntityToModel(Product product){
+
+    public ProductDataModel convertEntityToModel(Product product) {
         this.product = product;
         productDataModel = new ProductDataModel();
         productDataModel.setId(product.getId());
@@ -31,7 +34,7 @@ public class ProductMap {
         productDataModel.setPrice(product.getPrice());
         Set<ProductImages> arrImages = product.getProductimages();
         byte[] arr;
-        for(ProductImages productImages:arrImages){
+        for (ProductImages productImages : arrImages) {
             arr = productImages.getImage();
             productDataModel.setImage(arr);
             break;

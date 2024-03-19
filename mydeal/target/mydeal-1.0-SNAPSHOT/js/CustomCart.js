@@ -56,6 +56,9 @@ function makeOrderFromServlet() {
                     customAlert("Failed to place order. Please Check your balance.");
                     getCartItemsFromServlet();
                 }
+                else if(response === 'notAuthorized'){
+                    customAlert("You should log in first to place an order.");
+                }
                 else {
                     customAlert("Failed to place order. Please Check Products availability.");
                     getCartItemsFromServlet();
@@ -140,7 +143,7 @@ function displayProduct(products) {
         var tableDataCountInput = document.createElement('input');
         tableDataCountInput.className = 'input-number';
         tableDataCountInput.type = 'text';
-        tableDataCountInput.value = product.quantity;
+        tableDataCountInput.value = Math.min(product.quantity, product.availableQuantity);
         tableDataCountInput.min = 1;
         tableDataCountInput.max = product.availableQuantity;
         var tableDataCountIncrement = document.createElement('span');
