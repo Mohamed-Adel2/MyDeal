@@ -41,6 +41,36 @@ function updateCartFromServlet(operation, productId, quantity) {
     xhr.send();
 }
 
+function makeOrderFromServlet() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if(response === 'success') {
+                    customAlert("Your order has been placed successfully!");
+                    getCartItemsFromServlet();
+                }
+                else if(response === 'failure') {
+                    customAlert("Failed to place order. Please Check your balance.");
+                    getCartItemsFromServlet();
+                }
+                else {
+                    customAlert("Failed to place order. Please Check Products availability.");
+                    getCartItemsFromServlet();
+                }
+
+            } else {
+                customAlert("Failed to place order. Please try again later.");
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+    xhr.open('GET', 'checkout', true);
+    xhr.send();
+}
+
 
 function displayProduct(products) {
     var productContainer = document.getElementById("cart-table");
@@ -235,6 +265,21 @@ function customAlert(message) {
     // Show the alert
     alertContainer.style.display = 'block';
 }
+
+var checkoutButton = document.getElementById('complete-order');
+checkoutButton.addEventListener('click', function () {
+    var cartTable = document.getElementById('cart-table');
+    if (cartTable.rows.length <= 1) {
+        customAlert('Your cart is empty. Please add some items to cart first.');
+        return;
+    }
+    makeOrderFromServlet();
+});
+
+var continueShoppingButton = document.getElementById('return-shopping');
+continueShoppingButton.addEventListener('click', function () {
+    window.location.href = 'product_list.html';
+});
 
 
 document.addEventListener('DOMContentLoaded', function () {
