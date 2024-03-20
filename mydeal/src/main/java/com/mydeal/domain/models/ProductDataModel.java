@@ -28,7 +28,7 @@ public class ProductDataModel implements Serializable {
 
    //private Category category;
 
-    private byte[][] image;
+    private byte[] image;
     @Override
     public String toString() {
         return "ProductDataModel{" +

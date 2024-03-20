@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CheckOutServlet extends HttpServlet {
-    //TODO: check for availability of products first and update product quantity
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getSession(false) != null && request.getSession(false).getAttribute("user") == null) {

@@ -24,6 +24,16 @@
         <servlet-class>com.mydeal.presentation.controllers.CheckOutServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>CustomerDataInitializerServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CustomerDataInitializerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CustomerDataInitializerServlet</servlet-name>
+        <url-pattern>/info</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>CheckOutServlet</servlet-name>
         <url-pattern>/checkout</url-pattern>
@@ -65,15 +75,25 @@
         <servlet-name>Navigator</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.Navigator</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.CheckStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <url-pattern>/checkStatus</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>Navigator</servlet-name>
         <url-pattern>/navigator</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>updateUserInfo</servlet-name>
         <url-pattern>/updateUserInfo</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>validationServlet</servlet-name>
         <url-pattern>/validate</url-pattern>
