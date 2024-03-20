@@ -13,7 +13,7 @@ public class CustomerCartRepository extends CrudRepository<CustomerCart> {
     }
 
     public ArrayList<CustomerCart> getCustomerCart(EntityManager em, int customerId) {
-        return (ArrayList<CustomerCart>) em.createQuery("SELECT c FROM CustomerCart c WHERE c.customerId = :customerId")
+        return (ArrayList<CustomerCart>) em.createQuery("SELECT c FROM CustomerCart c WHERE c.id.customerId = :customerId")
                 .setParameter("customerId", customerId)
                 .getResultList();
     }
