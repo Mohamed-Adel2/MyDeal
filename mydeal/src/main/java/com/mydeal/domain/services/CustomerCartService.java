@@ -80,10 +80,10 @@ public class CustomerCartService {
         return cartModels;
     }
 
-    public int getCartItemsPrice(int customerId) {
+    public double getCartItemsPrice(int customerId) {
         CustomerCartRepository customerCartRepository = new CustomerCartRepository();
         EntityManager em = JpaUtil.createEntityManager();
-        int ret = customerCartRepository.getCustomerCartPrice(em, customerId);
+        double ret = customerCartRepository.getCustomerCartPrice(em, customerId);
         em.close();
         return ret;
     }

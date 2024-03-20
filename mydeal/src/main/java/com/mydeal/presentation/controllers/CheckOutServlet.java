@@ -10,9 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CheckOutServlet extends HttpServlet {
-    //TODO: check for availability of products first
+    //TODO: check for availability of products first and update product quantity
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (request.getSession(false) != null && request.getSession(false).getAttribute("user") == null) {
@@ -24,10 +25,12 @@ public class CheckOutServlet extends HttpServlet {
         double cartItemsPrice = getCartItemsPrice(customerId);
         if (customerBalance >= cartItemsPrice) {
             CheckOutService checkOutService = new CheckOutService();
-            checkOutService.makeOrder(customerId, cartItemsPrice);
-            response.getWriter().write(new Gson().toJson("success"));
+            if (checkOutService.makeOrder(customerId, cartItemsPrice))
+                response.getWriter().write(new Gson().toJson("success"));
+            else
+                response.getWriter().write(new Gson().toJson("quantityFailure"));
         } else {
-            response.getWriter().write(new Gson().toJson("failure"));
+            response.getWriter().write(new Gson().toJson("balanceFailure"));
         }
     }
 
@@ -40,4 +43,5 @@ public class CheckOutServlet extends HttpServlet {
         CustomerCartService customerCartService = new CustomerCartService();
         return customerCartService.getCartItemsPrice(customerId);
     }
+
 }

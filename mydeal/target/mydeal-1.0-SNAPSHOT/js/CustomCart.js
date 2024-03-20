@@ -48,16 +48,14 @@ function makeOrderFromServlet() {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if(response === 'success') {
+                if (response === 'success') {
                     customAlert("Your order has been placed successfully!");
                     getCartItemsFromServlet();
-                }
-                else if(response === 'failure') {
-                    customAlert("Failed to place order. Please Check your balance.");
+                } else if (response === 'balanceFailure') {
+                    customAlert("Failed to place order. Please check your balance.");
                     getCartItemsFromServlet();
-                }
-                else {
-                    customAlert("Failed to place order. Please Check Products availability.");
+                } else {
+                    customAlert("Failed to place order. Please check products availability.");
                     getCartItemsFromServlet();
                 }
 
@@ -205,16 +203,16 @@ function displayProduct(products) {
         })();
 
 
-        (function(product, tableDataCountInput, tableDataUpdateButton, tableDataRemoveButton) {
+        (function (product, tableDataCountInput, tableDataUpdateButton, tableDataRemoveButton) {
             // Add event listener to update button
-            tableDataUpdateButton.addEventListener('click', function() {
+            tableDataUpdateButton.addEventListener('click', function () {
                 var productId = product.id;
                 var quantity = parseInt(tableDataCountInput.value, 10);
                 updateCartFromServlet('update', productId, quantity);
             });
 
             // Add event listener to delete button
-            tableDataRemoveButton.addEventListener('click', function() {
+            tableDataRemoveButton.addEventListener('click', function () {
                 var productId = product.id;
                 updateCartFromServlet('delete', productId, 0);
             });

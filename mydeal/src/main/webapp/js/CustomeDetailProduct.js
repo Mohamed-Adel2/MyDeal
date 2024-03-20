@@ -86,6 +86,7 @@ async function displayProduct(product) {
     productQuantity.innerHTML = 'Available Quantity: ' + product.availableQuantity;
     productQuantityInput.max = product.availableQuantity;
     productQuantityInput.min = 1;
+    productQuantityInput.value = 1;
 
     $(productImgSlide).addClass('owl-carousel').owlCarousel({
         loop: true,
@@ -122,6 +123,7 @@ function addToCart(val) {
             } else {
                 customAlert('Failed adding to cart, please try again!');
             }
+            getDetailFromServlet();
         }
     };
 

@@ -13,13 +13,13 @@ public class ProductDetailDataModel {
 
    private byte [][]images;
 
-   private BigDecimal price;
+   private Double price;
 
     private String description;
 
     private Integer availableQuantity;
 
-    private BigDecimal averageRating;
+    private Double averageRating;
 
     private Integer quantity;
 }

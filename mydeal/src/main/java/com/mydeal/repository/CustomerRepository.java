@@ -44,8 +44,8 @@ public class CustomerRepository extends CrudRepository<Customer> {
         }
     }
 
-    public int getCustomerBalance(EntityManager em, int customerId) {
-        TypedQuery<Integer> query = em.createQuery("SELECT c.creditLimit FROM Customer c WHERE c.id = :customerId", Integer.class);
+    public double getCustomerBalance(EntityManager em, int customerId) {
+        TypedQuery<Double> query = em.createQuery("SELECT c.creditLimit FROM Customer c WHERE c.id = :customerId", Double.class);
         query.setParameter("customerId", customerId);
         return query.getSingleResult();
     }
