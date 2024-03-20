@@ -15,14 +15,14 @@ public class CheckOutServlet extends HttpServlet {
     //TODO: check for availability of products first
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (request.getSession(false) == null) {
+        if(request.getSession().getAttribute("user") == null) {
             response.getWriter().write(new Gson().toJson("notAuthorized"));
             return;
         }
-        int customerId = ((Customer) request.getSession(false).getAttribute("user")).getId();
+        int customerId = ((Customer) request.getSession().getAttribute("user")).getId();
         double customerBalance = getCustomerBalance(customerId);
         double cartItemsPrice = getCartItemsPrice(customerId);
-        if (customerBalance >= cartItemsPrice) {
+        if(customerBalance >= cartItemsPrice){
             CheckOutService checkOutService = new CheckOutService();
             checkOutService.makeOrder(customerId, cartItemsPrice);
             response.getWriter().write(new Gson().toJson("success"));
@@ -36,7 +36,7 @@ public class CheckOutServlet extends HttpServlet {
         return customerDataService.getCustomerBalance(customerId);
     }
 
-    private double getCartItemsPrice(int customerId) {
+    private double getCartItemsPrice(int customerId){
         CustomerCartService customerCartService = new CustomerCartService();
         return customerCartService.getCartItemsPrice(customerId);
     }

@@ -9,7 +9,10 @@ import com.mydeal.domain.services.CustomerCartService;
 import com.mydeal.domain.services.ProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,11 +21,10 @@ import java.util.Base64;
 public class CartItemsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getSession(false) != null) {
-            retrieveCustomerCart(req, resp);
-        } else {
+        if (req.getSession(false) == null) {
             retrieveTempCart(req, resp);
-        }
+        } else
+            retrieveCustomerCart(req, resp);
     }
 
     private void retrieveTempCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
