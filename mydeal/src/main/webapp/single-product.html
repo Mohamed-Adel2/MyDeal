@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/CustomAlert.css">
 </head>
 
 <body>
@@ -156,7 +157,7 @@
 <!--                            <p id="available-quantity">Quantity</p>-->
                             <div class="product_count d-inline-block">
                                 <span class="product_count_item inumber-decrement"> <i class="ti-minus"></i></span>
-                                <input class="product_count_item input-number" id="product-quantity" type="text" value="1" min="0">
+                                <input class="product_count_item input-number" id="product-quantity" type="text" value="1" min="1">
                                 <span class="product_count_item number-increment"> <i class="ti-plus"></i></span>
                             </div>
 <!--                            <p id="product-price">$5</p>-->
@@ -169,6 +170,7 @@
                         </div>
                         <div class="add_to_cart" >
                             <button style="margin-left: 15px;" class="btn_3"  id="addToCartBtn">add to cart</button>
+                            <button style="margin-left: 15px;" class="btn_3"  id="backBtn">Continue Shopping</button>
                         </div>
                         <div class="notification" id="notification"></div>
                     </div>
@@ -184,8 +186,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="subscribe_part_content">
-                    <h2>Be the first one to now out latest products!</h2>
-                    <p>Be the first to discover our newest arrivals and stay ahead of the curve with our latest
+                    <h2>Be the first one to know our latest products!</h2>
+                    <p>Be the first one to discover our newest arrivals and stay ahead of the curve with our latest
                         products!</p>
                     <div class="subscribe_form">
                         <input type="email" placeholder="Enter your mail">
@@ -231,7 +233,6 @@
         </div>
     </div>
 </footer>
-<!--::footer_part end::-->
 
 <!-- jquery plugins here-->
 <script src="js/jquery-1.12.1.min.js"></script>
