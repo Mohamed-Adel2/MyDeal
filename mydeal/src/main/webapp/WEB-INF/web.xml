@@ -57,6 +57,23 @@
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>updateUserInfo</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.UpdateInfoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Navigator</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.Navigator</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Navigator</servlet-name>
+        <url-pattern>/navigator</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateUserInfo</servlet-name>
+        <url-pattern>/updateUserInfo</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>validationServlet</servlet-name>
         <url-pattern>/validate</url-pattern>

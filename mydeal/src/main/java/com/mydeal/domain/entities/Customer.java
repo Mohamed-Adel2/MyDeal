@@ -39,7 +39,7 @@ public class Customer {
     @Column(name = "credit_limit", precision = 10, scale = 2)
     private Double creditLimit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 

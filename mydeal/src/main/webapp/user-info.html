@@ -119,14 +119,6 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-6">
-                <div class="login_part_text text-center">
-                    <div class="login_part_text_iner">
-                        <h2>Welcome our dear customer</h2>
-                        <p>We hope you are happy with our site</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
                 <div class="login_part_form">
                     <div class="login_part_form_iner">
                         <h3>Your profile</h3>
@@ -178,15 +170,9 @@
                                 <input type="password" class="form-control" id="password" name="password" value=""
                                        placeholder="Password" required>
                             </div>
-                            <!-- Confirm Password Field -->
-                            <div class="col-md-12 form-group p_star">
-                                <input type="password" class="form-control" id="confirmPassword" name="confirm_password"
-                                       value=""
-                                       placeholder="Confirm Password" required>
-                            </div>
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit" class="btn_3">
-                                    Register
+                                    Update Info
                                 </button>
                             </div>
                         </form>
@@ -240,20 +226,67 @@
 
         dob.onchange = validateDOB;
     });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#emailValidity').hide();
-        $('#phoneValidity').hide();
+    document.addEventListener('DOMContentLoaded', function () {
+        var password = document.getElementById("password");
+        var confirmPassword = document.getElementById("confirmPassword");
 
-        function checkFormValidity() {
-            if ($('#emailValidity').is(':visible') || $('#phoneValidity').is(':visible')) {
-                $('button[type="submit"]').prop('disabled', true);
+        function validatePassword() {
+            if (password.value != confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords don't match");
             } else {
-                $('button[type="submit"]').prop('disabled', false);
+                confirmPassword.setCustomValidity('');
             }
         }
 
+        password.onchange = validatePassword;
+        confirmPassword.onkeyup = validatePassword;
+    });
+</script>
+<script>
+    function checkFormValidity() {
+        if ($('#emailValidity').is(':visible') || $('#phoneValidity').is(':visible')) {
+            $('button[type="submit"]').prop('disabled', true);
+        } else {
+            $('button[type="submit"]').prop('disabled', false);
+        }
+    }
+</script>
+<script>
+    function loadDataFromLocalStorage() {
+        // Retrieve values from localStorage
+        var username = localStorage.getItem('username');
+        var email = localStorage.getItem('email');
+        var phoneNumber = localStorage.getItem('phoneNumber');
+        var dob = localStorage.getItem('dob'); // This will be a string, you might need to convert it back to a Date object
+        var creditLimit = localStorage.getItem('creditLimit'); // This will be a string, you might need to convert it back to a float
+        var street = localStorage.getItem('street');
+        var city = localStorage.getItem('city');
+        var apartment = localStorage.getItem('apartment'); // This will be a string, you might need to convert it back to an integer
+        var password = localStorage.getItem('password');
+        // Assign values to HTML elements
+        document.getElementById("name").value = username;
+        document.getElementById("email").value = email;
+        document.getElementById("phoneNumber").value = phoneNumber;
+        // Assuming dob is stored as a string in localStorage
+        var dobString = localStorage.getItem('dob');
+// Parse the string into a Date object
+        var dobDate = new Date(dobString);
+// Format the Date object as a string in the format YYYY-MM-DD
+        var formattedDob = dobDate.toISOString().substr(0, 10);
+// Assign the formatted string to the HTML element
+        document.getElementById("dob").value = formattedDob;
+        document.getElementById("creditLimit").value = Number.parseFloat(creditLimit); // Assuming creditLimit is stored as a string
+        document.getElementById("street").value = street;
+        document.getElementById("city").value = city;
+        document.getElementById("apartment").value = Number.parseInt(apartment); // Assuming apartment is stored as a string
+        document.getElementById("password").value = password;
+        console.log("Load Data From Local Storage Called");
+        console.log(`email: ${email} , password : ${password} , phone number : ${phoneNumber} , dob : ${dob} , credit limit : ${creditLimit} , street : ${street} , city : ${city} , apartment : ${apartment}`);
+    }
+
+    $(document).ready(function () {
+        $('#emailValidity').hide();
+        $('#phoneValidity').hide();
         $('#phoneNumber').on('blur', function () {
             var phoneNumber = $(this).val();
             if (phoneNumber.length == 0) {
@@ -309,7 +342,7 @@
                             $('#emailValidity').show();
                             $('#emailValidity').text('   This email is already exist').css('color', 'red');
                         }
-                    },onerror:function(){
+                    }, onerror: function () {
                         $('#emailValidity').text('There is an error occurred').css('color', 'red');
                     }
                 });
@@ -342,45 +375,25 @@
                 event.preventDefault();
             }
         });
-// Remove error message on input change
         $('input[required]').on('input', function () {
             $(this).removeClass('error');
             $(this).next('.error-message').remove();
         });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var password = document.getElementById("password");
-        var confirmPassword = document.getElementById("confirmPassword");
-
-        function validatePassword() {
-            if (password.value != confirmPassword.value) {
-                confirmPassword.setCustomValidity("Passwords don't match");
-            } else {
-                confirmPassword.setCustomValidity('');
-            }
-        }
-
-        password.onchange = validatePassword;
-        confirmPassword.onkeyup = validatePassword;
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var dob = document.getElementById("dob");
-
-        function validateDOB() {
-            var enteredDOB = new Date(dob.value);
-            var today = new Date();
-            if (enteredDOB >= today) {
-                dob.setCustomValidity("Date of birth must be in the past");
-            } else {
-                dob.setCustomValidity('');
-            }
-        }
-
-        dob.onchange = validateDOB;
+        // $.ajax({
+        //     type: 'GET',
+        //     url: 'updateUserInfo',
+        //     data: {email: localStorage.getItem("email"), password: localStorage.getItem("password")}, // Send data as form parameters
+        //     success: function (data) {
+        //         alert("Customer Data Fetched from Server successfully!");
+        //     },
+        //     error: function (xhr, status, error) {
+        //         // Handle error
+        //         console.error('Error logging in:', error);
+        //         // You can show an error message to the user or take any other appropriate action
+        //     }
+        // });
+        checkFormValidity();
+        loadDataFromLocalStorage();
     });
 </script>
 </body>
