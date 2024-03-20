@@ -25,7 +25,7 @@
     display: block;
     width: 100%;
     padding: 0.75rem;
-    background-color: #B08EAD;
+    background-color: #2272E5;
     border: none;
     color: white;
     font-size: 1rem;
@@ -35,5 +35,5 @@
 }
 
 #custom-alert button:hover {
-    background-color: #B08EAD;
+    background-color: #2272E5;
 }

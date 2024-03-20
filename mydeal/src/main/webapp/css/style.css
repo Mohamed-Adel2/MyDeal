@@ -3010,9 +3010,9 @@ ul {
 
 /* line 189, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_single_product.scss */
 .card_area .product_count input {
-  background-color: #795376;
+  background-color: #2272E5;
   color: #fff;
-  border: 1px solid #795376;
+  border: 1px solid #2272E5;
   color: #fff;
 }
 
@@ -3309,7 +3309,7 @@ input:focus {
 
 /* line 1, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_subscribe_part.scss */
 .subscribe_part {
-  background-color: #4B3049;
+  background-color: #2272E5;
 }
 
 /* line 3, /Applications/MAMP/htdocs/old/palash/cl/shop_html/sass/_subscribe_part.scss */
@@ -8632,7 +8632,7 @@ h6 {
   height: 45px;
   width: 45px;
   border-radius: 50%;
-  background-color: #4B3049;
+  background-color: #2272E5;
   line-height: 45px;
   color: #fff;
   display: inline-block;

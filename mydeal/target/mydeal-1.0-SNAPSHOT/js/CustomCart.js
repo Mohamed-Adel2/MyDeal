@@ -143,6 +143,7 @@ function displayProduct(products) {
         tableDataCountInput.value = product.quantity;
         tableDataCountInput.min = 1;
         tableDataCountInput.max = product.availableQuantity;
+        tableDataCountInput.value = Math.min(product.quantity, product.availableQuantity);
         var tableDataCountIncrement = document.createElement('span');
         tableDataCountIncrement.className = 'input-number-increment';
         var tableDataCountIncrementIcon = document.createElement('i');

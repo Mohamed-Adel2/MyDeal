@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("quantity equal" + " " + quantity);
         addToCart(quantity);
     });
+    var backBtn = document.getElementById('backBtn');
+    backBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        window.location.href = 'product_list.html';
+    });
 });
 
 function getDetailFromServlet() {
@@ -80,6 +85,7 @@ async function displayProduct(product) {
     //Update the maximum quantity allowed
     productQuantity.innerHTML = 'Available Quantity: ' + product.availableQuantity;
     productQuantityInput.max = product.availableQuantity;
+    productQuantityInput.min = 1;
 
     $(productImgSlide).addClass('owl-carousel').owlCarousel({
         loop: true,
@@ -95,7 +101,7 @@ async function displayProduct(product) {
 document.getElementById('product-quantity').addEventListener('input', function (e) {
     var max = parseInt(e.target.max);
     var value = parseInt(e.target.value);
-    if (value < 0) e.target.value = 0;
+    if (value < 1) e.target.value = 1;
     if (value > max) e.target.value = max;
 });
 
@@ -109,14 +115,12 @@ function addToCart(val) {
                 var product = JSON.parse(jsonResponse);
                 console.log(product);
                 if (product === "valid")
-                    showNotification('Item added to cart successfully!');
+                    customAlert('Item added to cart successfully!');
                 else
-                    showNotification('The requested quantity is unavailable now!');
-                setTimeout(hideNotification, 3000);
+                    customAlert('The requested quantity is unavailable now!');
 
             } else {
-                showNotification('Failed adding to cart, please try again!');
-                setTimeout(hideNotification, 3000);
+                customAlert('Failed adding to cart, please try again!');
             }
         }
     };
@@ -193,4 +197,39 @@ async function resizeImage(input, maxWidth, maxHeight) {
     });
 }
 
+function customAlert(message) {
+    // Create overlay
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.zIndex = 999;
+    document.body.appendChild(overlay);
 
+    // Create alert container
+    var alertContainer = document.createElement('div');
+    alertContainer.id = 'custom-alert';
+
+    // Create message element
+    var messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    alertContainer.appendChild(messageElement);
+
+    // Create OK button
+    var okButton = document.createElement('button');
+    okButton.textContent = 'OK';
+    okButton.addEventListener('click', function () {
+        alertContainer.style.display = 'none';
+        overlay.style.display = 'none';
+    });
+    alertContainer.appendChild(okButton);
+
+    // Append alert container to body
+    document.body.appendChild(alertContainer);
+
+    // Show the alert
+    alertContainer.style.display = 'block';
+}

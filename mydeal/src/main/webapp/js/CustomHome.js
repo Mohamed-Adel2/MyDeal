@@ -43,7 +43,14 @@ function displayProducts(products) {
 
         var productName = document.createElement('h3');
         var productLink = document.createElement('a');
-        productLink.href = 'single-product.html';
+        let paramValue = product.id;
+        console.log(paramValue);
+        var parms = {
+            Id: paramValue
+        }
+        var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
+        console.log(paramStr);
+        productLink.href = 'single-product.html' + '?' + paramStr;
         productLink.textContent = product.productName;
         productName.appendChild(productLink);
 
