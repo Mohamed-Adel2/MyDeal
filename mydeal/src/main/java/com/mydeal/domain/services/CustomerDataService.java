@@ -5,10 +5,10 @@ import com.mydeal.repository.CustomerRepository;
 import jakarta.persistence.EntityManager;
 
 public class CustomerDataService {
-    public int getCustomerBalance(int customerId) {
+    public double getCustomerBalance(int customerId) {
         CustomerRepository customerRepository = new CustomerRepository();
         EntityManager em = JpaUtil.createEntityManager();
-        int ret = customerRepository.getCustomerBalance(em, customerId);
+        double ret = customerRepository.getCustomerBalance(em, customerId);
         em.close();
         return ret;
     }

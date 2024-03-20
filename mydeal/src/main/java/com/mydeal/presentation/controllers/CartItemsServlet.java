@@ -8,7 +8,6 @@ import com.mydeal.domain.models.ProductDetailDataModel;
 import com.mydeal.domain.services.CustomerCartService;
 import com.mydeal.domain.services.ProductService;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

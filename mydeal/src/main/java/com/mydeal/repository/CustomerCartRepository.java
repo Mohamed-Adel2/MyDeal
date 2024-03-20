@@ -18,8 +18,8 @@ public class CustomerCartRepository extends CrudRepository<CustomerCart> {
                 .getResultList();
     }
 
-    public int getCustomerCartPrice(EntityManager em, int customerId) {
-        TypedQuery<Integer> query = em.createQuery("SELECT SUM(c.quantity * p.price) FROM CustomerCart c JOIN Product p ON c.id.productId = p.id WHERE c.id.customerId = :customerId", Integer.class);
+    public double getCustomerCartPrice(EntityManager em, int customerId) {
+        TypedQuery<Double> query = em.createQuery("SELECT SUM(c.quantity * p.price) FROM CustomerCart c JOIN Product p ON c.id.productId = p.id WHERE c.id.customerId = :customerId", Double.class);
         query.setParameter("customerId", customerId);
         return query.getSingleResult();
     }

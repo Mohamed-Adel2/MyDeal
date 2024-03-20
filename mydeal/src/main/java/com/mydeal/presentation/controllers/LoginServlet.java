@@ -2,29 +2,22 @@ package com.mydeal.presentation.controllers;
 
 import com.google.gson.Gson;
 import com.mydeal.domain.entities.Customer;
-import com.mydeal.domain.mapping.CustomerMapping;
 import com.mydeal.domain.models.AuthenticationModel;
 import com.mydeal.domain.models.OfflineCartModel;
 import com.mydeal.domain.services.CustomerCartService;
 import com.mydeal.domain.services.CustomerLoginService;
 import com.mydeal.domain.util.RequestKey;
-import com.mydeal.presentation.utils.ClientJSAlert;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.Hibernate;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Optional;
 
 
-//@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
-    // TODO: handle cookies and load cart from cookies
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,7 +37,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 req.getSession(true).setAttribute("user", customer);
                 updateCart(getCookie(req, "cart"), customer.getId());
-                if (req.getParameter("rememberMe") != null) {
+                if (req.getParameter("rememberMe") != null && req.getParameter("rememberMe").equals("true")) {
                     AuthenticationModel authenticationModel = new AuthenticationModel(customer.getEmail(), customer.getPassword());
                     Cookie authCookie = new Cookie("auth", Base64.getEncoder().encodeToString(new Gson().toJson(authenticationModel).getBytes()));
                     authCookie.setMaxAge(60 * 60 * 24 * 30);

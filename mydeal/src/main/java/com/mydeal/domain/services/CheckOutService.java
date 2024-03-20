@@ -2,21 +2,19 @@ package com.mydeal.domain.services;
 
 import com.mydeal.domain.entities.*;
 import com.mydeal.domain.util.JpaUtil;
-import com.mydeal.repository.CustomerCartRepository;
-import com.mydeal.repository.CustomerRepository;
-import com.mydeal.repository.OrderDetailsRepository;
-import com.mydeal.repository.OrderRepository;
+import com.mydeal.repository.*;
 import jakarta.persistence.EntityManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CheckOutService {
-    public void makeOrder(int customerId, double orderPrice) {
+    public boolean makeOrder(int customerId, double orderPrice) {
         CustomerCartRepository customerCartRepository = new CustomerCartRepository();
         OrderDetailsRepository orderDetailsRepository = new OrderDetailsRepository();
         CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
+        ProductRepository productRepository = new ProductRepository();
         EntityManager em = JpaUtil.createEntityManager();
         ArrayList<CustomerCart> cart = getCustomerCart(em, customerId);
         Customer customer = getCustomer(em, customerId);
@@ -25,17 +23,27 @@ public class CheckOutService {
         em.getTransaction().begin();
         orderRepository.create(em, order);
         for (CustomerCart customerCart : cart) {
+            if (customerCart.getProduct().getAvailableQuantity() < customerCart.getQuantity()) {
+                em.getTransaction().rollback();
+                em.close();
+                return false;
+            }
             OrderDetails orderDetails = new OrderDetails();
             OrderDetailsId orderDetailsId = new OrderDetailsId();
             orderDetailsId.setOrderId(order.getId());
             orderDetailsId.setProductId(customerCart.getId().getProductId());
             orderDetails.setId(orderDetailsId);
+            orderDetails.setOrder(order);
+            orderDetails.setProduct(customerCart.getProduct());
+            orderDetails.setQuantity(customerCart.getQuantity());
             orderDetailsRepository.create(em, orderDetails);
             customerCartRepository.delete(em, customerCart);
+            productRepository.getProduct(em, customerCart.getProduct().getId()).setAvailableQuantity(customerCart.getProduct().getAvailableQuantity() - customerCart.getQuantity());
         }
         customerRepository.update(em, customer);
         em.getTransaction().commit();
         em.close();
+        return true;
     }
 
     private Customer getCustomer(EntityManager em, int customerId) {

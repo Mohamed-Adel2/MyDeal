@@ -29,13 +29,13 @@ public class Product {
     private String description;
 
     @Column(name = "price", precision = 10, scale = 2)
-    private BigDecimal price;
+    private Double price;
 
     @Column(name = "available_quantity")
     private Integer availableQuantity;
 
     @Column(name = "average_rating", precision = 3, scale = 2)
-    private BigDecimal averageRating;
+    private Double averageRating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
