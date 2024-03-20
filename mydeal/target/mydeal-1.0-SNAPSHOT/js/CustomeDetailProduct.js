@@ -134,18 +134,6 @@ function addToCart(val) {
     xhr.send();
 }
 
-function showNotification(message) {
-    var notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.style.display = 'block'; // Show the notification
-}
-
-// Function to hide the notification
-function hideNotification() {
-    var notification = document.getElementById('notification');
-    notification.style.display = 'none'; // Hide the notification
-}
-
 
 async function resizeImage(input, maxWidth, maxHeight) {
     return new Promise((resolve, reject) => {

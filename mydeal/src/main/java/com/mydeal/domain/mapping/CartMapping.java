@@ -2,6 +2,7 @@ package com.mydeal.domain.mapping;
 
 import com.mydeal.domain.entities.Customer;
 import com.mydeal.domain.entities.CustomerCart;
+import com.mydeal.domain.entities.CustomerCartId;
 import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.models.CartModel;
 
@@ -16,6 +17,7 @@ public class CartMapping {
 
     public static CustomerCart mapToCustomerCart(CartModel cartModel) {
         CustomerCart customerCart = new CustomerCart();
+        customerCart.setId(new CustomerCartId());
         customerCart.getId().setCustomerId(cartModel.getCustomerId());
         customerCart.getId().setProductId(cartModel.getProductId());
         customerCart.setQuantity(cartModel.getQuantity());

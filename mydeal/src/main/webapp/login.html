@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/CustomAlert.css">
 </head>
 
 <body>
@@ -52,7 +53,7 @@
                     <div class="login_part_form_iner">
                         <h3>Welcome Back ! <br>
                             Please Sign in now</h3>
-                        <form class="row contact_form" method="post">
+                        <form class="row contact_form" novalidate="novalidate">
                             <div class="col-md-12 form-group p_star">
                                 <input type="email" class="form-control" id="email" name="email" value=""
                                        placeholder="Email" required>
@@ -66,7 +67,7 @@
                                     <input type="checkbox" id="f-option" name="selector">
                                     <label for="f-option">Remember me</label>
                                 </div>
-                                <button type="submit" value="submit" class="btn_3" onclick="loginUser()">
+                                <button type="submit" value="submit" class="btn_3" onclick="getUserFromServlet(false)">
                                     log in
                                 </button>
                                 <a class="lost_pass" href="#">forget password?</a>
@@ -114,79 +115,79 @@
         $("#headerContainer").load("myDealHeader.html");
     });
 </script>
-<script>
-    function showLoggingMessage() {
-        // Show loading indicator before sending the request
-        $(document).ajaxSend(function () {
-            document.title = 'Logging...';
-        });
-    }
+<!--<script>-->
+<!--    function showLoggingMessage() {-->
+<!--        // Show loading indicator before sending the request-->
+<!--        $(document).ajaxSend(function () {-->
+<!--            document.title = 'Logging...';-->
+<!--        });-->
+<!--    }-->
 
-    function resetTabName() {
-        // Reset the title when the request is complete
-        $(document).ajaxComplete(function () {
-            document.title = 'MyDeal';
-        });
-    }
+<!--    function resetTabName() {-->
+<!--        // Reset the title when the request is complete-->
+<!--        $(document).ajaxComplete(function () {-->
+<!--            document.title = 'MyDeal';-->
+<!--        });-->
+<!--    }-->
 
-    function storeDataLocally(data) {
-        console.log(data);
-        // Retrieve values from the provided JSON object
-        var username = data.userName;
-        var email = data.email;
-        var phoneNumber = data.phoneNumber;
-        var dob = new Date(data.dob).toISOString(); // Convert date to ISO string
-        var creditLimit = parseFloat(data.creditLimit); // Parse credit limit as float
+<!--    function storeDataLocally(data) {-->
+<!--        console.log(data);-->
+<!--        // Retrieve values from the provided JSON object-->
+<!--        var username = data.userName;-->
+<!--        var email = data.email;-->
+<!--        var phoneNumber = data.phoneNumber;-->
+<!--        var dob = new Date(data.dob).toISOString(); // Convert date to ISO string-->
+<!--        var creditLimit = parseFloat(data.creditLimit); // Parse credit limit as float-->
 
-        // Address details
-        var street = data.addressDataModel.street;
-        var city = data.addressDataModel.city;
-        var apartment = parseInt(data.addressDataModel.apartment); // Parse apartment as integer
+<!--        // Address details-->
+<!--        var street = data.addressDataModel.street;-->
+<!--        var city = data.addressDataModel.city;-->
+<!--        var apartment = parseInt(data.addressDataModel.apartment); // Parse apartment as integer-->
 
-        var password = data.password;
+<!--        var password = data.password;-->
 
-        // Store all data in Browser Local Storage :
-        localStorage.setItem('username', username);
-        localStorage.setItem('email', email);
-        localStorage.setItem('phoneNumber', phoneNumber);
-        localStorage.setItem('dob', dob); // Store date as ISO string
-        localStorage.setItem('creditLimit', creditLimit.toString()); // Convert float to string
-        localStorage.setItem('street', street);
-        localStorage.setItem('city', city);
-        localStorage.setItem('apartment', apartment.toString()); // Convert integer to string
-        localStorage.setItem('password', password);
-    }
+<!--        // Store all data in Browser Local Storage :-->
+<!--        localStorage.setItem('username', username);-->
+<!--        localStorage.setItem('email', email);-->
+<!--        localStorage.setItem('phoneNumber', phoneNumber);-->
+<!--        localStorage.setItem('dob', dob); // Store date as ISO string-->
+<!--        localStorage.setItem('creditLimit', creditLimit.toString()); // Convert float to string-->
+<!--        localStorage.setItem('street', street);-->
+<!--        localStorage.setItem('city', city);-->
+<!--        localStorage.setItem('apartment', apartment.toString()); // Convert integer to string-->
+<!--        localStorage.setItem('password', password);-->
+<!--    }-->
 
-    function loginUser() {
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-        // Prevent default form submission behavior
-        event.preventDefault();
-        // Perform the AJAX request
-        $.ajax({
-            type: 'POST',
-            url: 'login',
-            data: {email: email, password: password},
-            beforeSend: function () {
-                showLoggingMessage();
-            },
-            success: function (data) {
-                // Store the values in Browser localStorage
-                storeDataLocally(data);
-                // Redirect to index.html on success
-                window.location.href = 'index.html';
-            },
-            error: function (xhr, status, error) {
-                // Handle error
-                console.error('Error logging in:', error);
-                // You can show an error message to the user or take any other appropriate action
-            },
-            complete: function () {
-                resetTabName();
-            }
-        });
-    }
-
-</script>
+<!--    function loginUser() {-->
+<!--        var email = document.getElementById("email").value;-->
+<!--        var password = document.getElementById("password").value;-->
+<!--        // Prevent default form submission behavior-->
+<!--        event.preventDefault();-->
+<!--        // Perform the AJAX request-->
+<!--        $.ajax({-->
+<!--            type: 'POST',-->
+<!--            url: 'login',-->
+<!--            data: {email: email, password: password},-->
+<!--            beforeSend: function () {-->
+<!--                showLoggingMessage();-->
+<!--            },-->
+<!--            success: function (data) {-->
+<!--                // Store the values in Browser localStorage-->
+<!--                storeDataLocally(data);-->
+<!--                // Redirect to index.html on success-->
+<!--                window.location.href = 'index.html';-->
+<!--            },-->
+<!--            error: function (xhr, status, error) {-->
+<!--                // Handle error-->
+<!--                console.error('Error logging in:', error);-->
+<!--                // You can show an error message to the user or take any other appropriate action-->
+<!--            },-->
+<!--            complete: function () {-->
+<!--                resetTabName();-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+<script src="js/CustomLogin.js"></script>
 </body>
 </html>
