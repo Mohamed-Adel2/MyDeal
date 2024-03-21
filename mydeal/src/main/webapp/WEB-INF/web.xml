@@ -125,6 +125,16 @@
         <servlet-class>com.mydeal.presentation.controllers.ProductDetailServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.OrderServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/orders</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>CategoryServlet</servlet-name>
         <url-pattern>/categories</url-pattern>
