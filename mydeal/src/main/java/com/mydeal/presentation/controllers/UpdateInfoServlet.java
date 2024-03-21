@@ -15,18 +15,16 @@ import java.io.IOException;
 public class UpdateInfoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("get");
         if (request.getSession(false) == null) {
             response.getWriter().write(new Gson().toJson("failure"));
         } else {
-            System.out.println("sl1");
             Customer customer = (Customer) request.getSession(false).getAttribute("user");
             Utils.setCustomerAttributes(customer, request);
-            System.out.println("sl2");
             AddressService addressService = new AddressService();
             CustomerUpdateInfoService customerUpdateInfoService = new CustomerUpdateInfoService();
             addressService.updateAddress(customer.getAddress());
             customerUpdateInfoService.updateCustomerInfo(customer);
+            request.getSession(false).setAttribute("user", customer);
             response.getWriter().write(new Gson().toJson("success"));
         }
     }

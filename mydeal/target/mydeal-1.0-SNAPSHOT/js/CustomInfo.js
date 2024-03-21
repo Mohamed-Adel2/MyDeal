@@ -39,6 +39,7 @@ function updateInfo() {
             } else {
                 console.error('Request failed: ' + xhr.status);
             }
+            getDataFromServlet();
         }
     };
     var params = {
@@ -68,7 +69,6 @@ function setData(response) {
     var apartment = document.getElementById("apartment");
     var dob = document.getElementById("dob");
     var creditLimit = document.getElementById("creditLimit");
-
     name.value = response.userName;
     email.value = response.email;
     userEmail = response.email;
@@ -93,11 +93,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function validateForm() {
+    validateCity();
+    validateStreet();
+    validateCredit();
+    validateDob();
+    validateEmail();
+    validateName();
+    validatePassword();
+    validatePhone();
+    validateApartment();
+    validateConfirmation();
     if ($('#emailValidity').is(':visible') || $('#phoneValidity').is(':visible') || $('#usernameValidity').is(':visible') || $('#dobValidity').is(':visible') || $('#creditValidity').is(':visible') || $('#streetValidity').is(':visible') || $('#cityValidity').is(':visible') || $('#apartmentValidity').is(':visible') || $('#passwordValidity').is(':visible') || $('#confirmationValidity').is(':visible')) {
         return;
     }
     updateInfo();
-    getDataFromServlet();
 }
 
 
@@ -155,165 +164,206 @@ $(document).ready(function () {
     $('#confirmationValidity').hide();
 
     $('#phoneNumber').on('blur', function () {
-        var phoneNumber = $(this).val();
-        var phonePattern = /^(010|011|012|015)[0-9]{8}$/;
-        if (phoneNumber === userPhone) {
-            $('#phoneValidity').hide();
-        } else if (phonePattern.test(phoneNumber)) {
-            $('#phoneValidity').hide();
-            $.ajax({
-                url: 'validate',
-                type: 'POST',
-                data: {phone_number: phoneNumber},
-                success: function (response) {
-                    if (response.trim() == 'valid') {
-                        $('#phoneValidity').text('');
-                        $('#phoneValidity').hide();
-                    } else {
-                        $('#phoneValidity').show();
-                        $('#phoneValidity').text('This phone number is already exist').css('color', 'red');
-                    }
-                }
-            });
-        } else {
-            $('#phoneValidity').show();
-            $('#phoneValidity').text('Phone number must start with 010, 011, 012, or 015 and consist of 11 digits.').css('color', 'red');
-        }
+        console.log('blur');
+        validatePhone();
     });
 
     $('#email').on('blur', function () {
-        var email = $(this).val();
-        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        if (email.length == 0) {
-            $('#emailValidity').text("Please enter a valid email").css('color', 'red');
-        } else if ((userEmail === email)) {
-            $('#emailValidity').hide();
-        } else if (emailPattern.test(email)) {
-            $('#emailValidity').hide();
-            $.ajax({
-                url: 'validate', // Change this to the URL where you handle validation
-                type: 'POST',
-                data: {email: email},
-                beforeSend: function () {
-                    $('#emailValidity').hide();
-                },
-                success: function (response) {
-                    if (response.trim() == 'valid') {
-                        $('#emailValidity').hide();
-                    } else {
-                        $('#emailValidity').show();
-                        $('#emailValidity').text('This email is already exist').css('color', 'red');
-                    }
-                }, onerror: function () {
-                    $('#emailValidity').text('There is an error occurred').css('color', 'red');
-                }
-            });
-        } else {
-            $('#emailValidity').show();
-            $('#emailValidity').text("Email must be in the correct format.").css('color', 'red');
-        }
+        validateEmail();
     });
 
     $('#name').on('blur', function () {
-        var name = $(this).val();
-        if (name.length < 4) {
-            $('#usernameValidity').show();
-            $('#usernameValidity').text('Name must be more than 4 characters long.').css('color', 'red');
-        } else {
-            $('#usernameValidity').text('').css('color', 'red');
-            $('#usernameValidity').hide();
-        }
+        validateName();
     });
 
     $('#dob').on('blur', function () {
-        var dob = $(this).val();
-        var date = new Date();
-        var today = date.toISOString().substring(0, 10);
-        var dobPattern = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-        if (!dobPattern.test(dob) || dob > today) {
-            $('#dobValidity').show();
-            $('#dobValidity').text('Date of birth must be a valid date in the past.').css('color', 'red');
-        } else {
-            $('#dobValidity').text('').css('color', 'red');
-            $('#dobValidity').hide();
-        }
+        validateDob();
     });
 
     $('#creditLimit').on('blur', function () {
-        var creditLimit = $(this).val();
-        var creditLimitPattern = /^[0-9]*\.?[0-9]+$/;
-        if (!creditLimitPattern.test(creditLimit) || creditLimit > 100000) {
-            $('#creditValidity').show();
-            $('#creditValidity').text('Credit limit must be a positive number between 0 and 100000.').css('color', 'red');
-        } else {
-            $('#creditValidity').text('').css('color', 'red');
-            $('#creditValidity').hide();
-        }
+        validateCredit();
     });
 
     $('#street').on('blur', function () {
-        var street = $(this).val();
-        var streetPattern = /^.{8,}$/;
-        if (!streetPattern.test(street)) {
-            $('#streetValidity').show();
-            $('#streetValidity').text('Street must be more than 8 characters long.').css('color', 'red');
-        } else {
-            $('#streetValidity').text('').css('color', 'red');
-            $('#streetValidity').hide();
-        }
+        validateStreet();
     });
 
     $('#city').on('blur', function () {
-        var city = $(this).val();
-        var cityPattern = /^.{3,}$/;
-        if (!cityPattern.test(city)) {
-            $('#cityValidity').show();
-            $('#cityValidity').text('City must be more than 3 characters long.').css('color', 'red');
-        } else {
-            $('#cityValidity').text('').css('color', 'red');
-            $('#cityValidity').hide();
-        }
+        validateCity();
     });
 
     $('#apartment').on('blur', function () {
-        var apartment = $(this).val();
-        var apartmentPattern = /^[1-9][0-9]?$|^100$/;
-        if (!apartmentPattern.test(apartment)) {
-            $('#apartmentValidity').show();
-            $('#apartmentValidity').text('Apartment must be an integer between 1 and 100.').css('color', 'red');
-        } else {
-            $('#apartmentValidity').text('').css('color', 'red');
-            $('#apartmentValidity').hide();
-        }
+        validateApartment();
     });
 
     $('#password').on('blur', function () {
-        var password = $(this).val();
-        var passwordPattern = /^.{8,}$/;
-        if (!passwordPattern.test(password)) {
-            $('#passwordValidity').show();
-            $('#passwordValidity').text('Password must be at least 8 characters long.').css('color', 'red');
-        } else {
-            $('#passwordValidity').text('').css('color', 'red');
-            $('#passwordValidity').hide();
-        }
+        validatePassword();
     });
 
     $('#confirmationPassword').on('blur', function () {
-        var password = $('#password').val();
-        var confirmPassword = $(this).val();
-        if (password !== confirmPassword) {
-            $('#confirmationValidity').show();
-            $('#confirmationValidity').text('Passwords do not match.').css('color', 'red');
-        } else {
-            $('#confirmationValidity').text('').css('color', 'red');
-            $('#confirmationValidity').hide();
-        }
+        validateConfirmation();
     });
 
     $('input[required]').on('input', function () {
         $(this).removeClass('error');
         $(this).next('.error-message').remove();
     });
-})
-;
+});
+
+function validateEmail() {
+    var email = $('#email').val().trim();
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (email.length === 0) {
+        $('#emailValidity').text("Please enter a valid email").css('color', 'red');
+        $('#emailValidity').show();
+    } else if (email === userEmail) {
+        $('#emailValidity').hide();
+    } else if (emailPattern.test(email)) {
+        $('#emailValidity').hide();
+        $.ajax({
+            url: 'validate',
+            type: 'POST',
+            data: {email: email},
+            beforeSend: function () {
+                $('#emailValidity').hide();
+            },
+            success: function (response) {
+                if (response.trim() == 'valid') {
+                    $('#emailValidity').hide();
+                } else {
+                    $('#emailValidity').text('This email is already exist').css('color', 'red');
+                    $('#emailValidity').show();
+                }
+            }, onerror: function () {
+                $('#emailValidity').text('There is an error occurred').css('color', 'red');
+            }
+        });
+    } else {
+        $('#emailValidity').text("Email must be in the correct format.").css('color', 'red');
+        $('#emailValidity').show();
+    }
+}
+
+function validatePhone() {
+    var phoneNumber = $('#phoneNumber').val().trim();
+    var phonePattern = /^(010|011|012|015)[0-9]{8}$/;
+    if (phoneNumber === userPhone) {
+        $('#phoneValidity').hide();
+    } else if (phonePattern.test(phoneNumber)) {
+        $('#phoneValidity').hide();
+        $.ajax({
+            url: 'validate',
+            type: 'POST',
+            data: {phone_number: phoneNumber},
+            success: function (response) {
+                if (response.trim() == 'valid') {
+                    $('#phoneValidity').hide();
+                    $('#phoneValidity').text('');
+                } else {
+                    $('#phoneValidity').text('This phone number is already exist').css('color', 'red');
+                    $('#phoneValidity').show();
+                }
+            }
+        });
+    } else {
+        $('#phoneValidity').text('Phone number must start with 010, 011, 012, or 015 and consist of 11 digits.').css('color', 'red');
+        $('#phoneValidity').show();
+    }
+}
+
+function validateName() {
+    var name = $('#name').val().trim();
+    if (name.length < 4) {
+        $('#usernameValidity').text('Name must be more than 4 characters long.').css('color', 'red');
+        $('#usernameValidity').show();
+    } else {
+        $('#usernameValidity').hide();
+        $('#usernameValidity').text('').css('color', 'red');
+    }
+}
+
+function validateDob() {
+    var dob = $('#dob').val().trim();
+    var date = new Date();
+    var today = date.toISOString().substring(0, 10);
+    var dobPattern = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+    if (!dobPattern.test(dob) || dob > today) {
+        $('#dobValidity').text('Date of birth must be a valid date in the past.').css('color', 'red');
+        $('#dobValidity').show();
+    } else {
+        $('#dobValidity').hide();
+        $('#dobValidity').text('').css('color', 'red');
+    }
+}
+
+function validateCredit() {
+    var creditLimit = $('#creditLimit').val();
+    var creditLimitPattern = /^[0-9]*\.?[0-9]+$/;
+    if (!creditLimitPattern.test(creditLimit) || creditLimit > 100000) {
+        $('#creditValidity').text('Credit limit must be a positive number between 0 and 100000.').css('color', 'red');
+        $('#creditValidity').show();
+    } else {
+        $('#creditValidity').hide();
+        $('#creditValidity').text('').css('color', 'red');
+    }
+}
+
+function validateStreet() {
+    var street = $('#street').val().trim();
+    var streetPattern = /^.{8,}$/;
+    if (!streetPattern.test(street)) {
+        $('#streetValidity').text('Street must be more than 8 characters long.').css('color', 'red');
+        $('#streetValidity').show();
+    } else {
+        $('#streetValidity').hide();
+        $('#streetValidity').text('').css('color', 'red');
+    }
+}
+
+function validateCity() {
+    var city = $('#city').val().trim();
+    var cityPattern = /^.{3,}$/;
+    if (!cityPattern.test(city)) {
+        $('#cityValidity').text('City must be more than 3 characters long.').css('color', 'red');
+        $('#cityValidity').show();
+    } else {
+        $('#cityValidity').hide();
+        $('#cityValidity').text('').css('color', 'red');
+    }
+}
+
+function validateApartment() {
+    var apartment = $('#apartment').val();
+    var apartmentPattern = /^[1-9][0-9]?$|^100$/;
+    if (!apartmentPattern.test(apartment)) {
+        $('#apartmentValidity').text('Apartment must be an integer between 1 and 100.').css('color', 'red');
+        $('#apartmentValidity').show();
+    } else {
+        $('#apartmentValidity').hide();
+        $('#apartmentValidity').text('').css('color', 'red');
+    }
+}
+
+function validatePassword() {
+    var password = $('#password').val();
+    var passwordPattern = /^.{8,}$/;
+    if (!passwordPattern.test(password)) {
+        $('#passwordValidity').text('Password must be at least 8 characters long.').css('color', 'red');
+        $('#passwordValidity').show();
+    } else {
+        $('#passwordValidity').hide();
+        $('#passwordValidity').text('').css('color', 'red');
+    }
+}
+
+function validateConfirmation() {
+    var password = $('#password').val();
+    var confirmPassword = $('#confirmationPassword').val();
+    if (password !== confirmPassword) {
+        $('#confirmationValidity').text('Passwords do not match.').css('color', 'red');
+        $('#confirmationValidity').show();
+    } else {
+        $('#confirmationValidity').hide();
+        $('#confirmationValidity').text('').css('color', 'red');
+    }
+}

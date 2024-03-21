@@ -1,5 +1,6 @@
 package com.mydeal.presentation.controllers;
 
+import com.google.gson.Gson;
 import com.mydeal.domain.entities.Address;
 import com.mydeal.domain.entities.Customer;
 import com.mydeal.domain.services.AddressService;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Customer customer = new Customer();
         Utils.setCustomerAttributes(customer, req);
         try {
@@ -22,10 +23,10 @@ public class RegisterServlet extends HttpServlet {
             AddressService addressService = new AddressService();
             addressService.createAddress(customer.getAddress());
             customerRegistrationService.register(customer);
-            resp.sendRedirect("login.html");
+            resp.getWriter().write(new Gson().toJson("success"));
         }
         catch (Exception e) {
-            resp.sendRedirect("register.html");
+            resp.getWriter().write(new Gson().toJson("failure"));
         }
     }
 }
