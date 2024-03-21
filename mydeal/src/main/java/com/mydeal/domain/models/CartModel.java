@@ -13,4 +13,13 @@ public class CartModel {
     private int customerId;
     private int productId;
     private int quantity;
+
+    @Override
+    public String toString() {
+        return "CartModel{" +
+                "customerId=" + customerId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

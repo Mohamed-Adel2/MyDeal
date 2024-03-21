@@ -18,6 +18,8 @@ import java.util.Base64;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
     // TODO: handle adding old quantity
+
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CartModel cart = extractCartItem(request);

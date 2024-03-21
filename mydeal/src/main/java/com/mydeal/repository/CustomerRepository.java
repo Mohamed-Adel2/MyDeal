@@ -14,13 +14,6 @@ public class CustomerRepository extends CrudRepository<Customer> {
         setEntityClass(Customer.class);
     }
 
-    /**
-     * Get Customer by email and password , used in login process .
-     *
-     * @param email
-     * @param password
-     * @return
-     */
     public Customer getCustomerByEmailAndPassword(EntityManager em, String email, String password) {
         String jpql = "SELECT c FROM Customer c WHERE c.email = :email AND c.password = :password";
         TypedQuery<Customer> query = em.createQuery(jpql, Customer.class);
@@ -43,8 +36,15 @@ public class CustomerRepository extends CrudRepository<Customer> {
             return null;
         }
     }
-    public boolean checkAdmin(EntityManager em, String email){
+
+    public boolean checkAdmin(EntityManager em, String email) {
         //will handle with database when change in schema validation of user
         return email.equals("mydeal@gmail.com");
+    }
+
+    public double getCustomerBalance(EntityManager em, int customerId) {
+        TypedQuery<Double> query = em.createQuery("SELECT c.creditLimit FROM Customer c WHERE c.id = :customerId", Double.class);
+        query.setParameter("customerId", customerId);
+        return query.getSingleResult();
     }
 }

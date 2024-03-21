@@ -37,9 +37,9 @@ public class Customer {
     private String password;
 
     @Column(name = "credit_limit", precision = 10, scale = 2)
-    private BigDecimal creditLimit;
+    private Double creditLimit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 

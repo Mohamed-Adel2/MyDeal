@@ -12,20 +12,19 @@ import java.math.BigDecimal;
 public class ProductDataModel implements Serializable {
     private Integer id;
 
-
     private String productName;
 
 
     private String description;
 
 
-    private BigDecimal price;
+    private Double price;
 
 
     private Integer availableQuantity;
 
 
-    private BigDecimal averageRating;
+    private Double averageRating;
 
    private int category;
 

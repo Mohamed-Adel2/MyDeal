@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class CustomerDataModel {
     private Integer id, addressId;
     private String userName, email, phoneNumber, dob, password;
-    private BigDecimal creditLimit;
+    private Double creditLimit;
     private AddressDataModel addressDataModel;
 
     public CustomerDataModel() {
@@ -91,11 +91,11 @@ public class CustomerDataModel {
         return this;
     }
 
-    public BigDecimal getCreditLimit() {
+    public Double getCreditLimit() {
         return creditLimit;
     }
 
-    public CustomerDataModel setCreditLimit(BigDecimal creditLimit) {
+    public CustomerDataModel setCreditLimit(Double creditLimit) {
         this.creditLimit = creditLimit;
         return this;
     }
