@@ -21,6 +21,7 @@ function checkUserStatus(isLoggedIn) {
         profileIcon.style.display = 'block';
         historyTab.style.display = 'block';
         logoutTab.style.display = 'block';
+        logoutTab.setAttribute('onclick', 'logOut()');
         loginTab.style.display = 'none';
         registerTab.style.display = 'none';
     } else {
@@ -51,6 +52,27 @@ function checkStatus() {
         }
     };
     xhr.open('GET', 'checkStatus', true);
+    xhr.send();
+}
+
+function logOut() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if (response === "success") {
+                    window.location.href = "index.html";
+                } else {
+                    customAlert("Something went wrong, please try again later");
+                }
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+    xhr.open('GET', 'logout', true);
     xhr.send();
 }
 
