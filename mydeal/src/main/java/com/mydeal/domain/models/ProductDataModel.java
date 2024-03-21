@@ -27,7 +27,7 @@ public class ProductDataModel implements Serializable {
 
     private BigDecimal averageRating;
 
-   //private Category category;
+   private int category;
 
     private byte[] image;
     @Override

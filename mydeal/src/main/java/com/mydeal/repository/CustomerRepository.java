@@ -43,4 +43,8 @@ public class CustomerRepository extends CrudRepository<Customer> {
             return null;
         }
     }
+    public boolean checkAdmin(EntityManager em, String email){
+        //will handle with database when change in schema validation of user
+        return email.equals("mydeal@gmail.com");
+    }
 }

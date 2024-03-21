@@ -37,11 +37,16 @@ public class LoginServlet extends HttpServlet {
         if (loggedCustomer.isPresent()) {
             Customer customer = loggedCustomer.get();
             req.getSession(true).setAttribute("user", customer);
-            resp.sendRedirect("index.html");
+            if(customerLoginService.checkAdmin(email)){
+                System.out.println("AdminNow");
+               resp.sendRedirect("index.html");
+            }else{
+            resp.sendRedirect("index.html");}
         } else {
             resp.setContentType("text/html");
             ClientJSAlert.showAlert(resp, "Invalid Email or Password");
             resp.sendRedirect("login.html");
         }
     }
+
 }

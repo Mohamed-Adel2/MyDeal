@@ -21,6 +21,21 @@
         <servlet-name>CartServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.CartServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminAddServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminAddProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminDelteServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/cart</url-pattern>
@@ -67,6 +82,21 @@
     <servlet-mapping>
         <servlet-name>ProductDetailServlet</servlet-name>
         <url-pattern>/productDetail</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminHome</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminAddServlet</servlet-name>
+        <url-pattern>/adminAdd</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminDelteServlet</servlet-name>
+        <url-pattern>/adminDelete</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

@@ -1,5 +1,6 @@
 package com.mydeal.domain.mapping;
 
+import com.mydeal.domain.entities.Category;
 import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.entities.ProductImages;
 import com.mydeal.domain.models.ProductDataModel;
@@ -38,5 +39,18 @@ public class ProductMap {
         }
         productDataModel.setAvailableQuantity(product.getAvailableQuantity());
         return productDataModel;
+    }
+    public Product convertModeToEntity(ProductDataModel productDataModel){
+        Category category = new Category();
+        category.setId(productDataModel.getCategory());
+        this.productDataModel = new ProductDataModel();
+       product = new Product();
+       product.setId(productDataModel.getId());
+       product.setCategory(category);
+       product.setProductName(productDataModel.getProductName());
+       product.setPrice(productDataModel.getPrice());
+       product.setDescription(productDataModel.getDescription());
+       product.setAvailableQuantity(product.getAvailableQuantity());
+       return product;
     }
 }

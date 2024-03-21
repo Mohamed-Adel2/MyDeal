@@ -9,6 +9,7 @@ com\mydeal\repository\ProductImagesRepository.class
 com\mydeal\domain\services\CustomerDataValidatorService.class
 com\mydeal\presentation\controllers\ProductServlet.class
 com\mydeal\repository\OrderRepository.class
+com\mydeal\presentation\controllers\admin\AdminProductServlet.class
 com\mydeal\domain\entities\Category.class
 com\mydeal\repository\CrudRepository.class
 com\mydeal\domain\util\AppConfig.class
@@ -20,10 +21,13 @@ com\mydeal\repository\CustomerCartRepository.class
 com\mydeal\repository\CategoryRepository.class
 com\mydeal\presentation\controllers\LoginServlet.class
 com\mydeal\domain\models\FilterModel.class
+com\mydeal\domain\models\admin\AddProductModel.class
 com\mydeal\domain\services\CustomerCartService.class
 com\mydeal\presentation\controllers\RegisterServlet.class
 com\mydeal\presentation\controllers\CustomerProfileServlet.class
+com\mydeal\presentation\controllers\admin\AdminAddProductServlet.class
 com\mydeal\domain\entities\Order.class
+com\mydeal\domain\mapping\admin\AddProductMap.class
 com\mydeal\presentation\filters\Filter.class
 com\mydeal\domain\mapping\ProductImageMap.class
 com\mydeal\presentation\utils\ClientJSAlert.class
@@ -51,10 +55,13 @@ com\mydeal\domain\services\ProductImageService.class
 com\mydeal\repository\AddressRepository.class
 com\mydeal\domain\entities\Address.class
 com\mydeal\domain\services\CustomerUpdateInfoService.class
+com\mydeal\presentation\controllers\admin\update\UpdateProductServlet.class
+com\mydeal\presentation\controllers\admin\DeleteProductServlet.class
 com\mydeal\domain\mapping\ProductDetailMap.class
 com\mydeal\domain\util\RequestKey.class
 com\mydeal\domain\entities\Product.class
 com\mydeal\domain\entities\ProductImages.class
 com\mydeal\domain\models\AddressDataModel.class
+com\mydeal\domain\models\admin\AddImageModel.class
 com\mydeal\domain\services\ProductService.class
 com\mydeal\domain\util\JpaUtil.class
