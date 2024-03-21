@@ -47,17 +47,19 @@ function displayOrders(orders) {
         var totalPrice = document.createElement("td");
         totalPrice.innerHTML = order.totalPrice;
         row.appendChild(totalPrice);
-        var tableDataUpdateAction = document.createElement('td');
-        var tableDataUpdateButton = document.createElement('button');
-        tableDataUpdateButton.className = 'btn_3';
-        tableDataUpdateButton.id = 'update-btn';
-        tableDataUpdateButton.type = 'button';
-        tableDataUpdateButton.textContent = 'Order Details';
-        tableDataUpdateButton.onclick = function () {
-            window.location.href = 'updateOrder?id=' + order.id;
-        };
-        tableDataUpdateAction.appendChild(tableDataUpdateButton);
-        row.appendChild(tableDataUpdateAction);
+        var tableDataInfoAction = document.createElement('td');
+        var tableDataInfoButton = document.createElement('button');
+        tableDataInfoButton.className = 'btn_3';
+        tableDataInfoButton.id = 'info-btn';
+        tableDataInfoButton.type = 'button';
+        tableDataInfoButton.textContent = 'Order Details';
+        tableDataInfoButton.onclick = (function(order) {
+            return function() {
+                window.location.href = 'order-items.html?id=' + order.id;
+            };
+        })(order);
+        tableDataInfoAction.appendChild(tableDataInfoButton);
+        row.appendChild(tableDataInfoAction);
         orderList.appendChild(row);
     }
 }

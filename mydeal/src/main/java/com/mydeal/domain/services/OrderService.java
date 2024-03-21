@@ -1,9 +1,13 @@
 package com.mydeal.domain.services;
 
 import com.mydeal.domain.entities.Order;
+import com.mydeal.domain.entities.OrderDetails;
+import com.mydeal.domain.mapping.OrderDetailsMapping;
 import com.mydeal.domain.mapping.OrderMapping;
+import com.mydeal.domain.models.OrderItemModel;
 import com.mydeal.domain.models.OrderModel;
 import com.mydeal.domain.util.JpaUtil;
+import com.mydeal.repository.OrderDetailsRepository;
 import com.mydeal.repository.OrderRepository;
 import jakarta.persistence.EntityManager;
 
@@ -19,6 +23,20 @@ public class OrderService {
         for (Order order : orders) {
             orderModels.add(OrderMapping.mapOrderToOrderModel(order));
         }
+        em.close();
         return orderModels;
+    }
+
+    public List<OrderItemModel> getOrderDetails(Integer orderId) {
+        OrderDetailsRepository orderRepository = new OrderDetailsRepository();
+        EntityManager em = JpaUtil.createEntityManager();
+        List<OrderItemModel> orderItems = new ArrayList<>();
+        List<OrderDetails> orderDetails = orderRepository.getOrderDetails(em, orderId);
+        System.out.println("Size of orderDetails: " + orderDetails.size());
+        for (OrderDetails od : orderDetails) {
+            orderItems.add(OrderDetailsMapping.convertEntityToModel(od));
+        }
+        em.close();
+        return orderItems;
     }
 }

@@ -81,7 +81,7 @@ function displayProduct(products) {
     var tableHeaderPrice = document.createElement('th');
     tableHeaderPrice.textContent = 'Price';
     var tableHeaderCount = document.createElement('th');
-    tableHeaderCount.textContent = 'Count';
+    tableHeaderCount.textContent = 'Quantity';
     var tableHeaderTotal = document.createElement('th');
     tableHeaderTotal.textContent = 'Total';
     var tableHeaderAvailableQuantity = document.createElement('th');
