@@ -12,12 +12,12 @@ public class AddProductModel {
 
     private String Description;
 
-    private BigDecimal Price;
+    private Double Price;
 
     private Integer AvailableQuantity;
 
 
-    private BigDecimal Rating;
+    private Double Rating;
 
     byte[][] Images;
 
@@ -28,7 +28,7 @@ public class AddProductModel {
 
     }
 
-    public AddProductModel(String productName, String description, BigDecimal price, Integer availableQuantity, BigDecimal averageRating, int category, byte[][]Images) {
+    public AddProductModel(String productName, String description, Double price, Integer availableQuantity, Double averageRating, int category, byte[][]Images) {
         this.ProductName = productName;
         this.Description = description;
         this.Price = price;
