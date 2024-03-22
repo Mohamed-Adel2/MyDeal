@@ -89,6 +89,12 @@
         <servlet-name>AdminDeleteServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>AdminUpdatedServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.UpdateProductServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/cart</url-pattern>
@@ -176,7 +182,12 @@
 
     <servlet-mapping>
         <servlet-name>AdminDeleteServlet</servlet-name>
-        <url-pattern>/adminDelete</url-pattern>
+        <url-pattern>/admin/adminDelete</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminUpdatedServlet</servlet-name>
+        <url-pattern>/admin/adminUpdate</url-pattern>
     </servlet-mapping>
 
 </web-app>

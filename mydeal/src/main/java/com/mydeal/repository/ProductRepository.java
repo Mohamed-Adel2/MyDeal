@@ -59,15 +59,13 @@ public class ProductRepository extends CrudRepository<Product> {
     public boolean updateProduct(EntityManager em , Product product){
         try {
             em.getTransaction().begin();
-            Product updatedProduct = em.merge(product); // Perform the merge operation
+            Product updatedProduct = em.merge(product);
             em.getTransaction().commit();
 
             if (updatedProduct  != null) {
-                // Merge operation was successful
                 System.out.println("Merge operation successful");
                 return true;
             } else {
-                // Merge operation failed or did not result in a managed entity
                 System.out.println("Merge operation failed or no changes were made");
                 return false;
             }
@@ -75,7 +73,7 @@ public class ProductRepository extends CrudRepository<Product> {
             // Handle exceptions
             System.err.println("Failed to merge entity: " + e.getMessage());
             if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // Rollback the transaction if it's still active
+                em.getTransaction().rollback();
             }
             return false;
         }

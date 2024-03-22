@@ -4,10 +4,12 @@ import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.mapping.ProductDetailMap;
 import com.mydeal.domain.mapping.ProductMap;
 import com.mydeal.domain.mapping.admin.AddProductMap;
+import com.mydeal.domain.mapping.admin.UpdateProductModelToProductMap;
 import com.mydeal.domain.models.FilterModel;
 import com.mydeal.domain.models.ProductDataModel;
 import com.mydeal.domain.models.ProductDetailDataModel;
 import com.mydeal.domain.models.admin.AddProductModel;
+import com.mydeal.domain.models.admin.UpdateProductModel;
 import com.mydeal.domain.util.JpaUtil;
 import com.mydeal.repository.ProductRepository;
 
@@ -66,10 +68,11 @@ public class ProductService {
         em.close();
         return delete;
     }
-    public boolean updateProduct(ProductDataModel productDataModel){
+    public boolean updateProduct(UpdateProductModel updateProductModel){
         var em = JpaUtil.createEntityManager();
         ProductMap productMap = new ProductMap();
-        Product product =productMap.convertModeToEntity(productDataModel) ;
+        UpdateProductModelToProductMap updateProductModelToProductMap = new UpdateProductModelToProductMap();
+       Product product= updateProductModelToProductMap.convertModelToEntity(updateProductModel);
         ProductRepository pr = new ProductRepository();
         boolean update = pr.updateProduct(em, product);
         em.close();
