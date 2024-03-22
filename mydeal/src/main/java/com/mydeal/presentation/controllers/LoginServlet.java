@@ -26,9 +26,17 @@ public class LoginServlet extends HttpServlet {
         } else {
             CustomerLoginService customerLoginService = new CustomerLoginService();
             Customer customer = customerLoginService.login(req.getParameter(RequestKey.RQ_CustomerEmail), req.getParameter(RequestKey.RQ_CustomerPassword));
+
+           boolean isAdmin = customerLoginService.checkAdmin(req.getParameter(RequestKey.RQ_CustomerEmail));
+
+           System.out.println("User Is Admin "+isAdmin);
             if (getCookie(req, "auth") != null) {
                 req.getSession(true).setAttribute("user", customer);
-                resp.getWriter().write(new Gson().toJson("valid"));
+                if(isAdmin){
+                    resp.getWriter().write(new Gson().toJson("Admin"));
+                }else{
+                    resp.getWriter().write(new Gson().toJson("valid"));
+                }
                 return;
             }
             if (customer == null) {
@@ -42,7 +50,12 @@ public class LoginServlet extends HttpServlet {
                     authCookie.setMaxAge(60 * 60 * 24 * 30);
                     resp.addCookie(authCookie);
                 }
+                if(isAdmin){
+                    resp.getWriter().write(new Gson().toJson("Admin"));
+                }else{
                 resp.getWriter().write(new Gson().toJson("valid"));
+            }
+
             }
         }
     }

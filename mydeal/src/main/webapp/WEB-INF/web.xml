@@ -86,7 +86,7 @@
     </servlet>
 
     <servlet>
-        <servlet-name>AdminDelteServlet</servlet-name>
+        <servlet-name>AdminDeleteServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -175,7 +175,7 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>AdminDelteServlet</servlet-name>
+        <servlet-name>AdminDeleteServlet</servlet-name>
         <url-pattern>/adminDelete</url-pattern>
     </servlet-mapping>
 

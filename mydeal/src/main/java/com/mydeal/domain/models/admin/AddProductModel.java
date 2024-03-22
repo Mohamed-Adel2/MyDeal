@@ -3,6 +3,7 @@ package com.mydeal.domain.models.admin;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 
 @Data
@@ -36,5 +37,18 @@ public class AddProductModel {
         this.Rating = averageRating;
         this.Images = Images;
         Category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "AddProductModel{" +
+                "ProductName='" + ProductName + '\'' +
+                ", Description='" + Description + '\'' +
+                ", Price=" + Price +
+                ", AvailableQuantity=" + AvailableQuantity +
+                ", Rating=" + Rating +
+                ", Images=" + Images.length +
+                ", Category=" + Category +
+                '}';
     }
 }
