@@ -176,7 +176,7 @@
 
     <servlet-mapping>
         <servlet-name>AdminDeleteServlet</servlet-name>
-        <url-pattern>/adminDelete</url-pattern>
+        <url-pattern>/admin/adminDelete</url-pattern>
     </servlet-mapping>
 
 </web-app>

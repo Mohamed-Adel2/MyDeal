@@ -8,7 +8,13 @@ function getUserFromServlet(first) {
                 console.log(response);
                 if (response === 'invalid' && !first) {
                     customAlert('Wrong email or password, please try again');
-                } else if (response === 'valid') {
+                }
+                else if(response === 'Admin'){
+                    console.log("Yes Admin");
+                    window.location.href ='adminHome.html';
+                }
+                else if (response === 'valid') {
+                   // window.location.href ='adminHome.html';
                     window.location.href = 'index.html';
                 }
             } else {

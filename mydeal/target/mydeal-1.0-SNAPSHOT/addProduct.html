@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+    <link rel="stylesheet" href="css/loadImage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -12,7 +13,7 @@
 <div id="headerContainer"></div>
 <!-- Header part end-->
 
-<!--================Register_part Area =================-->
+<!--================Add Product part Area =================-->
 <section class="login_part section_padding ">
     <div class="container">
         <div class="row align-items-center">
@@ -30,30 +31,46 @@
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="productDescription" name="productDescription" value=""
                                        placeholder="Enter Product Description" required>
-                                <label id="emailValidity"></label>
                             </div>
                             <!-- Product Price Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="number" class="form-control" id="productPrice" name="productPrice" value=""
-                                       placeholder="Enter Product Price" required>
-                                <label id="phoneValidity"></label>
+                                  placeholder="Enter Product Price" required>
                             </div>
                             <!-- Product available quantity Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="date" class="form-control" id="dob" name="date_of_birth" value=""
-                                       placeholder="Date of Birth" required>
-                            </div>
-                            <!-- Product Average Rating Field -->
-                            <div class="col-md-12 form-group p_star">
-                                <input type="number" class="form-control" id="creditLimit" name="credit_limit" value=""
-                                       placeholder="Credit Limit" step="0.01" min="1" required>
+                                <input type="number" class="form-control" id="productQuantity" name="productQuantity" value=""
+                                       placeholder="Enter Product Quantity" required>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <button type="submit" value="submit" class="btn_3" onclick="registerUser()">
-                                    Add New Product
-                                </button>
+                            <div class="col-md-12 form-group p_star">
+                                <fieldset class="border p-2">
+                                    <legend class="w-auto">Category:</legend>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="category" id="category1" value="category1">
+                                        <label class="form-check-label" for="category1">
+                                            Category 1
+                                        </label>
+                                    </div>
+                                </fieldset>
                             </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <form id="imageUploadForm" enctype="multipart/form-data">
+                                    <label for="fileInput" class="custom-file-upload">
+                                        Upload Images
+                                    </label>
+                                    <input type="file" id="fileInput" accept="image/*" multiple>
+                                </form>
+                            </div>
+                            <div id="imageList" class="col-md-12 form-group p_star"></div>
+
+                            <!-- Add Product Button -->
+                            <div class="col-md-12 form-group p_star">
+                                <button type="button" id="addProductButton" class="btn btn-primary">Add Product</button>
+
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -90,6 +107,7 @@
 <script src="js/mail-script.js"></script>
 <!-- custom js -->
 <script src="js/custom.js"></script>
+<script src="js/AddProduct.js"></script>
 <script src="js/CustomerState.js"></script>
 <!-- Your JavaScript code -->
 <script>
