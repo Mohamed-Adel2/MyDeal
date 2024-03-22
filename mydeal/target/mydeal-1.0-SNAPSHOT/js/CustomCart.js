@@ -97,7 +97,6 @@ function displayProduct(products) {
     var tableBody = document.createElement('tbody');
     //add product rows
     for (var i = 0; i < products.length; i++) {
-        console.log(products[i]);
         var product = products[i];
         var tableDataRow = document.createElement('tr');
         var tableDataProduct = document.createElement('td');
@@ -115,6 +114,12 @@ function displayProduct(products) {
         tableDataProductMediaBody.className = 'media-body';
         var tableDataProductMediaBodyP = document.createElement('p');
         tableDataProductMediaBodyP.textContent = product.productName;
+        tableDataProductMediaBodyP.style.cursor = 'pointer';
+        (function (product) {
+            tableDataProductMediaBodyP.addEventListener('click', function () {
+                window.location.href = 'single-product.html?Id=' + product.id;
+            });
+        })(product);
         tableDataProductMediaBody.appendChild(tableDataProductMediaBodyP);
         tableDataProductMedia.appendChild(tableDataProductMediaBody);
         tableDataProduct.appendChild(tableDataProductMedia);
@@ -140,7 +145,8 @@ function displayProduct(products) {
         tableDataCountInput.value = product.quantity;
         tableDataCountInput.min = 1;
         tableDataCountInput.max = product.availableQuantity;
-        tableDataCountInput.value = Math.min(product.quantity, product.availableQuantity);
+        product.quantity = Math.min(product.quantity, product.availableQuantity);
+        tableDataCountInput.value = product.quantity;
         var tableDataCountIncrement = document.createElement('span');
         tableDataCountIncrement.className = 'input-number-increment';
         var tableDataCountIncrementIcon = document.createElement('i');
@@ -154,7 +160,7 @@ function displayProduct(products) {
         //add total
         var tableDataTotal = document.createElement('td');
         var tableDataTotalH5 = document.createElement('h5');
-        tableDataTotalH5.textContent = '$' + product.price * product.quantity;
+        tableDataTotalH5.textContent = '$' + (product.price * product.quantity).toFixed(2);
         tableDataTotal.appendChild(tableDataTotalH5);
         tableDataRow.appendChild(tableDataTotal);
         //add available quantity
@@ -225,6 +231,80 @@ function displayProduct(products) {
         })
     }
     productContainer.appendChild(tableBody);
+
+    productContainer = document.getElementById("details-table").getElementsByTagName('tbody')[0];
+    productContainer.innerHTML = '';
+
+    var totalQuantity = 0;
+    var totalPrice = 0;
+
+    for (var i = 0; i < products.length; i++) {
+        var product = products[i];
+        var tableDataRow = document.createElement('tr');
+
+        // Product name
+        // add a elements that links to th product page
+        var tableDataProduct = document.createElement('th');
+        tableDataProduct.colSpan = "2";
+        var productNameSpan = document.createElement('span');
+        productNameSpan.textContent = product.productName;
+        productNameSpan.style.cursor = 'pointer';
+        (function (product) {
+            productNameSpan.addEventListener('click', function () {
+                window.location.href = 'single-product.html?Id=' + product.id;
+            });
+        })(product);
+        tableDataProduct.appendChild(productNameSpan);
+        tableDataRow.appendChild(tableDataProduct);
+
+        // Quantity
+        var tableDataQuantity = document.createElement('th');
+        tableDataQuantity.textContent = 'x' + product.quantity;
+        tableDataRow.appendChild(tableDataQuantity);
+
+        // Total
+        var tableDataTotal = document.createElement('th');
+        var totalSpan = document.createElement('span');
+        totalSpan.textContent = '$' + (product.price * product.quantity).toFixed(2);
+        tableDataTotal.appendChild(totalSpan);
+        tableDataRow.appendChild(tableDataTotal);
+
+        productContainer.appendChild(tableDataRow);
+
+        totalQuantity += product.quantity;
+        totalPrice += product.price * product.quantity;
+    }
+
+    // Add subtotal row
+    var subtotalRow = document.createElement('tr');
+    var subtotalTh = document.createElement('th');
+    subtotalTh.colSpan = "3";
+    subtotalTh.textContent = 'Subtotal';
+    subtotalRow.appendChild(subtotalTh);
+    var subtotalTotalTh = document.createElement('th');
+    var subtotalTotalSpan = document.createElement('span');
+    subtotalTotalSpan.textContent = '$' + totalPrice.toFixed(2);
+    subtotalTotalTh.appendChild(subtotalTotalSpan);
+    subtotalRow.appendChild(subtotalTotalTh);
+    productContainer.appendChild(subtotalRow);
+
+    // Add shipping row
+    var shippingRow = document.createElement('tr');
+    var shippingTh = document.createElement('th');
+    shippingTh.colSpan = "3";
+    shippingTh.textContent = 'Shipping';
+    shippingRow.appendChild(shippingTh);
+    var shippingTotalTh = document.createElement('th');
+    var shippingTotalSpan = document.createElement('span');
+    shippingTotalSpan.textContent = 'free delivery: $00.00';
+    shippingTotalTh.appendChild(shippingTotalSpan);
+    shippingRow.appendChild(shippingTotalTh);
+    productContainer.appendChild(shippingRow);
+
+    // Update the footer
+    var footer = document.getElementById("details-table").getElementsByTagName('tfoot')[0];
+    footer.getElementsByTagName('th')[1].textContent = totalQuantity;
+    footer.getElementsByTagName('th')[2].textContent = '$' + (totalPrice.toFixed(2));
 }
 
 function customAlert(message) {

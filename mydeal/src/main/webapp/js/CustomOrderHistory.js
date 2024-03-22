@@ -49,13 +49,13 @@ function displayOrders(orders) {
         row.appendChild(totalPrice);
         var tableDataInfoAction = document.createElement('td');
         var tableDataInfoButton = document.createElement('button');
-        tableDataInfoButton.className = 'btn_3';
+        tableDataInfoButton.className = 'btn_1';
         tableDataInfoButton.id = 'info-btn';
         tableDataInfoButton.type = 'button';
         tableDataInfoButton.textContent = 'Order Details';
-        tableDataInfoButton.onclick = (function(order) {
-            return function() {
-                window.location.href = 'order-items.html?id=' + order.id;
+        tableDataInfoButton.onclick = (function (order) {
+            return function () {
+                window.location.href = 'order-items.html?id=' + order.id + '&date=' + order.date+'&totalPrice='+order.totalPrice;
             };
         })(order);
         tableDataInfoAction.appendChild(tableDataInfoButton);

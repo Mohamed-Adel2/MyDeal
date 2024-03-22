@@ -8,77 +8,79 @@ function getURLParameter(name) {
 }
 
 function displayProducts(products) {
-    var productContainer = document.getElementById("details-table");
+    var productContainer = document.getElementById("details-table").getElementsByTagName('tbody')[0];
     productContainer.innerHTML = '';
-    // Add header row
-    var tableHeader = document.createElement('thead');
-    var tableHeaderRow = document.createElement('tr');
-    var tableHeaderProduct = document.createElement('th');
-    tableHeaderProduct.textContent = 'Product';
-    var tableHeaderPrice = document.createElement('th');
-    tableHeaderPrice.textContent = 'Price';
-    var tableHeaderCount = document.createElement('th');
-    tableHeaderCount.textContent = 'Quantity';
-    var tableHeaderTotal = document.createElement('th');
-    tableHeaderTotal.textContent = 'Total';
-    tableHeaderRow.appendChild(tableHeaderProduct);
-    tableHeaderRow.appendChild(tableHeaderPrice);
-    tableHeaderRow.appendChild(tableHeaderCount);
-    tableHeaderRow.appendChild(tableHeaderTotal);
-    tableHeader.appendChild(tableHeaderRow);
-    productContainer.appendChild(tableHeader);
-    //add body
-    var tableBody = document.createElement('tbody');
-    //add product rows
+
+    var totalQuantity = 0;
+    var totalPrice = 0;
+
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
         var tableDataRow = document.createElement('tr');
-        var tableDataProduct = document.createElement('td');
-        var tableDataProductMedia = document.createElement('div');
-        tableDataProductMedia.className = 'media';
-        var tableDataProductMediaDiv = document.createElement('div');
-        tableDataProductMediaDiv.className = 'd-flex';
-        var tableDataProductMediaImage = document.createElement('img');
-        var blob = new Blob([new Uint8Array(product.image)], {type: 'image/jpeg'});
-        tableDataProductMediaImage.src = URL.createObjectURL(blob);
-        tableDataProductMediaImage.alt = 'Product Image';
-        tableDataProductMediaDiv.appendChild(tableDataProductMediaImage);
-        tableDataProductMedia.appendChild(tableDataProductMediaDiv);
-        var tableDataProductMediaBody = document.createElement('div');
-        tableDataProductMediaBody.className = 'media-body';
-        var tableDataProductMediaBodyP = document.createElement('p');
-        tableDataProductMediaBodyP.textContent = product.productName;
-        tableDataProductMediaBody.appendChild(tableDataProductMediaBodyP);
-        tableDataProductMedia.appendChild(tableDataProductMediaBody);
-        tableDataProduct.appendChild(tableDataProductMedia);
+
+        // Product name
+        // add a elements that links to th product page
+        var tableDataProduct = document.createElement('th');
+        tableDataProduct.colSpan = "2";
+        var productNameSpan = document.createElement('span');
+        productNameSpan.textContent = product.productName;
+        productNameSpan.style.cursor = 'pointer';
+        (function (product) {
+            productNameSpan.addEventListener('click', function () {
+                window.location.href = 'single-product.html?Id=' + product.id;
+            });
+        })(product);
+        tableDataProduct.appendChild(productNameSpan);
         tableDataRow.appendChild(tableDataProduct);
 
-        //add price
-        var tableDataPrice = document.createElement('td');
-        var tableDataPriceH5 = document.createElement('h5');
-        tableDataPriceH5.textContent = '$' + product.price;
-        tableDataPrice.appendChild(tableDataPriceH5);
-        tableDataRow.appendChild(tableDataPrice);
+        // Quantity
+        var tableDataQuantity = document.createElement('th');
+        tableDataQuantity.textContent = 'x' + product.quantity;
+        tableDataRow.appendChild(tableDataQuantity);
 
-        //add count
-        var tableDataCount = document.createElement('td');
-        var tableDataQuantityH5 = document.createElement('h5');
-        tableDataQuantityH5.textContent = product.quantity;
-        tableDataCount.appendChild(tableDataQuantityH5);
-        tableDataRow.appendChild(tableDataCount);
-
-        //add total
-        var tableDataTotal = document.createElement('td');
-        var tableDataTotalH5 = document.createElement('h5');
-        tableDataTotalH5.textContent = '$' + product.price * product.quantity;
-        tableDataTotal.appendChild(tableDataTotalH5);
+        // Total
+        var tableDataTotal = document.createElement('th');
+        var totalSpan = document.createElement('span');
+        totalSpan.textContent = '$' + (product.price * product.quantity).toFixed(2);
+        tableDataTotal.appendChild(totalSpan);
         tableDataRow.appendChild(tableDataTotal);
 
-        tableBody.appendChild(tableDataRow);
+        productContainer.appendChild(tableDataRow);
 
-        productContainer.appendChild(tableBody);
-
+        totalQuantity += product.quantity;
+        totalPrice += product.price * product.quantity;
     }
+
+    // Add subtotal row
+    var subtotalRow = document.createElement('tr');
+    var subtotalTh = document.createElement('th');
+    subtotalTh.colSpan = "3";
+    subtotalTh.textContent = 'Subtotal';
+    subtotalRow.appendChild(subtotalTh);
+    var subtotalTotalTh = document.createElement('th');
+    var subtotalTotalSpan = document.createElement('span');
+    subtotalTotalSpan.textContent = '$' + totalPrice.toFixed(2);
+    subtotalTotalTh.appendChild(subtotalTotalSpan);
+    subtotalRow.appendChild(subtotalTotalTh);
+    productContainer.appendChild(subtotalRow);
+
+    // Add shipping row
+    var shippingRow = document.createElement('tr');
+    var shippingTh = document.createElement('th');
+    shippingTh.colSpan = "3";
+    shippingTh.textContent = 'Shipping';
+    shippingRow.appendChild(shippingTh);
+    var shippingTotalTh = document.createElement('th');
+    var shippingTotalSpan = document.createElement('span');
+    shippingTotalSpan.textContent = 'free delivery: $00.00';
+    shippingTotalTh.appendChild(shippingTotalSpan);
+    shippingRow.appendChild(shippingTotalTh);
+    productContainer.appendChild(shippingRow);
+
+    // Update the footer
+    var footer = document.getElementById("details-table").getElementsByTagName('tfoot')[0];
+    footer.getElementsByTagName('th')[1].textContent = totalQuantity;
+    footer.getElementsByTagName('th')[2].textContent = '$' + (totalPrice.toFixed(2));
 }
 
 
@@ -94,7 +96,8 @@ function getOrderDetails() {
                 if (orderDetails === "failure")
                     customAlert('Something went wrong, please try again!');
                 else {
-                    displayProducts(orderDetails);
+                    displayCustomerDetails(orderDetails[0]);
+                    displayProducts(orderDetails[1]);
                 }
 
             } else {
@@ -105,6 +108,49 @@ function getOrderDetails() {
     };
     xhr.open('GET', 'orderDetails?orderId=' + getURLParameter("id"), true);
     xhr.send();
+}
+
+
+function displayCustomerDetails(customer) {
+    // Order info
+    var orderInfoList = document.getElementById("order-details");
+    orderInfoList.innerHTML = `
+        <li>
+            <p>Order ID</p><span>: ${getURLParameter("id")}</span>
+        </li>
+        <li>
+            <p>Date</p><span>: ${new Date(getURLParameter("date")).toLocaleDateString()}</span>
+        </li>
+        <li>
+            <p>Total</p><span>: USD ${getURLParameter("totalPrice")}</span>
+        </li>
+        <li>
+            <p>Payment method</p><span>: Cash on Delivery</span>
+        </li>
+        <li>
+            <p>Status</p><span>: Under delivery</span>
+        </li>
+    `;
+
+    // Shipping address
+    var shippingAddressList = document.getElementById("shipping-details");
+    shippingAddressList.innerHTML = `
+        <li>
+            <p>Customer Name</p><span>: ${customer.name}</span>
+        </li>
+        <li>
+            <p>Phone</p><span>: ${customer.phone}</span>
+        </li>
+        <li>
+            <p>Street</p><span>: ${customer.address.street}</span>
+        </li>
+        <li>
+            <p>City</p><span>: ${customer.address.city}</span>
+        </li>
+        <li>
+            <p>Apartment</p><span>: ${customer.address.apartment}</span>
+        </li>
+    `;
 }
 
 

@@ -16,7 +16,7 @@ public class OrderMapping {
             totalPrice += orderDetails.getQuantity() * orderDetails.getProduct().getPrice();
         }
         orderModel.setItemsCount(cnt);
-        orderModel.setTotalPrice(totalPrice);
+        orderModel.setTotalPrice(Math.round(totalPrice * 100.0) / 100.0);
         return orderModel;
     }
 }
