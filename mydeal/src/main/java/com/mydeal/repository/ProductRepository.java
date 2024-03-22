@@ -13,9 +13,13 @@ public class ProductRepository extends CrudRepository<Product> {
     }
 
     public List<Product> getAllProduct(EntityManager em, FilterModel filter) {
-        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p WHERE p.price >= :minPrice"
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p "
+                + "LEFT JOIN OrderDetails od ON p.id = od.product.id "
+                + "WHERE p.price >= :minPrice"
                 + (filter.getCategoryId() == 0 ? "" : " AND p.category.id = :category ")
-                + " AND p.price <= :maxPrice AND p.productName LIKE :searchKey", Product.class);
+                + " AND p.price <= :maxPrice AND p.productName LIKE :searchKey"
+                + " GROUP BY p.id"
+                + " ORDER BY SUM(od.quantity) DESC", Product.class);
         query.setParameter("minPrice", filter.getMinPrice());
         query.setParameter("maxPrice", filter.getMaxPrice());
         query.setParameter("searchKey", "%" + filter.getSearchKey() + "%");

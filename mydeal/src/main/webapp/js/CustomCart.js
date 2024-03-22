@@ -95,7 +95,6 @@ function displayProduct(products) {
     productContainer.appendChild(tableHeader);
     //add body
     var tableBody = document.createElement('tbody');
-    console.log(products.length);
     //add product rows
     for (var i = 0; i < products.length; i++) {
         console.log(products[i]);

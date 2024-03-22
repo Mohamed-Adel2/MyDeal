@@ -8,7 +8,6 @@ function getURLParameter(name) {
 }
 
 function displayProducts(products) {
-    console.log(products);
     var productContainer = document.getElementById("details-table");
     productContainer.innerHTML = '';
     // Add header row
