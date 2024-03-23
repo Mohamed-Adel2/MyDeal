@@ -14,25 +14,28 @@ public class ProductMap {
 
     ProductDataModel productDataModel;
 
-    public ProductMap(){
+    public ProductMap() {
 
     }
-   public ProductMap(Product product){
-        this.product= product;
+
+    public ProductMap(Product product) {
+        this.product = product;
     }
-    public ProductMap(ProductDataModel productDataModel){
+
+    public ProductMap(ProductDataModel productDataModel) {
         this.productDataModel = productDataModel;
     }
-   public ProductDataModel convertEntityToModel(Product product){
+
+    public ProductDataModel convertEntityToModel(Product product) {
         this.product = product;
         productDataModel = new ProductDataModel();
         productDataModel.setId(product.getId());
         productDataModel.setProductName(product.getProductName());
         productDataModel.setDescription(product.getDescription());
-        productDataModel.setPrice(product.getPrice());
+        productDataModel.setPrice(Math.round(product.getPrice() * 100.0) / 100.0);
         Set<ProductImages> arrImages = product.getProductimages();
         byte[] arr;
-        for(ProductImages productImages:arrImages){
+        for (ProductImages productImages : arrImages) {
             arr = productImages.getImage();
             productDataModel.setImage(arr);
             break;

@@ -11,7 +11,7 @@ public class CustomerInfoMapping {
         customerInfoModel.setPhoneNumber(customer.getPhoneNumber());
         customerInfoModel.setDob(customer.getDateOfBirth().toString());
         customerInfoModel.setPassword(customer.getPassword());
-        customerInfoModel.setCreditLimit(customer.getCreditLimit().toString());
+        customerInfoModel.setCreditLimit(((Double) (Math.round(customer.getCreditLimit() * 100.0) / 100.0)).toString());
         customerInfoModel.setStreet(customer.getAddress().getStreet());
         customerInfoModel.setCity(customer.getAddress().getCity());
         customerInfoModel.setApartment(customer.getAddress().getApartment());
