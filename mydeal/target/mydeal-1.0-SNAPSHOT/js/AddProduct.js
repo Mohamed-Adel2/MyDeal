@@ -1,13 +1,16 @@
 // Define a global array to store the selected images
 var imagesList = [];
-
+var selectedCategoryNow
 function removeFileFromFileInput(file) {
 
     const newFiles = Array.from(fileInput.files).filter(f => f !== file);
     fileInput.files = newFiles;
     fileInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
+document.addEventListener('DOMContentLoaded', function () {
+    getCategoriesFromServlet();
 
+});
 
 // Function to display all images
 function displayImages(files) {
@@ -87,7 +90,7 @@ function makeGson(BytesArray){
         "Description": productDescription,
         "Price": productPrice,
         "AvailableQuantity": productQuantity,
-        "Category": "1",
+        "Category": selectedCategoryNow,
         "Rating":"0.0",
         "Images": formattedBytesArray,
     };
@@ -147,6 +150,60 @@ function convertFilesToByteArrays(filesList) {
         });
     };
     handleFile();
+}
+function getCategoriesFromServlet(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var jsonResponse = xhr.responseText;
+                var categories = JSON.parse(jsonResponse);
+                console.log(jsonResponse);
+                appearCategoriesOnScreen(categories);
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'categories', true);
+
+    xhr.send();
+}
+function appearCategoriesOnScreen(categories){
+
+
+    const categoryContainer = document.getElementById('categoryContainer');
+
+
+    categories.forEach((category, index) => {
+
+        const radioButton = document.createElement('input');
+        radioButton.setAttribute('type', 'radio');
+        radioButton.setAttribute('name', 'category');
+        radioButton.setAttribute('id', category);
+        radioButton.setAttribute('value', category);
+
+
+        const label = document.createElement('label');
+        label.setAttribute('for', category);
+        label.textContent = category;
+
+
+        const div = document.createElement('div');
+        div.classList.add('form-check');
+        div.appendChild(radioButton);
+        div.appendChild(label);
+
+
+        categoryContainer.querySelector('fieldset').appendChild(div);
+        radioButton.addEventListener('change', function() {
+            const selectedCategory = this.value;
+            console.log('Selected category:', selectedCategory);
+            selectedCategoryNow = selectedCategory;
+
+        });
+    });
 }
 
 

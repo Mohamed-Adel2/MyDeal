@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="css/loadImage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+<!--::header part start::-->
+<div id="headerContainer"></div>
+<!-- Header part end-->
+
+<!--================Add Product part Area =================-->
+<section class="login_part section_padding ">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_form">
+                    <div class="login_part_form_iner">
+                        <h3>Current Categories <br></h3>
+                        <form class="row contact_form" method="post">
+
+                            <div class="col-md-12 form-group p_star" id="categoryContainer">
+                                <fieldset class="border p-2">
+                                    <legend class="w-auto">Category:</legend>
+                                    <div class="form-check">
+<!--                                        <input class="form-check-input" type="radio" name="category" id="category1" value="category1">-->
+<!--                                        <label class="form-check-label" for="category1">-->
+<!--                                            Category 1-->
+<!--                                        </label>-->
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <button type="button" id="DeleteCategory" class="btn btn-primary">Delete Category</button>
+
+                            </div>
+
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="CategoryName" name="productDescription" value=""
+                                       placeholder="New Category" required>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <button type="button" id="AddCategory" class="btn btn-primary">Add New Category</button>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--================login_part end =================-->
+
+<!-- jquery plugins here-->
+<script src="js/jquery-1.12.1.min.js"></script>
+<!-- popper js -->
+<script src="js/popper.min.js"></script>
+<!-- bootstrap js -->
+<script src="js/bootstrap.min.js"></script>
+<!-- easing js -->
+<script src="js/jquery.magnific-popup.js"></script>
+<!-- swiper js -->
+<script src="js/swiper.min.js"></script>
+<!-- swiper js -->
+<script src="js/mixitup.min.js"></script>
+<!-- particles js -->
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<!-- slick js -->
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.counterup.min.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/mail-script.js"></script>
+<!-- custom js -->
+<script src="js/custom.js"></script>
+<script src="js/CategoryDetail.js"></script>
+<script src="js/CustomerState.js"></script>
+<!-- Your JavaScript code -->
+<script>
+    $(document).ready(function () {
+        // Fetch and include the header HTML
+        $("#headerContainer").load("myDealHeader.html");
+    });
+</script>
+</body>
+</html>

@@ -87,7 +87,7 @@
 
     <servlet>
         <servlet-name>AdminDeleteServlet</servlet-name>
-        <servlet-class>com.mydeal.presentation.controllers.admin.AdminDeleteCategory</servlet-class>
+        <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -102,7 +102,7 @@
 
     <servlet>
         <servlet-name>DeleteCategoryServlet</servlet-name>
-        <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminDeleteCategory</servlet-class>
     </servlet>
 
     <servlet-mapping>

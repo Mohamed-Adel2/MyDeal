@@ -22,14 +22,14 @@ public class AddProductModel {
 
     byte[][] Images;
 
-    int Category;
+    String Category;
 
 
     public AddProductModel(){
 
     }
 
-    public AddProductModel(String productName, String description, Double price, Integer availableQuantity, Double averageRating, int category, byte[][]Images) {
+    public AddProductModel(String productName, String description, Double price, Integer availableQuantity, Double averageRating, String category, byte[][]Images) {
         this.ProductName = productName;
         this.Description = description;
         this.Price = price;

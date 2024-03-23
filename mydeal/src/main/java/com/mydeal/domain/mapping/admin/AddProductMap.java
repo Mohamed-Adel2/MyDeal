@@ -3,6 +3,7 @@ package com.mydeal.domain.mapping.admin;
 import com.mydeal.domain.entities.Category;
 import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.models.admin.AddProductModel;
+import com.mydeal.domain.services.CategoryService;
 
 public class AddProductMap {
     Product product;
@@ -16,8 +17,9 @@ public class AddProductMap {
         product.setPrice(addProductModel.getPrice());
         product.setDescription(addProductModel.getDescription());
         product.setAverageRating(addProductModel.getRating());
+        CategoryService categoryService = new CategoryService();
         Category category = new Category();
-        category.setId(addProductModel.getCategory());
+        category.setId(categoryService.getCategoryId(addProductModel.getCategory()));
         product.setCategory(category);
         return product;
     }

@@ -67,7 +67,7 @@ function deleteCategoryFromServlet(){
         "categoryName":selectedCategoryNow,
     };
     const xhr = new XMLHttpRequest();
-    const servletURL = 'admin/adminDelete';
+    const servletURL = 'admin/adminDeleteCategory';
     xhr.open('POST', servletURL, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 

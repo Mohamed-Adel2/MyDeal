@@ -20,7 +20,7 @@ function deleteProduct() {
     console.log(paramValue);
 
     var parms = {
-        productId: paramValue
+        Id: paramValue
     }
     var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
 

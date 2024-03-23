@@ -38,9 +38,14 @@ public class CustomerRepository extends CrudRepository<Customer> {
     }
 
     public boolean checkAdmin(EntityManager em, String email) {
-        //will handle with database when change in schema validation of user
-//        System.out.println("Email User that logged "+email);
-        return email.equals("mydeal@gmail.com");
+        TypedQuery<Customer> query = em.createQuery("SELECT u FROM Customer u WHERE u.email = :email", Customer.class);
+        query.setParameter("email", email);
+           Customer customer = query.getSingleResult();
+           if(customer.getIsAdmin()==0){
+               return false;
+           }else{
+               return true;
+           }
     }
 
     public double getCustomerBalance(EntityManager em, int customerId) {
