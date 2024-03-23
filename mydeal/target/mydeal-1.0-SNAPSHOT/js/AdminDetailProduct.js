@@ -1,5 +1,6 @@
 // Get the button element
 const deleteProductBtn = document.getElementById('DeleteProductBtn');
+const updateProductBtn = document.getElementById('UpdateProductBtn');
 deleteProductBtn.addEventListener('click', function() {
     if (confirm('mydeal: Are you sure you want to delete this product?')) {
         deleteProduct();
@@ -7,6 +8,13 @@ deleteProductBtn.addEventListener('click', function() {
         console.log('Product deletion cancelled.');
     }
 });
+updateProductBtn.addEventListener('click', function (){
+    var parms={
+        Id:getURLParameter("Id")
+    }
+    var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
+    window.location.href = 'updateProduct.html'+'?'+paramStr;
+})
 function deleteProduct() {
     let paramValue = getURLParameter('Id');
     console.log(paramValue);

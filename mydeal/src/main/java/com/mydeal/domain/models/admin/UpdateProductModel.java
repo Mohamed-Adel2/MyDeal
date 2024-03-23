@@ -16,7 +16,8 @@ public class UpdateProductModel {
 
     int quantity;
 
-    int category;
+    //int category;
+    String category;
 
     int[] deleted;
 
@@ -30,7 +31,7 @@ public class UpdateProductModel {
                 ", Description='" + Description + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", category=" + category +
+                ", category='" + category + '\'' +
                 ", deleted=" + deleted.length +
                 ", added=" + added.length +
                 '}';

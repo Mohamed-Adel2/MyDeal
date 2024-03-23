@@ -149,34 +149,5 @@ function convertFilesToByteArrays(filesList) {
     handleFile();
 }
 
-/*function SendJsonToServlet(jsonData) {
-    const xhr = new XMLHttpRequest();
-    const servletURL = 'adminAdd';
-    xhr.open('POST', servletURL, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            const responseData = JSON.parse(xhr.responseText);
-            console.log('Response from server:', responseData);
-
-            if (responseData.success) {
-                alert('Product and images added successfully');
-            } else {
-                alert('Failed to add product or images: ' + responseData.message);
-            }
-        } else {
-            console.error('Request failed with status:', xhr.status);
-        }
-    };
-
-    xhr.onerror = function() {
-     //   console.log(jsonData);
-
-        console.error('Request failed');
-    };
-    console.log("Json Data before send "+jsonData);
-    xhr.send(jsonData);
-}*/
 
 

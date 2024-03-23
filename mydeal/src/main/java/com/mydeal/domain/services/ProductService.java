@@ -42,6 +42,8 @@ public class ProductService {
         return productDataModel;
     }
 
+
+
     public Integer getProductQuantity(int productId) {
         var em = JpaUtil.createEntityManager();
         ProductRepository pr = new ProductRepository();
@@ -70,7 +72,7 @@ public class ProductService {
     }
     public boolean updateProduct(UpdateProductModel updateProductModel){
         var em = JpaUtil.createEntityManager();
-        ProductMap productMap = new ProductMap();
+       // ProductMap productMap = new ProductMap();
         UpdateProductModelToProductMap updateProductModelToProductMap = new UpdateProductModelToProductMap();
        Product product= updateProductModelToProductMap.convertModelToEntity(updateProductModel);
         ProductRepository pr = new ProductRepository();

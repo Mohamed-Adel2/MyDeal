@@ -3,6 +3,8 @@ package com.mydeal.repository;
 import com.mydeal.domain.entities.ProductImages;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 public class ProductImagesRepository extends CrudRepository<ProductImages>{
     public ProductImagesRepository()
     {

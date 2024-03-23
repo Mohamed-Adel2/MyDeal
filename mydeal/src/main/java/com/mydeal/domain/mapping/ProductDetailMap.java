@@ -20,16 +20,20 @@ public class ProductDetailMap {
     //    List<ProductImageModel> productImageModels = new ArrayList<>();
         Set<ProductImages> productImageEntity = product.getProductimages();
         byte arr[][] = new byte[productImageEntity.size()+1][];
+        int [] idsOfImages = new int[productImageEntity.size()+1];
         int i =0;
         for (ProductImages entity : productImageEntity) {
                 arr[i] = entity.getImage();
+                idsOfImages[i] = entity.getId();
                 i++;
         }
         productDetailDataModel.setImages(arr);
+        productDetailDataModel.setIdsOfImages(idsOfImages);
         productDetailDataModel.setDescription(product.getDescription());
         productDetailDataModel.setPrice(product.getPrice());
         productDetailDataModel.setAvailableQuantity(product.getAvailableQuantity());
         productDetailDataModel.setAverageRating(product.getAverageRating());
+        productDetailDataModel.setCategory(product.getCategory().getCategoryName());
         return productDetailDataModel;
     }
 

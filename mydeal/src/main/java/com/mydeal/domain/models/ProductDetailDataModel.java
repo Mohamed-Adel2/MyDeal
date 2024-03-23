@@ -22,4 +22,8 @@ public class ProductDetailDataModel {
     private Double averageRating;
 
     private Integer quantity;
+
+    private String category;
+
+    private int[] IdsOfImages;
 }
