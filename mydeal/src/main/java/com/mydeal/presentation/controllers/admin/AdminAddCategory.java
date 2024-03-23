@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class AdminAddCategory extends HttpServlet {
 
@@ -30,5 +31,9 @@ public class AdminAddCategory extends HttpServlet {
             jsonResponse.addProperty("success", false);
             jsonResponse.addProperty("message", "Failed to add Add Category");
         }
+        res.setContentType("application/json");
+        PrintWriter out = res.getWriter();
+        out.println(jsonResponse.toString());
+        out.close();
     }
 }

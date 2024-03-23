@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class AdminDeleteCategory extends HttpServlet {
     @Override
@@ -26,5 +27,9 @@ public class AdminDeleteCategory extends HttpServlet {
             jsonResponse.addProperty("success", false);
             jsonResponse.addProperty("message", "Failed to add Delete Category");
         }
+        res.setContentType("application/json");
+        PrintWriter out = res.getWriter();
+        out.println(jsonResponse.toString());
+        out.close();
     }
 }

@@ -10,6 +10,10 @@ let minPrice = 0;
 let maxPrice = 1000;
 let searchKey = "";
 
+function moveToCategoryScreen(){
+    window.location.href = "CategoriesDetail.html";
+}
+
 function getProductsFromServlet(newFilter) {
     var xhr = new XMLHttpRequest();
     if (newFilter === true) {
