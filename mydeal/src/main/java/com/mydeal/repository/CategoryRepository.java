@@ -24,4 +24,35 @@ public class CategoryRepository extends CrudRepository<Category> {
             query.setParameter("categoryName", categoryName);
         return query.getSingleResult();
     }
+    public Integer createNewCategory(EntityManager em , String categoryName){
+        TypedQuery<Integer> query = em.createQuery("SELECT c.id FROM Category c WHERE c.categoryName = :categoryName",Integer.class);
+            query.setParameter("categoryName", categoryName);
+        List<Integer> resultList = query.getResultList();
+        if(resultList.isEmpty()){
+            Category category = new Category();
+            category.setCategoryName(categoryName);
+            em.getTransaction().begin();
+            em.persist(category);
+            em.getTransaction().commit();
+            return category.getId();
+        }else{
+            return -1;
+        }
+    }
+    public boolean deleteCategory(EntityManager em , String categoryName){
+        TypedQuery<Integer> query = em.createQuery("SELECT c.id FROM Category c WHERE c.categoryName = :categoryName",Integer.class);
+        query.setParameter("categoryName", categoryName);
+        List<Integer> resultList = query.getResultList();
+        if(!resultList.isEmpty()){
+            System.out.println("Category Name "+categoryName);
+            Integer categoryId = resultList.getFirst(); // Assuming there's only one category with the same name
+            Category category = em.find(Category.class,categoryId);
+            em.getTransaction().begin();
+            em.remove(category);
+            em.getTransaction().commit();
+            return true;
+        }else{
+                return false;
+        }
+    }
 }

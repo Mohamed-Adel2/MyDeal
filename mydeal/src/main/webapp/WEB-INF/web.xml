@@ -87,12 +87,22 @@
 
     <servlet>
         <servlet-name>AdminDeleteServlet</servlet-name>
-        <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminDeleteCategory</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>AdminUpdatedServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.admin.UpdateProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AddCategoryServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminAddCategory</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -189,5 +199,13 @@
         <servlet-name>AdminUpdatedServlet</servlet-name>
         <url-pattern>/admin/adminUpdate</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCategoryServlet</servlet-name>
+        <url-pattern>/admin/adminAddCategory</url-pattern>
+    </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <url-pattern>/admin/adminDeleteCategory</url-pattern>
+    </servlet-mapping>
 </web-app>
