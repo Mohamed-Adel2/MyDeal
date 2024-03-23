@@ -44,12 +44,15 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<CustomerCart> customerCarts = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderDetails> orderdetails = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductImages> productimages = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Reviews> reviews = new LinkedHashSet<>();
+
+    @Column(name = "is_removed")
+    private int isDeleted;
 }

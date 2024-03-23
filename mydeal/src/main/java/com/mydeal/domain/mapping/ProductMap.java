@@ -33,6 +33,8 @@ public class ProductMap {
         productDataModel.setProductName(product.getProductName());
         productDataModel.setDescription(product.getDescription());
         productDataModel.setPrice(Math.round(product.getPrice() * 100.0) / 100.0);
+        productDataModel.setCategory(product.getCategory().getId());
+        productDataModel.setIsRemoved(product.getIsDeleted());
         Set<ProductImages> arrImages = product.getProductimages();
         byte[] arr;
         for (ProductImages productImages : arrImages) {

@@ -11,6 +11,7 @@ import com.mydeal.domain.models.ProductDetailDataModel;
 import com.mydeal.domain.models.admin.AddProductModel;
 import com.mydeal.domain.models.admin.UpdateProductModel;
 import com.mydeal.domain.util.JpaUtil;
+import com.mydeal.repository.CustomerCartRepository;
 import com.mydeal.repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ public class ProductService {
         em.close();
         return products;
     }
-    public ProductDetailDataModel getProduct(int id){
+
+    public ProductDetailDataModel getProduct(int id) {
         var em = JpaUtil.createEntityManager();
         ProductRepository pr = new ProductRepository();
         Product product = pr.getProduct(em, id);
@@ -43,7 +45,6 @@ public class ProductService {
     }
 
 
-
     public Integer getProductQuantity(int productId) {
         var em = JpaUtil.createEntityManager();
         ProductRepository pr = new ProductRepository();
@@ -51,32 +52,36 @@ public class ProductService {
         em.close();
         return product.getAvailableQuantity();
     }
-    public int addProduct(AddProductModel addProductModel){
+
+    public int addProduct(AddProductModel addProductModel) {
         var em = JpaUtil.createEntityManager();
         AddProductMap addProductMap = new AddProductMap();
         Product product = addProductMap.convertModelToEntity(addProductModel);
         ProductRepository pr = new ProductRepository();
-       int id= pr.addProduct(em, product);
+        int id = pr.addProduct(em, product);
         em.close();
-        return id ;
+        return id;
     }
-    public boolean deleteProduct(int id){
-        var em = JpaUtil.createEntityManager();
 
-       Product product = em.find(Product.class , id);
-        System.out.println(product.getId());
-        ProductRepository pr = new ProductRepository();
-        boolean delete = pr.deleteProduct(em, product);
-        em.close();
-        return delete;
-    }
-    public boolean updateProduct(UpdateProductModel updateProductModel){
+    public boolean deleteProduct(int id) {
         var em = JpaUtil.createEntityManager();
-       // ProductMap productMap = new ProductMap();
-        UpdateProductModelToProductMap updateProductModelToProductMap = new UpdateProductModelToProductMap();
-       Product product= updateProductModelToProductMap.convertModelToEntity(updateProductModel);
+        Product product = em.find(Product.class, id);
+        product.setIsDeleted(1);
         ProductRepository pr = new ProductRepository();
-        boolean update = pr.updateProduct(em, product);
+        em.getTransaction().begin();
+        product = pr.update(em, product);
+        em.getTransaction().commit();
+        em.close();
+        return product.getIsDeleted() == 1;
+    }
+
+    public boolean updateProduct(UpdateProductModel updateProductModel) {
+        var em = JpaUtil.createEntityManager();
+        // ProductMap productMap = new ProductMap();
+        UpdateProductModelToProductMap updateProductModelToProductMap = new UpdateProductModelToProductMap();
+        Product product = updateProductModelToProductMap.convertModelToEntity(updateProductModel);
+        ProductRepository pr = new ProductRepository();
+        boolean update = pr.update(em, product) != null;
         em.close();
         return update;
     }

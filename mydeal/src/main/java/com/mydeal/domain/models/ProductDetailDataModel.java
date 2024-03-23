@@ -25,5 +25,7 @@ public class ProductDetailDataModel {
 
     private String category;
 
+    private Integer isRemoved;
+
     private int[] IdsOfImages;
 }

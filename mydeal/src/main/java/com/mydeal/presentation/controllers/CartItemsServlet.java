@@ -49,7 +49,7 @@ public class CartItemsServlet extends HttpServlet {
         ArrayList<ProductDetailDataModel> products = new ArrayList<>();
         for (CartModel cartModel : cart) {
             products.add(productService.getProduct(cartModel.getProductId()));
-            products.getLast().setQuantity(cartModel.getQuantity());
+            products.get(products.size() - 1).setQuantity(cartModel.getQuantity());
         }
         response.getWriter().write(Base64.getEncoder().encodeToString(new Gson().toJson(products).getBytes()));
     }

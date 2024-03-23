@@ -1,5 +1,6 @@
 // This function checks if the user is logged in or not
-function checkUserStatus(isLoggedIn) {
+function checkUserStatus(status) {
+    console.log(status);
     var homeTab = document.getElementById('homeTab');
     var aboutTab = document.getElementById('aboutTab');
     var contactTab = document.getElementById('contactTab');
@@ -10,6 +11,8 @@ function checkUserStatus(isLoggedIn) {
     var historyTab = document.getElementById('historyTab');
     var registerTab = document.getElementById('registerTab');
     var cartIcon = document.getElementById('cartIcon');
+    var addCategoryTab = document.getElementById('addCategoryTab');
+    var addProductTab = document.getElementById('addProductTab');
 
     homeTab.style.display = 'block';
     aboutTab.style.display = 'block';
@@ -17,19 +20,37 @@ function checkUserStatus(isLoggedIn) {
     productsTab.style.display = 'block';
     cartIcon.style.display = 'block';
 
-    if (isLoggedIn) {
+    if (status === 'user') {
         profileIcon.style.display = 'block';
         historyTab.style.display = 'block';
         logoutTab.style.display = 'block';
         logoutTab.setAttribute('onclick', 'logOut()');
         loginTab.style.display = 'none';
         registerTab.style.display = 'none';
-    } else {
+        addCategoryTab.style.display = 'none';
+        addProductTab.style.display = 'none';
+    } else if (status === 'notAuthorized') {
         profileIcon.style.display = 'none';
         historyTab.style.display = 'none';
         logoutTab.style.display = 'none';
         loginTab.style.display = 'block';
         registerTab.style.display = 'block';
+        addCategoryTab.style.display = 'none';
+        addProductTab.style.display = 'none';
+    } else {
+        logoutTab.style.display = 'block';
+        logoutTab.setAttribute('onclick', 'logOut()');
+        addProductTab.style.display = 'block';
+        addCategoryTab.style.display = 'block';
+        profileIcon.style.display = 'none';
+        historyTab.style.display = 'none';
+        loginTab.style.display = 'none';
+        registerTab.style.display = 'none';
+        cartIcon.style.display = 'none';
+        var addProductLink = document.getElementById("addProductLink");
+        if (addProductLink === null)
+            console.log("error");
+        addProductLink.href = 'adminHome.html';
     }
 }
 
@@ -41,11 +62,7 @@ function checkStatus() {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if (response === 'true') {
-                    checkUserStatus(true);
-                } else {
-                    checkUserStatus(false);
-                }
+                checkUserStatus(response);
             } else {
                 console.error('Request failed: ' + xhr.status);
             }

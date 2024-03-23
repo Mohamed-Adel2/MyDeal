@@ -20,14 +20,15 @@ public class DeleteProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       int productId = Integer.parseInt(req.getParameter("Id"));
+        int productId = Integer.parseInt(req.getParameter("Id"));
         ProductService productService = new ProductService();
-       boolean isDeleted =productService.deleteProduct(productId);
+        boolean isDeleted = productService.deleteProduct(productId);
+        System.out.println(isDeleted);
         PrintWriter wr = resp.getWriter();
-       if(isDeleted){
+        if (isDeleted) {
             wr.write("Product deleted successfully");
-       }else{
-           wr.write("Failed To deleted product");
-       }
+        } else {
+            wr.write("Failed To deleted product");
+        }
     }
 }

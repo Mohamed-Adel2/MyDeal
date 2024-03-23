@@ -16,7 +16,6 @@ public class UpdateProductModel {
 
     int quantity;
 
-    //int category;
     String category;
 
     int[] deleted;

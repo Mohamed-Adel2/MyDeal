@@ -31,8 +31,8 @@ public class ProductDetailMap {
         productDetailDataModel.setPrice(Math.round(product.getPrice() * 100.0) / 100.0);
         productDetailDataModel.setAvailableQuantity(product.getAvailableQuantity());
         productDetailDataModel.setCategory(product.getCategory().getCategoryName());
+        productDetailDataModel.setIsRemoved(product.getIsDeleted());
         productDetailDataModel.setAverageRating(Math.round(product.getAverageRating() * 100.0) / 100.0);
-
         return productDetailDataModel;
     }
 
@@ -45,6 +45,7 @@ public class ProductDetailMap {
         product.setPrice(Math.round(productDetailDataModel.getPrice() * 100.0) / 100.0);
         product.setAverageRating(Math.round(productDetailDataModel.getAverageRating() * 100.0) / 100.0);
         product.setAvailableQuantity(productDetailDataModel.getAvailableQuantity());
+        product.setIsDeleted(productDetailDataModel.getIsRemoved());
         return product;
     }
 }

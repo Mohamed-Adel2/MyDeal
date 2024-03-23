@@ -98,6 +98,9 @@ function displayProduct(products) {
     //add product rows
     for (var i = 0; i < products.length; i++) {
         var product = products[i];
+        console.log(product);
+        if (product.isRemoved === 1)
+            continue;
         var tableDataRow = document.createElement('tr');
         var tableDataProduct = document.createElement('td');
         var tableDataProductMedia = document.createElement('div');

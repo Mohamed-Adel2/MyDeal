@@ -17,7 +17,7 @@ public class ProductRepository extends CrudRepository<Product> {
                 + "LEFT JOIN OrderDetails od ON p.id = od.product.id "
                 + "WHERE p.price >= :minPrice"
                 + (filter.getCategoryId() == 0 ? "" : " AND p.category.id = :category ")
-                + " AND p.price <= :maxPrice AND p.productName LIKE :searchKey"
+                + " AND p.price <= :maxPrice AND p.productName LIKE :searchKey AND p.isDeleted = 0"
                 + " GROUP BY p.id"
                 + " ORDER BY SUM(od.quantity) DESC", Product.class);
         query.setParameter("minPrice", filter.getMinPrice());
@@ -32,8 +32,7 @@ public class ProductRepository extends CrudRepository<Product> {
     }
 
     public Product getProduct(EntityManager em , int id){
-        Product product = em.find(Product.class, id);
-        return product;
+        return em.find(Product.class, id);
     }
     public int addProduct(EntityManager em , Product product){
         em.getTransaction().begin();
@@ -41,46 +40,4 @@ public class ProductRepository extends CrudRepository<Product> {
         em.getTransaction().commit();
         return product.getId();
     }
-    public boolean deleteProduct(EntityManager em , Product product){
-        try {
-            System.out.println("We are here");
-            em.getTransaction().begin();
-            em.remove(product);
-            em.getTransaction().commit();
-            // Operation succeeded
-            System.out.println("Product removed successfully");
-            return true;
-        } catch (Exception e) {
-            // Operation failed
-            System.err.println("Failed to remove product: " + e.getMessage());
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // Rollback the transaction if it's still active
-            }
-            return false;
-        }
-
-    }
-    public boolean updateProduct(EntityManager em , Product product){
-        try {
-            em.getTransaction().begin();
-            Product updatedProduct = em.merge(product);
-            em.getTransaction().commit();
-
-            if (updatedProduct  != null) {
-                System.out.println("Merge operation successful");
-                return true;
-            } else {
-                System.out.println("Merge operation failed or no changes were made");
-                return false;
-            }
-        } catch (Exception e) {
-            // Handle exceptions
-            System.err.println("Failed to merge entity: " + e.getMessage());
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            return false;
-        }
-    }
-
 }

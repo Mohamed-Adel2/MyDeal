@@ -26,9 +26,12 @@ public class ProductDataModel implements Serializable {
 
     private Double averageRating;
 
-   private int category;
+    private int category;
+
+    private int isRemoved;
 
     private byte[] image;
+
     @Override
     public String toString() {
         return "ProductDataModel{" +
