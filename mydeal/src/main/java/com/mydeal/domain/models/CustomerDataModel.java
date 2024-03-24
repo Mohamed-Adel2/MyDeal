@@ -10,7 +10,8 @@ import java.time.LocalDate;
 
 @Data
 public class CustomerDataModel {
-    private Integer id, addressId;
+
+    private Integer id, addressId, isAdmin;
     private String userName, email, phoneNumber, dob, password;
     private Double creditLimit;
     private AddressDataModel addressDataModel;
