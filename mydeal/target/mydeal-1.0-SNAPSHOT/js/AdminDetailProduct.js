@@ -1,4 +1,9 @@
 // Get the button element
+document.addEventListener('DOMContentLoaded', function () {
+    checkAuth();
+    console.log("listener");
+
+});
 const deleteProductBtn = document.getElementById('DeleteProductBtn');
 const updateProductBtn = document.getElementById('UpdateProductBtn');
 deleteProductBtn.addEventListener('click', function () {
@@ -52,6 +57,31 @@ function deleteProduct() {
 function getURLParameter(name) {
     let params = new URLSearchParams(window.location.search);
     return params.get(name);
+}
+
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if(response==='admin'){
+                    getDetailFromServlet();
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
 }
 
 function customAlert(message) {
@@ -140,7 +170,6 @@ function customConfirm(message, callback) {
     // Show the confirm
     confirmContainer.style.display = 'block';
 }
-
 function getDetailFromServlet() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -217,7 +246,6 @@ async function displayProduct(product) {
         autoplayHoverPause: true
     });
 }
-
 document.addEventListener('DOMContentLoaded', function () {
-    getDetailFromServlet();
+    checkAuth();
 });

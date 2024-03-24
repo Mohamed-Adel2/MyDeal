@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function () {
+    checkAuth();
+
+});
 function register() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -314,6 +318,30 @@ function validateConfirmation() {
         $('#confirmationValidity').hide();
         $('#confirmationValidity').text('').css('color', 'red');
     }
+}
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if(response==='user'|| response==='notAuthorized'){
+                    return;
+                }else{
+
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
 }
 
 

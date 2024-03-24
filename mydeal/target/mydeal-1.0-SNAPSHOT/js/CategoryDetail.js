@@ -1,7 +1,8 @@
 var selectedCategoryNow;
 document.addEventListener('DOMContentLoaded', function () {
     console.log("listener");
-    getCategoreiesFromServlet();
+    //getCategoreiesFromServlet();
+    checkAuth();
 
 });
 const DeleteCategoryButton = document.getElementById('DeleteCategory');
@@ -128,6 +129,32 @@ function addCategoryToServlet() {
         console.error('Request failed');
     };
     xhr.send(JSON.stringify(jsonData));
+}
+
+function checkAuth() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if (response === 'admin') {
+
+                    getCategoreiesFromServlet();
+                } else {
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
 }
 
 function customAlert(message, state) {

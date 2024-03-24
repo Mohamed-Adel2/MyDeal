@@ -364,5 +364,31 @@ continueShoppingButton.addEventListener('click', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    getCartItemsFromServlet();
+    //getCartItemsFromServlet();
+    checkAuth();
 });
+
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if(response==='user'|| response==='notAuthorized'){
+                    getCartItemsFromServlet();
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
+}

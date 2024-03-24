@@ -151,7 +151,31 @@ function selectCategory(event) {
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("listener");
-    //getUserType
-    getCategoriesFromServlet();
-    getProductsFromServlet(true);
+    checkAuth();
 });
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if( response==='admin'){
+                   // getCategoriesFromServlet();
+                    getCategoriesFromServlet();
+                    getProductsFromServlet(true);
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
+}

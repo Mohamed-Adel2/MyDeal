@@ -165,6 +165,33 @@
         <servlet-name>OrderItemsServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.OrderItemsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminHomePage</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.HomePageServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>adminLogin</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>showAllCustomers</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.ShowAllCustomers</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>showAllCustomers</servlet-name>
+        <url-pattern>/showAllCustomers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminLogin</servlet-name>
+        <url-pattern>/admin/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>adminHomePage</servlet-name>
+        <url-pattern>/admin/home</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>OrderItemsServlet</servlet-name>
@@ -194,6 +221,7 @@
         <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>ProductDetailServlet</servlet-name>

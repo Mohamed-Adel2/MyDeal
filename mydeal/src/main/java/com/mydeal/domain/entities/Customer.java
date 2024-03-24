@@ -55,8 +55,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Reviews> reviews = new LinkedHashSet<>();
 
-    @Column(name = "is_admin")
-    private Integer IsAdmin;
     @Override
     public String toString() {
         return "Customer{" +
