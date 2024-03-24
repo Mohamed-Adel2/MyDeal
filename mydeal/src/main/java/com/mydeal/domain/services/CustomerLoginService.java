@@ -13,4 +13,12 @@ public class CustomerLoginService {
         em.close();
         return customer;
     }
+    public boolean checkAdmin(String email){
+        EntityManager em = JpaUtil.createEntityManager();
+        CustomerRepository customerRepository = new CustomerRepository();
+        boolean isAdmin = customerRepository.checkAdmin(em,email);
+        em.close();
+        return  isAdmin;
+
+    }
 }

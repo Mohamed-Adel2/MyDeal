@@ -17,7 +17,7 @@ public class ProductRepository extends CrudRepository<Product> {
                 + "LEFT JOIN OrderDetails od ON p.id = od.product.id "
                 + "WHERE p.price >= :minPrice"
                 + (filter.getCategoryId() == 0 ? "" : " AND p.category.id = :category ")
-                + " AND p.price <= :maxPrice AND p.productName LIKE :searchKey"
+                + " AND p.price <= :maxPrice AND p.productName LIKE :searchKey AND p.isDeleted = 0"
                 + " GROUP BY p.id"
                 + " ORDER BY SUM(od.quantity) DESC", Product.class);
         query.setParameter("minPrice", filter.getMinPrice());
@@ -32,8 +32,12 @@ public class ProductRepository extends CrudRepository<Product> {
     }
 
     public Product getProduct(EntityManager em , int id){
-        Product product = em.find(Product.class, id);
-        return product;
+        return em.find(Product.class, id);
     }
-
+    public int addProduct(EntityManager em , Product product){
+        em.getTransaction().begin();
+        em.persist(product);
+        em.getTransaction().commit();
+        return product.getId();
+    }
 }

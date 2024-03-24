@@ -26,24 +26,37 @@ public class LoginServlet extends HttpServlet {
         } else {
             CustomerLoginService customerLoginService = new CustomerLoginService();
             Customer customer = customerLoginService.login(req.getParameter(RequestKey.RQ_CustomerEmail), req.getParameter(RequestKey.RQ_CustomerPassword));
+
             if (getCookie(req, "auth") != null) {
-                req.getSession(true).setAttribute("user", customer);
-                resp.getWriter().write(new Gson().toJson("valid"));
+                if (customer.getIsAdmin() == 1) {
+                    req.getSession(true).setAttribute("admin", customer);
+                    resp.getWriter().write(new Gson().toJson("Admin"));
+                } else {
+                    req.getSession(true).setAttribute("user", customer);
+                    resp.getWriter().write(new Gson().toJson("valid"));
+                }
                 return;
             }
-            System.out.println(req.getParameter(RequestKey.RQ_CustomerEmail) + " " + req.getParameter(RequestKey.RQ_CustomerPassword));
             if (customer == null) {
                 resp.getWriter().write(new Gson().toJson("invalid"));
             } else {
-                req.getSession(true).setAttribute("user", customer);
-                updateCart(getCookie(req, "cart"), customer.getId());
+                if (customer.getIsAdmin() == 1)
+                    req.getSession(true).setAttribute("admin", customer);
+                else {
+                    req.getSession(true).setAttribute("user", customer);
+                    updateCart(getCookie(req, "cart"), customer.getId());
+                }
                 if (req.getParameter("rememberMe") != null && req.getParameter("rememberMe").equals("true")) {
                     AuthenticationModel authenticationModel = new AuthenticationModel(customer.getEmail(), customer.getPassword());
                     Cookie authCookie = new Cookie("auth", Base64.getEncoder().encodeToString(new Gson().toJson(authenticationModel).getBytes()));
                     authCookie.setMaxAge(60 * 60 * 24 * 30);
                     resp.addCookie(authCookie);
                 }
-                resp.getWriter().write(new Gson().toJson("valid"));
+                if (customer.getIsAdmin() == 1) {
+                    resp.getWriter().write(new Gson().toJson("Admin"));
+                } else {
+                    resp.getWriter().write(new Gson().toJson("valid"));
+                }
             }
         }
     }

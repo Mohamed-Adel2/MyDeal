@@ -74,6 +74,37 @@
         <servlet-name>CartServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.CartServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminAddServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminAddProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminDeleteServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.DeleteProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AdminUpdatedServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.UpdateProductServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AddCategoryServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminAddCategory</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminDeleteCategory</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/cart</url-pattern>
@@ -134,6 +165,33 @@
         <servlet-name>OrderItemsServlet</servlet-name>
         <servlet-class>com.mydeal.presentation.controllers.OrderItemsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminHomePage</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.HomePageServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>adminLogin</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.AdminLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>showAllCustomers</servlet-name>
+        <servlet-class>com.mydeal.presentation.controllers.admin.ShowAllCustomers</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>showAllCustomers</servlet-name>
+        <url-pattern>/showAllCustomers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminLogin</servlet-name>
+        <url-pattern>/admin/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>adminHomePage</servlet-name>
+        <url-pattern>/admin/home</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>OrderItemsServlet</servlet-name>
@@ -170,4 +228,32 @@
         <url-pattern>/productDetail</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminHome</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminAddServlet</servlet-name>
+        <url-pattern>/adminAdd</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminDeleteServlet</servlet-name>
+        <url-pattern>/admin/adminDelete</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>AdminUpdatedServlet</servlet-name>
+        <url-pattern>/admin/adminUpdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCategoryServlet</servlet-name>
+        <url-pattern>/admin/adminAddCategory</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <url-pattern>/admin/adminDeleteCategory</url-pattern>
+    </servlet-mapping>
 </web-app>

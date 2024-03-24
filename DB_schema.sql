@@ -14,11 +14,13 @@ CREATE TABLE Customers (
     password VARCHAR(255),
     credit_limit DECIMAL(10,2),
     address_id INT,
-       FOREIGN KEY (address_id) REFERENCES Address(address_id)
+    is_admin INT default 0,
+	FOREIGN KEY (address_id) REFERENCES Address(address_id)
 );
 CREATE TABLE Categories(
 	category_id INT AUTO_INCREMENT PRIMARY KEY,
-    categoty_name VARCHAR(255)
+    category_name VARCHAR(255),
+    is_removed INT
 );
 CREATE TABLE Products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,7 +30,8 @@ CREATE TABLE Products (
     available_quantity INT,
     average_rating DECIMAL(3,2),
     category_id INT,
-     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
+    is_removed INT,
+	FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
 CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,7 +61,7 @@ CREATE TABLE CustomerCart (
 CREATE TABLE ProductImages (
     image_id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT,
-    image BLOB,
+    image mediumblob,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 

@@ -22,6 +22,18 @@ public class Category {
     @Column(name = "category_name")
     private String categoryName;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> products = new LinkedHashSet<>();
+
+    @Column(name = "is_removed")
+    private int isRemoved;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'' +
+                ", isRemoved=" + isRemoved +
+                '}';
+    }
 }
