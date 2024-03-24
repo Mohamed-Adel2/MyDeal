@@ -44,10 +44,10 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<CustomerCart> customerCarts = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<OrderDetails> orderdetails = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductImages> productimages = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
@@ -55,4 +55,18 @@ public class Product {
 
     @Column(name = "is_removed")
     private int isDeleted;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", availableQuantity=" + availableQuantity +
+                ", averageRating=" + averageRating +
+                ", category=" + category +
+                ", isDeleted=" + isDeleted +
+                '}';
+    }
 }

@@ -85,7 +85,9 @@ public class ProductService {
         UpdateProductModelToProductMap updateProductModelToProductMap = new UpdateProductModelToProductMap();
         Product product = updateProductModelToProductMap.convertModelToEntity(updateProductModel);
         ProductRepository pr = new ProductRepository();
+        em.getTransaction().begin();
         boolean update = pr.update(em, product) != null;
+        em.getTransaction().commit();
         em.close();
         return update;
     }

@@ -27,8 +27,17 @@ public class CategoryRepository extends CrudRepository<Category> {
         return query.getSingleResult();
     }
 
+    public Category getCategory(EntityManager em, String categoryName) {
+        System.out.println(categoryName);
+        TypedQuery<Category> query = em.createQuery("SELECT c FROM Category c " +
+                (!categoryName.equals("All") ? " WHERE c.categoryName = :categoryName" : "") + " and c.isRemoved = 0", Category.class);
+        if (!categoryName.equals("All"))
+            query.setParameter("categoryName", categoryName);
+        return query.getSingleResult();
+    }
+
     public Integer createNewCategory(EntityManager em, String categoryName) {
-        TypedQuery<Integer> query = em.createQuery("SELECT c.id FROM Category c WHERE c.categoryName = :categoryName", Integer.class);
+        TypedQuery<Integer> query = em.createQuery("SELECT c.id FROM Category c WHERE c.categoryName = :categoryName and c.isRemoved = 0", Integer.class);
         query.setParameter("categoryName", categoryName);
         List<Integer> resultList = query.getResultList();
         if (resultList.isEmpty()) {
