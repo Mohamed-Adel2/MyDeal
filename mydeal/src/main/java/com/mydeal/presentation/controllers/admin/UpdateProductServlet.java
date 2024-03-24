@@ -26,13 +26,19 @@ public class UpdateProductServlet extends HttpServlet {
         ProductImageService productImageService = new ProductImageService();
 
         boolean dataUpdated = productService.updateProduct(updateProductModel);
-        int deletedImages = productImageService.deletedImagesToProduct(updateProductModel);
-        int addedImages = productImageService.addNewImagesToProduct(updateProductModel);
+        if (updateProductModel.getDeleted().length > 0) {
+            System.out.println("Deleted Images");
+            productImageService.deletedImagesToProduct(updateProductModel);
+        }
+        if (updateProductModel.getAdded().length > 0) {
+            System.out.println("Added Images");
+            productImageService.addNewImagesToProduct(updateProductModel);
+        }
 
-        System.out.println(dataUpdated +" "+deletedImages+" "+ addedImages);
+        System.out.println(dataUpdated);
 
         JsonObject jsonResponse = new JsonObject();
-        if (dataUpdated && deletedImages>0&& addedImages>0 ) {
+        if (dataUpdated) {
             jsonResponse.addProperty("success", true);
             jsonResponse.addProperty("message", "Data Updated successfully.");
         } else {

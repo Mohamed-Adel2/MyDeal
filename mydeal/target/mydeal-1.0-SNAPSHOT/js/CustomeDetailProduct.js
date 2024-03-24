@@ -70,23 +70,19 @@ async function displayProduct(product) {
     $(productImgSlide).trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
     $(productImgSlide).find('.owl-stage-outer').children().unwrap();
 
-    var cnt = 1;
     product.images.forEach(function (imageArray) {
-        if (cnt !== product.images.length) {
-            var img = document.createElement('img');
-            img.className = 'img-fluid';
-            var blob = new Blob([new Uint8Array(imageArray)], {type: 'image/jpeg'});
-            img.src = URL.createObjectURL(blob);
-            img.alt = "#";
+        var img = document.createElement('img');
+        img.className = 'img-fluid';
+        var blob = new Blob([new Uint8Array(imageArray)], {type: 'image/jpeg'});
+        img.src = URL.createObjectURL(blob);
+        img.alt = "#";
 
-            var singleProductImg = document.createElement('div');
-            singleProductImg.className = 'single_product_img';
-            singleProductImg.appendChild(img);
+        var singleProductImg = document.createElement('div');
+        singleProductImg.className = 'single_product_img';
+        singleProductImg.appendChild(img);
 
-            // Append the singleProductImg div to the productImgSlide div
-            productImgSlide.appendChild(singleProductImg);
-            cnt++;
-        }
+        // Append the singleProductImg div to the productImgSlide div
+        productImgSlide.appendChild(singleProductImg);
     });
     productPrice.innerHTML = '';
     productPrice.appendChild(priceSpan);

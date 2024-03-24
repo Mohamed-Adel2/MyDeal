@@ -1,15 +1,19 @@
 // Define a global array to store the selected images
 var imagesList = [];
 var selectedCategoryNow
+
 function removeFileFromFileInput(file) {
 
     const newFiles = Array.from(fileInput.files).filter(f => f !== file);
     fileInput.files = newFiles;
-    fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    fileInput.dispatchEvent(new Event('change', {bubbles: true}));
 }
-document.addEventListener('DOMContentLoaded', function () {
-    getCategoriesFromServlet();
 
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('add-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+    });
+    getCategoriesFromServlet();
 });
 
 // Function to display all images
@@ -20,7 +24,7 @@ function displayImages(files) {
         const file = files[i];
 
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             const imgElement = document.createElement('img');
             imgElement.src = event.target.result;
             imgElement.className = 'uploaded-image';
@@ -29,7 +33,7 @@ function displayImages(files) {
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'X';
             deleteButton.className = 'delete-button';
-            deleteButton.addEventListener('click', function() {
+            deleteButton.addEventListener('click', function () {
                 const containerDiv = this.parentElement;
                 imageListDiv.removeChild(containerDiv);
 
@@ -52,7 +56,7 @@ function displayImages(files) {
 
 
             imagesList.push(file);
-            console.log("Added");
+            validateProductImage();
         };
         reader.readAsDataURL(file);
     }
@@ -62,7 +66,7 @@ function displayImages(files) {
 const fileInput = document.getElementById('fileInput');
 const addProductButton = document.getElementById('addProductButton');
 
-fileInput.addEventListener('change', function() {
+fileInput.addEventListener('change', function () {
     const files = this.files;
 
     if (files.length > 0) {
@@ -71,12 +75,20 @@ fileInput.addEventListener('change', function() {
 });
 
 
-addProductButton.addEventListener('click', function() {
-    convertFilesToByteArrays(imagesList);
+addProductButton.addEventListener('click', function () {
+    var productNameValid = validateProductName();
+    var productDescriptionValid = validateProductDescription();
+    var productPriceValid = validateProductPrice();
+    var productQuantityValid = validateQuantity();
+    var categoryValid = categoryValidation();
+    var productImageValid = validateProductImage();
 
-
+    if (productNameValid && productDescriptionValid && productPriceValid && productQuantityValid && categoryValid && productImageValid) {
+        convertFilesToByteArrays(imagesList);
+    }
 });
-function makeGson(BytesArray){
+
+function makeGson(BytesArray) {
     const productName = document.getElementById('productName').value;
     const productDescription = document.getElementById('productDescription').value;
     const productPrice = document.getElementById('productPrice').value;
@@ -85,13 +97,13 @@ function makeGson(BytesArray){
     const formattedBytesArray = BytesArray.map(byteArray => Array.from(byteArray));
 
     // Prepare product data as JSON object
-     var  jsonData = {
+    var jsonData = {
         "ProductName": productName,
         "Description": productDescription,
         "Price": productPrice,
         "AvailableQuantity": productQuantity,
         "Category": selectedCategoryNow,
-        "Rating":"0.0",
+        "Rating": "0.0",
         "Images": formattedBytesArray,
     };
     const xhr = new XMLHttpRequest();
@@ -99,41 +111,43 @@ function makeGson(BytesArray){
     xhr.open('POST', servletURL, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             const responseData = JSON.parse(xhr.responseText);
             console.log('Response from server:', responseData);
 
             if (responseData.success) {
-                alert('Product and images added successfully');
+                customAlert('Product has been added successfully', true);
             } else {
-                alert('Failed to add product or images: ' + responseData.message);
+                customAlert('Failed to add the product', false);
             }
         } else {
             console.error('Request failed with status:', xhr.status);
         }
     };
 
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         //   console.log(jsonData);
 
         console.error('Request failed');
     };
-  //  console.log("Data "+JSON.stringify(jsonData));
+    //  console.log("Data "+JSON.stringify(jsonData));
     xhr.send(JSON.stringify(jsonData));
 
-  //  SendJsonToServlet(productData);
+    //  SendJsonToServlet(productData);
 
 }
+
 function fileToByteArray(file, callback) {
     const reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         const arrayBuffer = event.target.result;
         const bytes = new Uint8Array(arrayBuffer);
         callback(bytes);
     };
     reader.readAsArrayBuffer(file);
 }
+
 function convertFilesToByteArrays(filesList) {
     const byteArrays2D = [];
     let currentIndex = 0;
@@ -143,7 +157,7 @@ function convertFilesToByteArrays(filesList) {
             return;
         }
         const file = filesList[currentIndex];
-        fileToByteArray(file, function(byteArray) {
+        fileToByteArray(file, function (byteArray) {
             byteArrays2D.push(Array.from(byteArray));
             currentIndex++;
             handleFile();
@@ -151,7 +165,8 @@ function convertFilesToByteArrays(filesList) {
     };
     handleFile();
 }
-function getCategoriesFromServlet(){
+
+function getCategoriesFromServlet() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -170,7 +185,8 @@ function getCategoriesFromServlet(){
 
     xhr.send();
 }
-function appearCategoriesOnScreen(categories){
+
+function appearCategoriesOnScreen(categories) {
 
 
     const categoryContainer = document.getElementById('categoryContainer');
@@ -197,7 +213,7 @@ function appearCategoriesOnScreen(categories){
 
 
         categoryContainer.querySelector('fieldset').appendChild(div);
-        radioButton.addEventListener('change', function() {
+        radioButton.addEventListener('change', function () {
             const selectedCategory = this.value;
             console.log('Selected category:', selectedCategory);
             selectedCategoryNow = selectedCategory;
@@ -206,5 +222,140 @@ function appearCategoriesOnScreen(categories){
     });
 }
 
+function customAlert(message, state) {
+    // Create overlay
+    var overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.zIndex = 999;
+    document.body.appendChild(overlay);
 
+    // Create alert container
+    var alertContainer = document.createElement('div');
+    alertContainer.id = 'custom-alert';
 
+    // Create message element
+    var messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    alertContainer.appendChild(messageElement);
+
+    // Create OK button
+    var okButton = document.createElement('button');
+    okButton.textContent = 'OK';
+    okButton.addEventListener('click', function () {
+        alertContainer.style.display = 'none';
+        overlay.style.display = 'none';
+        if (state)
+            location.reload();
+    });
+    alertContainer.appendChild(okButton);
+
+    // Append alert container to body
+    document.body.appendChild(alertContainer);
+
+    // Show the alert
+    alertContainer.style.display = 'block';
+}
+
+function validateProductName() {
+    var productName = document.getElementById('productName').value;
+    if (productName === '' || productName.length < 3) {
+        $('#productNameValidity').text('Please enter a product name with at least 3 characters').css('color', 'red');
+        $('#productNameValidity').show();
+        return false;
+    } else {
+        $('#productNameValidity').hide();
+        $('#productNameValidity').text('');
+        return true;
+    }
+}
+
+function validateProductDescription() {
+    var productDescription = document.getElementById('productDescription').value;
+    if (productDescription === '' || productDescription.length < 20) {
+        $('#productDescriptionValidity').text('Please enter a product description with at least 20 characters').css('color', 'red');
+        $('#productDescriptionValidity').show();
+        return false;
+    } else {
+        $('#productDescriptionValidity').hide();
+        $('#productDescriptionValidity').text('');
+        return true;
+    }
+}
+
+function validateProductPrice() {
+    var productPrice = document.getElementById('productPrice').value;
+    if (productPrice === '' || productPrice < 1) {
+        $('#priceValidity').text('Please a valid price').css('color', 'red');
+        $('#priceValidity').show();
+        return false;
+    } else {
+        $('#priceValidity').hide();
+        $('#priceValidity').text('');
+        return true;
+    }
+}
+
+function validateQuantity() {
+    var productQuantity = document.getElementById('productQuantity').value;
+    if (productQuantity === '' || productQuantity < 1) {
+        $('#quantityValidity').text('Please enter a valid quantity').css('color', 'red');
+        $('#quantityValidity').show();
+        return false;
+    } else {
+        $('#quantityValidity').hide();
+        $('#quantityValidity').text('');
+        return true;
+    }
+}
+
+function categoryValidation() {
+    var category = document.querySelector('input[name="category"]:checked');
+    if (category === null) {
+        $('#categoryValidity').text('Please select a category').css('color', 'red');
+        $('#categoryValidity').show();
+        return false;
+    } else {
+        $('#categoryValidity').hide();
+        $('#categoryValidity').text('');
+        return true;
+    }
+}
+
+function validateProductImage() {
+    var parentDiv = document.getElementById('imageList');
+    var childDivs = parentDiv.getElementsByTagName('div');
+    if (childDivs.length > 0) {
+        $('#imageValidity').hide();
+        $('#imageValidity').text('');
+        return true;
+    } else {
+        $('#imageValidity').text('Please upload at least one image').css('color', 'red');
+        $('#imageValidity').show();
+        return false;
+    }
+}
+
+$('#productName').on('blur', function () {
+    validateProductName();
+});
+
+$('#productDescription').on('blur', function () {
+    validateProductDescription();
+});
+
+$('#productPrice').on('blur', function () {
+    validateProductPrice();
+});
+
+$('#productQuantity').on('blur', function () {
+    validateQuantity();
+});
+
+$('#categoryContainer').on('change', function () {
+    categoryValidation();
+});
