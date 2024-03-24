@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    getOrderDetails();
+   // getOrderDetails();
+    checkAuth();
 });
 
 function getURLParameter(name) {
@@ -189,4 +190,28 @@ function customAlert(message) {
 
     // Show the alert
     alertContainer.style.display = 'block';
+}
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if(response==='user'|| response==='admin'){
+                    getOrderDetails();
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
 }

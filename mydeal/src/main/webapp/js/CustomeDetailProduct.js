@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+    checkAuth();
     console.log("listener");
-    getDetailFromServlet();
+  //  getDetailFromServlet();
     var addToCartBtn = document.getElementById('addToCartBtn');
 
     addToCartBtn.addEventListener('click', function (event) {
@@ -145,56 +146,6 @@ function addToCart(val) {
 }
 
 
-async function resizeImage(input, maxWidth, maxHeight) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            // Calculate new dimensions
-            let width = img.width;
-            let height = img.height;
-            if (width > maxWidth) {
-                height *= maxWidth / width;
-                width = maxWidth;
-            }
-            if (height > maxHeight) {
-                width *= maxHeight / height;
-                height = maxHeight;
-            }
-
-            // Set canvas dimensions
-            canvas.width = width;
-            canvas.height = height;
-
-            // Draw image on canvas with new dimensions
-            ctx.drawImage(img, 0, 0, width, height);
-
-            // Convert canvas to Blob
-            canvas.toBlob(blob => {
-                resolve(blob);
-            }, 'image/jpeg');
-        };
-        img.onerror = function () {
-            reject(new Error('Failed to load the image.'));
-        };
-
-        // Load image from URL or Blob
-        if (input instanceof Blob) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                img.src = reader.result;
-            };
-            reader.readAsDataURL(input);
-        } else if (typeof input === 'string') {
-            img.src = input;
-        } else {
-            reject(new Error('Invalid input type.'));
-        }
-    });
-}
-
 function customAlert(message) {
     // Create overlay
     var overlay = document.createElement('div');
@@ -230,4 +181,28 @@ function customAlert(message) {
 
     // Show the alert
     alertContainer.style.display = 'block';
+}
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if(response==='user'|| response==='notAuthorized'){
+                    getDetailFromServlet();
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
 }
