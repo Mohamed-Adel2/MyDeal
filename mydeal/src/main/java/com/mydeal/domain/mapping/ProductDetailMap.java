@@ -17,8 +17,8 @@ public class ProductDetailMap {
         productDetailDataModel.setId(product.getId());
         productDetailDataModel.setProductName(product.getProductName());
         Set<ProductImages> productImageEntity = product.getProductimages();
-        byte arr[][] = new byte[productImageEntity.size()+1][];
-        int [] idsOfImages = new int[productImageEntity.size()+1];
+        byte arr[][] = new byte[productImageEntity.size()][];
+        int [] idsOfImages = new int[productImageEntity.size()];
         int i =0;
         for (ProductImages entity : productImageEntity) {
                 arr[i] = entity.getImage();
@@ -32,7 +32,6 @@ public class ProductDetailMap {
         productDetailDataModel.setAvailableQuantity(product.getAvailableQuantity());
         productDetailDataModel.setCategory(product.getCategory().getCategoryName());
         productDetailDataModel.setIsRemoved(product.getIsDeleted());
-        productDetailDataModel.setAverageRating(Math.round(product.getAverageRating() * 100.0) / 100.0);
         return productDetailDataModel;
     }
 
@@ -43,7 +42,6 @@ public class ProductDetailMap {
         product.setProductName(productDetailDataModel.getProductName());
         product.setDescription(productDetailDataModel.getDescription());
         product.setPrice(Math.round(productDetailDataModel.getPrice() * 100.0) / 100.0);
-        product.setAverageRating(Math.round(productDetailDataModel.getAverageRating() * 100.0) / 100.0);
         product.setAvailableQuantity(productDetailDataModel.getAvailableQuantity());
         product.setIsDeleted(productDetailDataModel.getIsRemoved());
         return product;

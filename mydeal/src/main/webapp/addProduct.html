@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title>MyDeal - Shopping</title>
     <link rel="stylesheet" href="css/loadImage.css">
     <link rel="icon" href="img/favicon.png">
     <!-- Bootstrap CSS -->
@@ -25,6 +25,13 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/CustomAlert.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #imageList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Optional: Adds some space between the images */
+        }
+    </style>
 </head>
 
 <body>
@@ -101,33 +108,41 @@
             <div class="col-lg-6 col-md-6">
                 <div class="login_part_form">
                     <div class="login_part_form_iner">
-                        <h3>Adding New Product <br></h3>
-                        <form class="row contact_form" method="post">
+                        <h3>Add New Product <br></h3>
+                        <form class="row contact_form" id="add-form">
                             <!-- Product Name Field -->
                             <div class="col-md-12 form-group p_star">
                                 <input type="text" class="form-control" id="productName" name="productName" value=""
                                        placeholder="Enter Product Name" required>
+                                <label id="productNameValidity"></label>
                             </div>
                             <!-- Product Description Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="productDescription" name="productDescription" value=""
+                                <input type="text" class="form-control" id="productDescription"
+                                       name="productDescription" value=""
                                        placeholder="Enter Product Description" required>
+                                <label id="productDescriptionValidity"></label>
                             </div>
                             <!-- Product Price Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="number" class="form-control" id="productPrice" name="productPrice" value=""
-                                  placeholder="Enter Product Price" required>
+                                <input type="number" class="form-control" id="productPrice" name="productPrice"
+                                       value="" min="1"
+                                       placeholder="Enter Product Price" required>
+                                <label id="priceValidity"></label>
                             </div>
                             <!-- Product available quantity Field -->
                             <div class="col-md-12 form-group p_star">
-                                <input type="number" class="form-control" id="productQuantity" name="productQuantity" value=""
+                                <input type="number" class="form-control" id="productQuantity"
+                                       name="productQuantity" value="" min="1"
                                        placeholder="Enter Product Quantity" required>
+                                <label id="quantityValidity"></label>
                             </div>
 
                             <div class="col-md-12 form-group p_star" id="categoryContainer">
                                 <fieldset class="border p-2">
                                     <legend class="w-auto">Category:</legend>
                                 </fieldset>
+                                <label id="categoryValidity"></label>
                             </div>
 
                             <div class="col-md-12 form-group p_star">
@@ -138,15 +153,25 @@
                                     <input type="file" id="fileInput" accept="image/*" multiple>
                                 </form>
                             </div>
+                            <label id="imageValidity"></label>
                             <div id="imageList" class="col-md-12 form-group p_star"></div>
 
                             <!-- Add Product Button -->
                             <div class="col-md-12 form-group p_star">
-                                <button type="button" id="addProductButton" class="btn btn-primary">Add Product</button>
-
+                                <button type="button" id="addProductButton" class="btn btn-primary">Add Product
+                                </button>
                             </div>
-
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_text text-center">
+                    <div class="login_part_text_iner">
+                        <h2>Add New Product</h2>
+                        <p>Hey Admin, before you add a new product, please ensure all necessary fields are filled
+                            accurately. Double-check product details, pricing, and availability to provide the best user
+                            experience. Thanks for your attention to detail!</p>
                     </div>
                 </div>
             </div>
@@ -155,6 +180,32 @@
 </section>
 
 <!--================login_part end =================-->
+
+<footer class="footer_part">
+    <div class="footer_iner">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-8">
+                    <div class="footer_menu">
+                        <div class="footer_logo">
+                            <a href="index.html"><img src="img/logo.png" alt="#"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="social_icon">
+                        <a href="https://www.facebook.com/profile.php?id=100012910928633"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/muhamed.adell_/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/moadelsamir/"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="https://www.linkedin.com/in/moadelsamir/"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
 <!-- jquery plugins here-->
 <script src="js/jquery-1.12.1.min.js"></script>

@@ -11,7 +11,7 @@ function getUserFromServlet(first) {
                 }
                 else if(response === 'Admin'){
                     console.log("Yes Admin");
-                    window.location.href ='adminHome.html';
+                    window.location.href ='index.html';
                 }
                 else if (response === 'valid') {
                    // window.location.href ='adminHome.html';

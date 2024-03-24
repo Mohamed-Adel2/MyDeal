@@ -151,6 +151,7 @@ function selectCategory(event) {
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("listener");
+    //getUserType
     getCategoriesFromServlet();
     getProductsFromServlet(true);
 });
