@@ -8,7 +8,8 @@ function removeFileFromFileInput(file) {
     fileInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
 document.addEventListener('DOMContentLoaded', function () {
-    getCategoriesFromServlet();
+    //getCategoriesFromServlet();
+    checkAuth();
 
 });
 
@@ -205,6 +206,29 @@ function appearCategoriesOnScreen(categories){
         });
     });
 }
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if( response==='admin'){
+                    getCategoriesFromServlet();
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
 
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
+}
 
 

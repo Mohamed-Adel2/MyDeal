@@ -4,9 +4,9 @@ const selectedFiles = [];
 var ProductData;
 var selectedCategoryNow;
 document.addEventListener('DOMContentLoaded', function () {
-
+    checkAuth();
     console.log("listener");
-    getCategoriesFromDatabase();
+  //  getCategoriesFromDatabase();
     const fileInput = document.getElementById('fileInput');
     fileInput.addEventListener('change', function (event) {
         const files = event.target.files;
@@ -290,4 +290,29 @@ function fileToByteArray(file, callback) {
         callback(bytes);
     };
     reader.readAsArrayBuffer(file);
+}
+function checkAuth(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if( response==='admin'){
+                    getCategoriesFromDatabase();
+                  //  getCategoreiesFromServlet();
+                }else{
+                    //need to redirect to home screen
+                    window.location.href = 'index.html';
+                }
+
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
 }

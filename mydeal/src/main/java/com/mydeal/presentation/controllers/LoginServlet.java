@@ -18,7 +18,6 @@ import java.util.Base64;
 
 
 public class LoginServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getSession(false) != null) {
@@ -26,7 +25,9 @@ public class LoginServlet extends HttpServlet {
         } else {
             CustomerLoginService customerLoginService = new CustomerLoginService();
             Customer customer = customerLoginService.login(req.getParameter(RequestKey.RQ_CustomerEmail), req.getParameter(RequestKey.RQ_CustomerPassword));
-
+            /**
+             * auth cookie is used to handle remember me option .
+             */
             if (getCookie(req, "auth") != null) {
                 if (customer.getIsAdmin() == 1) {
                     req.getSession(true).setAttribute("admin", customer);
