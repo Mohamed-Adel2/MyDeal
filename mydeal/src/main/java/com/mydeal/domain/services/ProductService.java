@@ -38,6 +38,10 @@ public class ProductService {
         var em = JpaUtil.createEntityManager();
         ProductRepository pr = new ProductRepository();
         Product product = pr.getProduct(em, id);
+        if (product == null) {
+            em.close();
+            return null;
+        }
         ProductDetailMap productMap = new ProductDetailMap();
         ProductDetailDataModel productDataModel = productMap.convertEntityToModel(product);
         em.close();
