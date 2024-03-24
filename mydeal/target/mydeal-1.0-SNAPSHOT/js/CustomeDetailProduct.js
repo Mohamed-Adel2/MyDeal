@@ -22,8 +22,16 @@ function getDetailFromServlet() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
-                var product = JSON.parse(jsonResponse);
-                displayProduct(product);
+                var response = JSON.parse(jsonResponse);
+                console.log("response" + " " + response);
+                if (response === "removed") {
+                    document.getElementById("body").innerHTML = '';
+                    customAlert('The product is no longer available!');
+                } else if (response === "notFound") {
+                    document.getElementById("body").innerHTML = '';
+                    customAlert('The product you are looking for is not available!');
+                } else
+                    displayProduct(response);
             } else {
                 console.error('Request failed: ' + xhr.status);
             }

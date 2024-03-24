@@ -16,15 +16,22 @@ import java.util.List;
 public class ProductDetailServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            int productId = Integer.parseInt(req.getParameter("Id"));
+        int productId = Integer.parseInt(req.getParameter("Id"));
         ProductService productService = new ProductService();
         ProductDetailDataModel productDetailDataModel = productService.getProduct(productId);
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd")
-                .create();
+        if (productDetailDataModel == null) {
+            resp.getWriter().write(new Gson().toJson("notFound"));
+        }
+        else if (productDetailDataModel.getIsRemoved() == 1) {
+            resp.getWriter().write(new Gson().toJson("removed"));
+        } else {
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd")
+                    .create();
 
-        String jsonProducts = gson.toJson(productDetailDataModel);
-        resp.setContentType("application/json");
-        resp.getWriter().write(jsonProducts);
+            String jsonProducts = gson.toJson(productDetailDataModel);
+            resp.setContentType("application/json");
+            resp.getWriter().write(jsonProducts);
+        }
     }
 }
