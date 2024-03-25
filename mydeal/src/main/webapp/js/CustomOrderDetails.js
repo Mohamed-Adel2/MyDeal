@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-   // getOrderDetails();
+    var backButton = document.getElementById("backBtn");
+    backButton.setAttribute('href', document.referrer);
     checkAuth();
 });
 
@@ -191,16 +192,17 @@ function customAlert(message) {
     // Show the alert
     alertContainer.style.display = 'block';
 }
-function checkAuth(){
+
+function checkAuth() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if(response==='user'|| response==='admin'){
+                if (response === 'user' || response === 'admin') {
                     getOrderDetails();
-                }else{
+                } else {
                     //need to redirect to home screen
                     window.location.href = 'index.html';
                 }

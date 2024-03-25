@@ -13,6 +13,7 @@ function checkUserStatus(status) {
     var cartIcon = document.getElementById('cartIcon');
     var addCategoryTab = document.getElementById('addCategoryTab');
     var addProductTab = document.getElementById('addProductTab');
+    var viewCustomersTab = document.getElementById('viewCustomersTab');
 
     homeTab.style.display = 'block';
     aboutTab.style.display = 'block';
@@ -29,6 +30,7 @@ function checkUserStatus(status) {
         registerTab.style.display = 'none';
         addCategoryTab.style.display = 'none';
         addProductTab.style.display = 'none';
+        viewCustomersTab.style.display = 'none';
     } else if (status === 'notAuthorized') {
         profileIcon.style.display = 'none';
         historyTab.style.display = 'none';
@@ -37,15 +39,18 @@ function checkUserStatus(status) {
         registerTab.style.display = 'block';
         addCategoryTab.style.display = 'none';
         addProductTab.style.display = 'none';
+        viewCustomersTab.style.display = 'none';
     } else {
         logoutTab.style.display = 'block';
         logoutTab.setAttribute('onclick', 'logOut()');
         addProductTab.style.display = 'block';
         addCategoryTab.style.display = 'block';
+        viewCustomersTab.style.display = 'block';
         profileIcon.style.display = 'none';
         historyTab.style.display = 'none';
         loginTab.style.display = 'none';
         registerTab.style.display = 'none';
+        contactTab.style.display = 'none';
         cartIcon.style.display = 'none';
         var addProductLink = document.getElementById("addProductLink");
         if (addProductLink === null)

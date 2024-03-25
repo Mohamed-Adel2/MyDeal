@@ -1,5 +1,6 @@
 let start = 0;
 let size = 5;
+let customerId = -1;
 
 function getOrders() {
     var xhr = new XMLHttpRequest();
@@ -22,6 +23,9 @@ function getOrders() {
         limit: size
     };
     var queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+    if (customerId !== -1) {
+        queryString += '&customerId=' + customerId;
+    }
     xhr.open('GET', 'orders?' + queryString, true);
     xhr.send();
 }
@@ -55,7 +59,7 @@ function displayOrders(orders) {
         tableDataInfoButton.textContent = 'Order Details';
         tableDataInfoButton.onclick = (function (order) {
             return function () {
-                window.location.href = 'order-items.html?id=' + order.id + '&date=' + order.date+'&totalPrice='+order.totalPrice;
+                window.location.href = 'order-items.html?id=' + order.id + '&date=' + order.date + '&totalPrice=' + order.totalPrice;
             };
         })(order);
         tableDataInfoAction.appendChild(tableDataInfoButton);
@@ -65,19 +69,22 @@ function displayOrders(orders) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    //getOrders();
     checkAuth();
 });
-function checkAuth(){
+
+function checkAuth() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if(response==='user'){
+                if (response === 'user' && getURLParameter('id') === null) {
                     getOrders();
-                }else{
+                } else if (response === 'admin') {
+                    customerId = getURLParameter('id');
+                    getOrders();
+                } else {
                     //need to redirect to home screen
                     window.location.href = 'index.html';
                 }
@@ -91,4 +98,11 @@ function checkAuth(){
     xhr.open('GET', 'checkStatus', true);
 
     xhr.send();
+}
+
+function getURLParameter(name) {
+    // Get the URL parameters part
+    let params = new URLSearchParams(window.location.search);
+
+    return params.get(name);
 }

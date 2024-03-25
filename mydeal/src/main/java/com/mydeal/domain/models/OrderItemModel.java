@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderItemModel {
     private Integer id;
+    private Integer customerId;
     private String productName;
     private Double rating;
     private Double price;

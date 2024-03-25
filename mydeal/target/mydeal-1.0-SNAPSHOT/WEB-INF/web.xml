@@ -228,9 +228,6 @@
         <url-pattern>/productDetail</url-pattern>
     </servlet-mapping>
 
-    <welcome-file-list>
-        <welcome-file>admin_ShowAllCustomers.html</welcome-file>
-    </welcome-file-list>
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/adminHome</url-pattern>
@@ -259,4 +256,7 @@
         <servlet-name>DeleteCategoryServlet</servlet-name>
         <url-pattern>/admin/adminDeleteCategory</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 </web-app>

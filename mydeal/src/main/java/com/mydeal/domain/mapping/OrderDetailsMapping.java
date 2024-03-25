@@ -11,7 +11,8 @@ public class OrderDetailsMapping {
         orderItemModel.setProductName(orderItem.getProduct().getProductName());
         orderItemModel.setPrice(Math.round(orderItem.getProduct().getPrice() * 100.0) / 100.0);
         orderItemModel.setQuantity(orderItem.getQuantity());
-        orderItemModel.setRating(Math.round(orderItem.getProduct().getAverageRating() * 100.0) / 100.0);
+        orderItemModel.setRating(0.0);
+        orderItemModel.setCustomerId(orderItem.getOrder().getCustomer().getId());
         orderItemModel.setImage(orderItem.getProduct().getProductimages().iterator().next().getImage());
         return orderItemModel;
     }

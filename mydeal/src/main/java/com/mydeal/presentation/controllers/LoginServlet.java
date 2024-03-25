@@ -48,7 +48,8 @@ public class LoginServlet extends HttpServlet {
                     updateCart(getCookie(req, "cart"), customer.getId());
                 }
                 if (req.getParameter("rememberMe") != null && req.getParameter("rememberMe").equals("true")) {
-                    AuthenticationModel authenticationModel = new AuthenticationModel(customer.getEmail(), customer.getPassword());
+                    int isAdmin = customer.getIsAdmin();
+                    AuthenticationModel authenticationModel = new AuthenticationModel(customer.getEmail(), customer.getPassword(), isAdmin);
                     Cookie authCookie = new Cookie("auth", Base64.getEncoder().encodeToString(new Gson().toJson(authenticationModel).getBytes()));
                     authCookie.setMaxAge(60 * 60 * 24 * 30);
                     resp.addCookie(authCookie);

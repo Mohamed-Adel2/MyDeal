@@ -20,31 +20,17 @@ import java.util.List;
 public class ShowAllCustomers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        EntityManager customerEM = JpaUtil.createEntityManager();
+        String email = req.getParameter("searchKey");
+        int startIdx = Integer.parseInt(req.getParameter("startIdx"));
+        int limit = Integer.parseInt(req.getParameter("limit"));
+
         CustomerDataService customerDataService = new CustomerDataService();
-        customerEM.getTransaction().begin();
-        /**
-         * Load all Customers from Database .
-         */
-        TypedQuery<Customer> query = customerEM.createQuery("SELECT c FROM Customer c", Customer.class);
-        List<Customer> customers = query.getResultList();
-        List<CustomerDataModel> customersDataModels = new ArrayList<>();
-        customers.forEach(customer -> customersDataModels.add(CustomerMapping.convertEntityToModel(customer)));
-        customerEM.getTransaction().commit();
-        customerEM.close();
-
+        List<CustomerDataModel> customersDataModels = customerDataService.getAllCustomers(email, startIdx, limit);
+        System.out.println("Size of customersDataModels: " + customersDataModels.size());
         Gson gson = new Gson();
-
-        String jsonCustomers = gson.toJson(customersDataModels);
+        String json = gson.toJson(customersDataModels);
 
         resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonCustomers);
-    }
-
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        resp.getWriter().write(json);
     }
 }

@@ -5,6 +5,7 @@ import com.mydeal.domain.entities.Customer;
 import com.mydeal.domain.mapping.OrderCustomerMapping;
 import com.mydeal.domain.models.CustomerOrderModel;
 import com.mydeal.domain.models.OrderItemModel;
+import com.mydeal.domain.services.CustomerDataService;
 import com.mydeal.domain.services.OrderService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -28,7 +29,18 @@ public class OrderItemsServlet extends HttpServlet {
         OrderService orderService = new OrderService();
         List<Object> ret = new ArrayList<>();
         List<OrderItemModel> orderItems = orderService.getOrderDetails(orderId);
-        CustomerOrderModel customerOrderModel = OrderCustomerMapping.EntityToModel((Customer) request.getSession().getAttribute("user"));
+        Customer customer;
+        if (request.getSession().getAttribute("user") != null) {
+            customer = (Customer) request.getSession().getAttribute("user");
+            if ((int) customer.getId() != orderItems.getFirst().getCustomerId()) {
+                response.getWriter().write(Base64.getEncoder().encodeToString(new Gson().toJson("failure").getBytes()));
+                return;
+            }
+        } else {
+            CustomerDataService customerDataService = new CustomerDataService();
+            customer = customerDataService.getCustomerById(orderItems.getFirst().getCustomerId());
+        }
+        CustomerOrderModel customerOrderModel = OrderCustomerMapping.EntityToModel(customer);
         ret.add(customerOrderModel);
         ret.add(orderItems);
         System.out.println("Size of orderItems: " + orderItems.size());
