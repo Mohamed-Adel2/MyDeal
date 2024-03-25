@@ -9,6 +9,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 public class CustomerRepository extends CrudRepository<Customer> {
     public CustomerRepository() {
         setEntityClass(Customer.class);
@@ -52,5 +54,13 @@ public class CustomerRepository extends CrudRepository<Customer> {
         TypedQuery<Double> query = em.createQuery("SELECT c.creditLimit FROM Customer c WHERE c.id = :customerId", Double.class);
         query.setParameter("customerId", customerId);
         return query.getSingleResult();
+    }
+
+    public List<Customer> getAllCustomer(EntityManager em, String email, int startIdx, int limit){
+        TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer c WHERE c.email LIKE :email", Customer.class);
+        query.setParameter("email", "%" + email + "%");
+        query.setFirstResult(startIdx);
+        query.setMaxResults(limit);
+        return query.getResultList();
     }
 }

@@ -16,11 +16,15 @@ import java.util.List;
 public class OrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
-            response.getWriter().write(new Gson().toJson("unauthorized"));
+        if (request.getSession(false) == null) {
+            Base64.getEncoder().encodeToString(new Gson().toJson("unauthorized").getBytes());
             return;
         }
-        Integer customerId = ((Customer) request.getSession(false).getAttribute("user")).getId();
+        Integer customerId;
+        if (request.getSession(false).getAttribute("user") != null)
+            customerId = ((Customer) request.getSession(false).getAttribute("user")).getId();
+        else
+            customerId = Integer.parseInt(request.getParameter("customerId"));
         Integer startIdx = Integer.parseInt(request.getParameter("startIdx"));
         Integer limit = Integer.parseInt(request.getParameter("limit"));
         OrderService orderService = new OrderService();

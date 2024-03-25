@@ -12,4 +12,5 @@ import lombok.Setter;
 public class AuthenticationModel {
     private String email;
     private String password;
+    private int isAdmin;
 }
