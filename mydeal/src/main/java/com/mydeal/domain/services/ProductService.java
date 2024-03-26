@@ -75,6 +75,10 @@ public class ProductService {
         var em = JpaUtil.createEntityManager();
         Product product = em.find(Product.class, id);
         product.setIsDeleted(1);
+
+        //make quantity equal 0 to prevent  making order
+        product.setAvailableQuantity(0);
+
         ProductRepository pr = new ProductRepository();
         em.getTransaction().begin();
         product = pr.update(em, product);

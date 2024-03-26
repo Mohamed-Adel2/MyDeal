@@ -69,8 +69,11 @@ public class CategoryRepository extends CrudRepository<Category> {
             update(em, category);
             Set<Product> products = category.getProducts();
             for (Product p : products) {
-                p.setIsDeleted(1);
-                customerCartRepository.deleteProductFromCustomerCart(em, p.getId());
+               p.setIsDeleted(1);
+                //make quantity equal 0 to prevent  making order
+                p.setAvailableQuantity(0);
+
+               // customerCartRepository.deleteProductFromCustomerCart(em, p.getId());
                 productRepository.update(em, p);
             }
             em.getTransaction().commit();
