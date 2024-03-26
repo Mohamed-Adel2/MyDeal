@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class CheckOutServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (request.getSession(false) != null && request.getSession(false).getAttribute("user") == null) {
+        if (request.getSession(false) == null || request.getSession(false).getAttribute("user") == null) {
             response.getWriter().write(new Gson().toJson("notAuthorized"));
             return;
         }
