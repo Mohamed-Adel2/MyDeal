@@ -61,6 +61,10 @@ public class ProductService {
         var em = JpaUtil.createEntityManager();
         AddProductMap addProductMap = new AddProductMap();
         Product product = addProductMap.convertModelToEntity(addProductModel);
+        if (product.getCategory().getId() == -1) {
+            em.close();
+            return -1;
+        }
         ProductRepository pr = new ProductRepository();
         int id = pr.addProduct(em, product);
         em.close();
@@ -84,6 +88,11 @@ public class ProductService {
         // ProductMap productMap = new ProductMap();
         UpdateProductModelToProductMap updateProductModelToProductMap = new UpdateProductModelToProductMap();
         Product product = updateProductModelToProductMap.convertModelToEntity(updateProductModel);
+        Product originalProduct = em.find(Product.class, product.getId());
+        if (originalProduct.getIsDeleted() == 1) {
+            em.close();
+            return false;
+        }
         ProductRepository pr = new ProductRepository();
         em.getTransaction().begin();
         boolean update = pr.update(em, product) != null;
@@ -91,6 +100,4 @@ public class ProductService {
         em.close();
         return update;
     }
-
-
 }

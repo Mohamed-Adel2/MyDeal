@@ -1,7 +1,8 @@
-function AddProductScreen(){
+function AddProductScreen() {
     // Redirect to another page within the same domain
     window.location.href = "addProduct.html";
 }
+
 let start = 0;
 let size = 6;
 let loadMore = document.getElementById('load-more');
@@ -10,7 +11,7 @@ let minPrice = 0;
 let maxPrice = 1000;
 let searchKey = "";
 
-function moveToCategoryScreen(){
+function moveToCategoryScreen() {
     window.location.href = "CategoriesDetail.html";
 }
 
@@ -30,7 +31,7 @@ function getProductsFromServlet(newFilter) {
                 var products = JSON.parse(jsonResponse);
                 start += products.length;
                 if (start % size !== 0 || products.length === 0) {
-                    loadMore.style.visibility = 'hidden';
+                    loadMore.style.display = 'none';
                 } else {
                     loadMore.style.visibility = 'visible';
                 }
@@ -117,12 +118,12 @@ function displayProducts(products, newFilter) {
         var productLink = document.createElement('a');
         let paramValue = product.id;
         console.log(paramValue);
-        var parms={
-            Id:paramValue
+        var parms = {
+            Id: paramValue
         }
         var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
         console.log(paramStr);
-        productLink.href = 'adminProductDetail.html'+'?'+paramStr;
+        productLink.href = 'adminProductDetail.html' + '?' + paramStr;
 
         productLink.textContent = product.productName;
         productName.appendChild(productLink);
@@ -153,18 +154,19 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("listener");
     checkAuth();
 });
-function checkAuth(){
+
+function checkAuth() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if( response==='admin'){
-                   // getCategoriesFromServlet();
+                if (response === 'admin') {
+                    // getCategoriesFromServlet();
                     getCategoriesFromServlet();
                     getProductsFromServlet(true);
-                }else{
+                } else {
                     //need to redirect to home screen
                     window.location.href = 'index.html';
                 }

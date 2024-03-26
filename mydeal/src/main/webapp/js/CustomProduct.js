@@ -22,7 +22,7 @@ function getProductsFromServlet(newFilter) {
                 var products = JSON.parse(jsonResponse);
                 start += products.length;
                 if (start % size !== 0 || products.length === 0) {
-                    loadMore.style.visibility = 'hidden';
+                    loadMore.style.display = 'none';
                 } else {
                     loadMore.style.visibility = 'visible';
                 }
@@ -109,12 +109,12 @@ function displayProducts(products, newFilter) {
         var productLink = document.createElement('a');
         let paramValue = product.id;
         console.log(paramValue);
-        var parms={
-            Id:paramValue
+        var parms = {
+            Id: paramValue
         }
         var paramStr = Object.keys(parms).map(key => key + '=' + encodeURIComponent(parms[key])).join('&');
         console.log(paramStr);
-        productLink.href = 'single-product.html'+'?'+paramStr;
+        productLink.href = 'single-product.html' + '?' + paramStr;
         productLink.textContent = product.productName;
         productName.appendChild(productLink);
 
@@ -145,18 +145,19 @@ document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
 
 });
+
 //need to check first if user not admin
-function checkAuth(){
+function checkAuth() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if(response==='user'|| response==='notAuthorized'){
+                if (response === 'user' || response === 'notAuthorized') {
                     getCategoriesFromServlet();
                     getProductsFromServlet(true);
-                }else{
+                } else {
                     //need to redirect to home screen
                     window.location.href = 'index.html';
                 }

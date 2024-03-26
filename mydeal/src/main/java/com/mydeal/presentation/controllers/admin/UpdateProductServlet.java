@@ -27,11 +27,9 @@ public class UpdateProductServlet extends HttpServlet {
 
         boolean dataUpdated = productService.updateProduct(updateProductModel);
         if (updateProductModel.getDeleted().length > 0) {
-            System.out.println("Deleted Images");
             productImageService.deletedImagesToProduct(updateProductModel);
         }
         if (updateProductModel.getAdded().length > 0) {
-            System.out.println("Added Images");
             productImageService.addNewImagesToProduct(updateProductModel);
         }
 

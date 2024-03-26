@@ -15,7 +15,7 @@ public class OrderRepository extends CrudRepository<Order> {
 
     public List<Order> getCustomerOrders(EntityManager em, Integer customerId, Integer startIdx, Integer limit) {
         // order the results descending by order date
-        TypedQuery<Order> query = em.createQuery("SELECT o FROM Order o WHERE o.customer.id = :customerId order by o.orderDate desc", Order.class);
+        TypedQuery<Order> query = em.createQuery("SELECT o FROM Order o WHERE o.customer.id = :customerId order by o.orderDate desc, o.id desc", Order.class);
         query.setParameter("customerId", customerId);
         query.setFirstResult(startIdx);
         query.setMaxResults(limit);

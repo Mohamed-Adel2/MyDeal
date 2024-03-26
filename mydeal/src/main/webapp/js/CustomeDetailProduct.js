@@ -27,10 +27,10 @@ function getDetailFromServlet() {
                 console.log("response" + " " + response);
                 if (response === "removed") {
                     document.getElementById("body").innerHTML = '';
-                    customAlert('The product is no longer available!');
+                    customAlert('The product is no longer available!', true);
                 } else if (response === "notFound") {
                     document.getElementById("body").innerHTML = '';
-                    customAlert('The product you are looking for is not available!');
+                    customAlert('The product you are looking for is not available!', true);
                 } else
                     displayProduct(response);
             } else {
@@ -121,12 +121,12 @@ function addToCart(val) {
                 var product = JSON.parse(jsonResponse);
                 console.log(product);
                 if (product === "valid")
-                    customAlert('Item added to cart successfully!');
+                    customAlert('Item added to cart successfully!', false);
                 else
-                    customAlert('The requested quantity is unavailable now!');
+                    customAlert('The requested quantity is unavailable now!', false);
 
             } else {
-                customAlert('Failed adding to cart, please try again!');
+                customAlert('Failed adding to cart, please try again!', true);
             }
             getDetailFromServlet();
         }
@@ -142,7 +142,7 @@ function addToCart(val) {
 }
 
 
-function customAlert(message) {
+function customAlert(message, state) {
     // Create overlay
     var overlay = document.createElement('div');
     overlay.style.position = 'fixed';
@@ -169,6 +169,8 @@ function customAlert(message) {
     okButton.addEventListener('click', function () {
         alertContainer.style.display = 'none';
         overlay.style.display = 'none';
+        if(state)
+            window.location.href = 'product_list.html';
     });
     alertContainer.appendChild(okButton);
 

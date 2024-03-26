@@ -354,17 +354,17 @@ function fileToByteArray(file, callback) {
     reader.readAsArrayBuffer(file);
 }
 
-function checkAuth(){
+function checkAuth() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if( response==='admin'){
+                if (response === 'admin') {
                     getCategoriesFromDatabase();
-                  //  getCategoreiesFromServlet();
-                }else{
+                    //  getCategoreiesFromServlet();
+                } else {
                     //need to redirect to home screen
                     window.location.href = 'index.html';
                 }
@@ -407,8 +407,11 @@ function customAlert(message, state) {
     okButton.addEventListener('click', function () {
         alertContainer.style.display = 'none';
         overlay.style.display = 'none';
+        console.log("state: " + state);
         if (state)
             location.reload();
+        else
+            document.location.href = 'adminHome.html';
     });
     alertContainer.appendChild(okButton);
 

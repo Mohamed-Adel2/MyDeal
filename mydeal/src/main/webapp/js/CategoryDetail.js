@@ -47,6 +47,7 @@ function appearCategories(categories) {
         radioButton.setAttribute('name', 'category');
         radioButton.setAttribute('id', category);
         radioButton.setAttribute('value', category);
+        radioButton.classList.add('form-check-input');
 
 
         const label = document.createElement('label');

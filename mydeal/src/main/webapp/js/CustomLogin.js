@@ -8,13 +8,11 @@ function getUserFromServlet(first) {
                 console.log(response);
                 if (response === 'invalid' && !first) {
                     customAlert('Wrong email or password, please try again');
-                }
-                else if(response === 'Admin'){
+                } else if (response === 'Admin') {
                     console.log("Yes Admin");
-                    window.location.href ='index.html';
-                }
-                else if (response === 'valid') {
-                   // window.location.href ='adminHome.html';
+                    window.location.href = 'index.html';
+                } else if (response === 'valid') {
+                    // window.location.href ='adminHome.html';
                     window.location.href = 'index.html';
                 }
             } else {
@@ -79,5 +77,28 @@ document.querySelector('.contact_form').addEventListener('submit', function (eve
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    getUserFromServlet(true);
+    checkAuth();
 });
+
+function checkAuth() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                let jsonResponse = xhr.responseText;
+                var response = JSON.parse(jsonResponse);
+                if (response === 'notAuthorized') {
+                    getUserFromServlet(true);
+                } else {
+                    window.location.href = 'index.html';
+                }
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open('GET', 'checkStatus', true);
+
+    xhr.send();
+}

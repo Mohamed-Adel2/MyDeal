@@ -32,18 +32,22 @@ public class AdminAddProductServlet extends HttpServlet {
         System.out.println(addProductModel);
         ProductService productService = new ProductService();
         int id = productService.addProduct(addProductModel);
-
-        // Handle images
-        ProductImageModel[] imageModels = handleRequestOfImage(req, id, addProductModel);
-        ProductImageService productImageService = new ProductImageService();
-        int imagesAdded = productImageService.setImages(imageModels);
         JsonObject jsonResponse = new JsonObject();
-        if (id > 0 && imagesAdded > 0) {
-            jsonResponse.addProperty("success", true);
-            jsonResponse.addProperty("message", "Product and images added successfully.");
-        } else {
+        if (id == -1) {
             jsonResponse.addProperty("success", false);
             jsonResponse.addProperty("message", "Failed to add product or images.");
+        } else {
+            // Handle images
+            ProductImageModel[] imageModels = handleRequestOfImage(req, id, addProductModel);
+            ProductImageService productImageService = new ProductImageService();
+            int imagesAdded = productImageService.setImages(imageModels);
+            if (id > 0 && imagesAdded > 0) {
+                jsonResponse.addProperty("success", true);
+                jsonResponse.addProperty("message", "Product and images added successfully.");
+            } else {
+                jsonResponse.addProperty("success", false);
+                jsonResponse.addProperty("message", "Failed to add product or images.");
+            }
         }
 
         // Set response content type
@@ -56,11 +60,11 @@ public class AdminAddProductServlet extends HttpServlet {
 
     }
 
-    public ProductImageModel[] handleRequestOfImage(HttpServletRequest req, int id, AddProductModel addProductModel){
-      //  String[] imageStrings = req.getParameterValues("Images");
-        int size= addProductModel.getImages().length;
-        byte[][] imageBytes = new byte[size+1][];
-        ProductImageModel[] images = new ProductImageModel[size+1];
+    public ProductImageModel[] handleRequestOfImage(HttpServletRequest req, int id, AddProductModel addProductModel) {
+        //  String[] imageStrings = req.getParameterValues("Images");
+        int size = addProductModel.getImages().length;
+        byte[][] imageBytes = new byte[size + 1][];
+        ProductImageModel[] images = new ProductImageModel[size + 1];
         for (int i = 0; i < size; i++) {
             //imageBytes[i] = Base64.getDecoder().decode(imageStrings[i]);
             imageBytes[i] = addProductModel.getImages()[i];

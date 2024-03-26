@@ -33,6 +33,10 @@ public class CheckOutService {
             }
             if (customerCart.getProduct().getAvailableQuantity() < customerCart.getQuantity()) {
                 em.getTransaction().rollback();
+                customerCart.setQuantity(customerCart.getProduct().getAvailableQuantity());
+                em.getTransaction().begin();
+                customerCartRepository.update(em, customerCart);
+                em.getTransaction().commit();
                 em.close();
                 return false;
             }

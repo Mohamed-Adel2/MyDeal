@@ -24,6 +24,8 @@ public class CategoryRepository extends CrudRepository<Category> {
                 (!categoryName.equals("All") ? " WHERE c.categoryName = :categoryName" : "") + " and c.isRemoved = 0", Integer.class);
         if (!categoryName.equals("All"))
             query.setParameter("categoryName", categoryName);
+        if(query.getResultList().isEmpty())
+            return -1;
         return query.getSingleResult();
     }
 

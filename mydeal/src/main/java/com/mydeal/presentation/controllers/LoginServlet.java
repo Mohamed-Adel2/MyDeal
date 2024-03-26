@@ -24,10 +24,19 @@ public class LoginServlet extends HttpServlet {
             resp.getWriter().write(new Gson().toJson("valid"));
         } else {
             CustomerLoginService customerLoginService = new CustomerLoginService();
-            Customer customer = customerLoginService.login(req.getParameter(RequestKey.RQ_CustomerEmail), req.getParameter(RequestKey.RQ_CustomerPassword));
-            /**
-             * auth cookie is used to handle remember me option .
-             */
+            Customer customer = null;
+            if (req.getParameter(RequestKey.RQ_CustomerEmail) != null || req.getParameter(RequestKey.RQ_CustomerPassword) != null) {
+                customer = customerLoginService.login(req.getParameter(RequestKey.RQ_CustomerEmail), req.getParameter(RequestKey.RQ_CustomerPassword));
+            } else {
+                AuthenticationModel authenticationModel = getAuthenticationModel(req);
+                if (authenticationModel != null) {
+                    customer = customerLoginService.login(authenticationModel.getEmail(), authenticationModel.getPassword());
+                }
+            }
+            if (customer == null) {
+                resp.getWriter().write(new Gson().toJson("invalid"));
+                return;
+            }
             if (getCookie(req, "auth") != null) {
                 if (customer.getIsAdmin() == 1) {
                     req.getSession(true).setAttribute("admin", customer);
@@ -36,10 +45,6 @@ public class LoginServlet extends HttpServlet {
                     req.getSession(true).setAttribute("user", customer);
                     resp.getWriter().write(new Gson().toJson("valid"));
                 }
-                return;
-            }
-            if (customer == null) {
-                resp.getWriter().write(new Gson().toJson("invalid"));
             } else {
                 if (customer.getIsAdmin() == 1)
                     req.getSession(true).setAttribute("admin", customer);
@@ -82,5 +87,21 @@ public class LoginServlet extends HttpServlet {
         CustomerCartService customerCartService = new CustomerCartService();
         customerCartService.addCartItems(offlineCartModel.getCartItems(), customerId);
         cookie.setMaxAge(0);
+    }
+
+    private AuthenticationModel getAuthenticationModel(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        AuthenticationModel authenticationModel = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("auth")) {
+                    String base64EncodedString = cookie.getValue();
+                    String jsonString = new String(Base64.getDecoder().decode(base64EncodedString));
+                    authenticationModel = new Gson().fromJson(jsonString, AuthenticationModel.class);
+                    break;
+                }
+            }
+        }
+        return authenticationModel;
     }
 }
