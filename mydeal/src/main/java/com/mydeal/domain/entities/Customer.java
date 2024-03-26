@@ -37,9 +37,12 @@ public class Customer {
     private String password;
 
     @Column(name = "credit_limit", precision = 10, scale = 2)
-    private BigDecimal creditLimit;
+    private Double creditLimit;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "is_admin")
+    private Integer isAdmin;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -66,6 +69,7 @@ public class Customer {
                 ", customerCarts=" + customerCarts +
                 ", orders=" + orders +
                 ", reviews=" + reviews +
+                ", isAdmin=" + isAdmin +
                 '}';
     }
 }

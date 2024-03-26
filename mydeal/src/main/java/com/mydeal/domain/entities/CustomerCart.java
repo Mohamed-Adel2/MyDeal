@@ -26,4 +26,8 @@ public class CustomerCart {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    public String toString() {
+        return "CustomerCart(id=" + this.getId().getCustomerId() + " " + this.getId().getProductId() + ", customer=" + this.getCustomer() + ", product=" + this.getProduct() + ", quantity=" + this.getQuantity() + ")";
+    }
 }

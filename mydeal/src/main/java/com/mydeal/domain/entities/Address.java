@@ -24,7 +24,4 @@ public class Address {
 
     @Column(name = "apartment")
     private Integer apartment;
-
-    @Column(name = "customer_id")
-    private Integer customerId;
 }

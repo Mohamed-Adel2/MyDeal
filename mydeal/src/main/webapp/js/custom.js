@@ -22,7 +22,6 @@
       autoplayHoverPause: true,
       autoplayTimeout: 5000,
       nav: true,
-      dots: false,
       navText: [" <i class='ti-angle-left'></i> ", "<i class='ti-angle-right'></i> "],
       responsive: {
         0: {
@@ -49,7 +48,6 @@
       autoplayHoverPause: true,
       autoplayTimeout: 5000,
       nav: true,
-      dots: false,
       navText: [" <i class='ti-angle-left'></i> ", "<i class='ti-angle-right'></i> "],
       responsive: {
         0: {
@@ -276,3 +274,8 @@ inputNumber($('.input-number'));
 
 
 }(jQuery));
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("start get");
+    //getDataFromServlet();
+});

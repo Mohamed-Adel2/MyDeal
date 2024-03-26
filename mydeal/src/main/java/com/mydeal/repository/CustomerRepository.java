@@ -9,28 +9,58 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 public class CustomerRepository extends CrudRepository<Customer> {
     public CustomerRepository() {
         setEntityClass(Customer.class);
     }
 
-    /**
-     * Get Customer by email and password , used in login process .
-     *
-     * @param email
-     * @param password
-     * @return
-     */
-    public CustomerDataModel getCustomerByEmailAndPassword(String email, String password) {
-        EntityManager em = JpaUtil.createEntityManager();
+    public Customer getCustomerByEmailAndPassword(EntityManager em, String email, String password) {
         String jpql = "SELECT c FROM Customer c WHERE c.email = :email AND c.password = :password";
         TypedQuery<Customer> query = em.createQuery(jpql, Customer.class);
         query.setParameter(RequestKey.RQ_CustomerEmail, email);
         query.setParameter(RequestKey.RQ_CustomerPassword, password);
         try {
-            return CustomerMapping.convertEntityToModel(query.getSingleResult());
+            return query.getSingleResult();
         } catch (NoResultException e) {
-            return null; // Handle the case where no customer is found with the provided email and password
+            return null;
         }
+    }
+
+    public String checkFieldAvailability(EntityManager em, String fieldName, String fieldValue) {
+        String jpql = "SELECT c." + fieldName + " FROM Customer c WHERE c." + fieldName + " = :fieldValue";
+        TypedQuery<String> query = em.createQuery(jpql, String.class);
+        query.setParameter("fieldValue", fieldValue);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    public boolean checkAdmin(EntityManager em, String email) {
+        TypedQuery<Customer> query = em.createQuery("SELECT u FROM Customer u WHERE u.email = :email", Customer.class);
+        query.setParameter("email", email);
+           Customer customer = query.getSingleResult();
+           if(customer.getIsAdmin()==0){
+               return false;
+           }else{
+               return true;
+           }
+    }
+
+    public double getCustomerBalance(EntityManager em, int customerId) {
+        TypedQuery<Double> query = em.createQuery("SELECT c.creditLimit FROM Customer c WHERE c.id = :customerId", Double.class);
+        query.setParameter("customerId", customerId);
+        return query.getSingleResult();
+    }
+
+    public List<Customer> getAllCustomer(EntityManager em, String email, int startIdx, int limit){
+        TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer c WHERE c.email LIKE :email", Customer.class);
+        query.setParameter("email", "%" + email + "%");
+        query.setFirstResult(startIdx);
+        query.setMaxResults(limit);
+        return query.getResultList();
     }
 }

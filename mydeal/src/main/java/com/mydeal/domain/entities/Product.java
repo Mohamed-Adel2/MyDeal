@@ -29,13 +29,13 @@ public class Product {
     private String description;
 
     @Column(name = "price", precision = 10, scale = 2)
-    private BigDecimal price;
+    private Double price;
 
     @Column(name = "available_quantity")
     private Integer availableQuantity;
 
     @Column(name = "average_rating", precision = 3, scale = 2)
-    private BigDecimal averageRating;
+    private Double averageRating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -47,9 +47,26 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<OrderDetails> orderdetails = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductImages> productimages = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Reviews> reviews = new LinkedHashSet<>();
+
+    @Column(name = "is_removed")
+    private int isDeleted;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", availableQuantity=" + availableQuantity +
+                ", averageRating=" + averageRating +
+                ", category=" + category +
+                ", isDeleted=" + isDeleted +
+                '}';
+    }
 }
