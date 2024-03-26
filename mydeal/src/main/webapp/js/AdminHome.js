@@ -112,7 +112,7 @@ function displayProducts(products, newFilter) {
         var blob = new Blob([new Uint8Array(product.image)], {type: 'image/jpeg'});
         productImage.src = URL.createObjectURL(blob);
         productImage.alt = 'Product Image';
-        productImage.className = 'img-fluid';
+        productImage.className = 'product_image';
 
         var productName = document.createElement('h3');
         var productLink = document.createElement('a');
