@@ -20,12 +20,12 @@ public class JpaUtil {
 //        AppConfig.load();
         HikariConfig config = new HikariConfig();
         HikariDataSource ds;
-        /*config.setJdbcUrl("jdbc:mysql://node593116-mydeal.j.layershift.co.uk:3306/mydeal");
+        config.setJdbcUrl("node593528-mydeal1.j.layershift.co.uk");
         config.setUsername("root");
-        config.setPassword("BMAmed66661");*/
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
-        config.setUsername("root");
-        config.setPassword("1234");
+        config.setPassword("OSCcnm61918");
+//        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
+//        config.setUsername("root");
+//        config.setPassword("1234");
         // max number of connections on database .
         config.setMaximumPoolSize(30);
         config.addDataSourceProperty("cachePrepStmts", true);
