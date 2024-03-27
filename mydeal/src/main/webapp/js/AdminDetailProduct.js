@@ -214,7 +214,6 @@ async function displayProduct(product) {
     $(productImgSlide).trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
     $(productImgSlide).find('.owl-stage-outer').children().unwrap();
 
-    var cnt = 1;
     product.images.forEach(function (imageArray) {
         var img = document.createElement('img');
         img.className = 'img-fluid';
@@ -228,7 +227,6 @@ async function displayProduct(product) {
 
         // Append the singleProductImg div to the productImgSlide div
         productImgSlide.appendChild(singleProductImg);
-        cnt++;
     });
     productPrice.innerHTML = '';
     productPrice.appendChild(priceSpan);

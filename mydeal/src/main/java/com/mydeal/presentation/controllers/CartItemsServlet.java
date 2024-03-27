@@ -2,6 +2,7 @@ package com.mydeal.presentation.controllers;
 
 import com.google.gson.Gson;
 import com.mydeal.domain.entities.Customer;
+import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.models.CartModel;
 import com.mydeal.domain.models.OfflineCartModel;
 import com.mydeal.domain.models.ProductDetailDataModel;
@@ -48,8 +49,13 @@ public class CartItemsServlet extends HttpServlet {
         ProductService productService = new ProductService();
         ArrayList<ProductDetailDataModel> products = new ArrayList<>();
         for (CartModel cartModel : cart) {
-            products.add(productService.getProduct(cartModel.getProductId()));
-            products.get(products.size() - 1).setQuantity(cartModel.getQuantity());
+            ProductDetailDataModel product = productService.getProduct(cartModel.getProductId());
+            if (product.getIsRemoved() == 1) {
+                customerCartService.removeProductFromCart(cartModel);
+            } else {
+                products.add(productService.getProduct(cartModel.getProductId()));
+                products.get(products.size() - 1).setQuantity(cartModel.getQuantity());
+            }
         }
         response.getWriter().write(Base64.getEncoder().encodeToString(new Gson().toJson(products).getBytes()));
     }

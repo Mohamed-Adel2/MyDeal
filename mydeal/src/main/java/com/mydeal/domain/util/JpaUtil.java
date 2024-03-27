@@ -20,9 +20,10 @@ public class JpaUtil {
 //        AppConfig.load();
         HikariConfig config = new HikariConfig();
         HikariDataSource ds;
+        /*config.setJdbcUrl("jdbc:mysql://node593116-mydeal.j.layershift.co.uk:3306/mydeal");
+        config.setUsername("root");
+        config.setPassword("BMAmed66661");*/
         config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
-//        config.setUsername(AppConfig.DB_USER);
-//        config.setPassword(AppConfig.DB_PASSWORD);
         config.setUsername("root");
         config.setPassword("1234");
         // max number of connections on database .

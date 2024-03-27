@@ -8,7 +8,6 @@ function getCartItemsFromServlet() {
                 var products = JSON.parse(decodedString);
                 console.log(products);
                 displayProduct(products);
-
             } else {
                 console.error('Request failed: ' + xhr.status);
             }
@@ -49,18 +48,20 @@ function makeOrderFromServlet() {
                 var jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
                 if (response === 'success') {
-                    customAlert("Your order has been placed successfully!");
+                    customAlert("Your order has been placed successfully!", false);
                     getCartItemsFromServlet();
                 } else if (response === 'balanceFailure') {
-                    customAlert("Failed to place order. Please check your balance.");
+                    customAlert("Failed to place order. Please check your balance.", false);
                     getCartItemsFromServlet();
+                } else if (response === 'notAuthorized') {
+                    customAlert("You must log in first.", true);
                 } else {
-                    customAlert("Failed to place order. Please check products availability.");
+                    customAlert("Failed to place order. Please check products availability.", false);
                     getCartItemsFromServlet();
                 }
 
             } else {
-                customAlert("Failed to place order. Please try again later.");
+                customAlert("Failed to place order. Please try again later.", false);
                 console.error('Request failed: ' + xhr.status);
             }
         }
@@ -310,7 +311,7 @@ function displayProduct(products) {
     footer.getElementsByTagName('th')[2].textContent = '$' + (totalPrice.toFixed(2));
 }
 
-function customAlert(message) {
+function customAlert(message, state) {
     // Create overlay
     var overlay = document.createElement('div');
     overlay.style.position = 'fixed';
@@ -333,10 +334,15 @@ function customAlert(message) {
 
     // Create OK button
     var okButton = document.createElement('button');
-    okButton.textContent = 'OK';
+    if (state)
+        okButton.textContent = 'Sign in';
+    else
+        okButton.textContent = 'OK';
     okButton.addEventListener('click', function () {
         alertContainer.style.display = 'none';
         overlay.style.display = 'none';
+        if (state)
+            document.location.href = 'login.html';
     });
     alertContainer.appendChild(okButton);
 
@@ -368,16 +374,16 @@ document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
 });
 
-function checkAuth(){
+function checkAuth() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                if(response==='user'|| response==='notAuthorized'){
+                if (response === 'user' || response === 'notAuthorized') {
                     getCartItemsFromServlet();
-                }else{
+                } else {
                     //need to redirect to home screen
                     window.location.href = 'index.html';
                 }

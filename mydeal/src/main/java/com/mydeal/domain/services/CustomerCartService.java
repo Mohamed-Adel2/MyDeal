@@ -39,19 +39,27 @@ public class CustomerCartService {
         em.close();
     }
 
-    public void removeProductFromCart(CartModel cartModel) {
-        CustomerCartId customerCartId = new CustomerCartId(cartModel.getCustomerId(), cartModel.getProductId());
-        CustomerCartRepository customerCartRepository = new CustomerCartRepository();
-        EntityManager em = JpaUtil.createEntityManager();
-        CustomerCart customerCart = customerCartRepository.read(em, customerCartId);
-        if (customerCart != null) {
-            em.getTransaction().begin();
-            customerCartRepository.delete(em, customerCart);
-            em.getTransaction().commit();
-        }
-        em.close();
-    }
+//    public void removeProductFromCart(CartModel cartModel) {
+//        CustomerCartId customerCartId = new CustomerCartId(cartModel.getCustomerId(), cartModel.getProductId());
+//        CustomerCartRepository customerCartRepository = new CustomerCartRepository();
+//        EntityManager em = JpaUtil.createEntityManager();
+//        CustomerCart customerCart = customerCartRepository.read(em, customerCartId);
+//        if (customerCart != null) {
+//            em.getTransaction().begin();
+//            customerCartRepository.delete(em, customerCart);
+//            em.getTransaction().commit();
+//        }
+//        em.close();
+//    }
 
+    public void removeProductFromCart(CartModel cartModel) {
+      CustomerCartRepository customerCartRepository = new CustomerCartRepository();
+      EntityManager entityManager = JpaUtil.createEntityManager();
+      entityManager.getTransaction().begin();
+      customerCartRepository.deleteProductFromCustomerCart(entityManager, cartModel.getProductId(), cartModel.getCustomerId());
+      entityManager.getTransaction().commit();
+      entityManager.close();
+    }
     public void updateProductQuantity(CartModel cartModel) {
         CustomerCartId customerCartId = new CustomerCartId(cartModel.getCustomerId(), cartModel.getProductId());
         CustomerCartRepository customerCartRepository = new CustomerCartRepository();

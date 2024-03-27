@@ -24,11 +24,11 @@ public class CustomerCartRepository extends CrudRepository<CustomerCart> {
         return query.getSingleResult();
     }
 
-    public void deleteProductFromCustomerCart(EntityManager em, int productId) {
-        em.createQuery("DELETE FROM CustomerCart c WHERE c.id.productId = :productId")
-                .setParameter("productId", productId)
-                .executeUpdate();
-    }
+//    public void deleteProductFromCustomerCart(EntityManager em, int productId) {
+//        em.createQuery("DELETE FROM CustomerCart c WHERE c.id.productId = :productId")
+//                .setParameter("productId", productId)
+//                .executeUpdate();
+//    }
 
     public int deleteProductFromCustomerCart(EntityManager em, int productId, int customerId) {
         return em.createQuery("DELETE FROM CustomerCart c WHERE c.id.productId = :productId AND c.id.customerId = :customerId")
