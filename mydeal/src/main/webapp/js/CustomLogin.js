@@ -5,11 +5,9 @@ function getUserFromServlet(first) {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                console.log(response);
                 if (response === 'invalid' && !first) {
                     customAlert('Wrong email or password, please try again');
                 } else if (response === 'Admin') {
-                    console.log("Yes Admin");
                     window.location.href = 'index.html';
                 } else if (response === 'valid') {
                     // window.location.href ='adminHome.html';
@@ -17,7 +15,6 @@ function getUserFromServlet(first) {
                 }
             } else {
                 customAlert('Something went wrong, please try again later');
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };

@@ -14,7 +14,6 @@ import java.io.IOException;
 public class CredentialValidatorServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Validation Request Received");
         String email = req.getParameter(RequestKey.RQ_CustomerEmail);
         String phoneNumber = req.getParameter(RequestKey.RQ_CustomerPhoneNumber);
         CustomerDataValidatorService customerDataValidatorService = new CustomerDataValidatorService();

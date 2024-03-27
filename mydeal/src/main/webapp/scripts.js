@@ -7,12 +7,9 @@ $(document).ready(function () {
         type: 'GET',
         success: function (data) {
             // Extract the file name from the URL
-            var fileName = window.location.pathname.split('/').pop();
-            console.log('Current HTML file:', fileName);
-            // Here you can perform actions based on the file name
+            var fileName = window.location.pathname.split('/').pop();// Here you can perform actions based on the file name
         },
         error: function (xhr, status, error) {
-            console.error('Error fetching current URL:', error);
         }
     });
 });

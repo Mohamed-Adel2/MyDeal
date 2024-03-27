@@ -47,17 +47,13 @@ function getProductsFromServlet(newFilter) {
 
 
 function getCategoriesFromServlet() {
-    console.log("data appear");
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var categories = JSON.parse(jsonResponse);
-                console.log(jsonResponse);
                 displayCategories(categories);
-            } else {
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };
@@ -141,9 +137,7 @@ function selectCategory(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("listener");
     checkAuth();
-
 });
 
 //need to check first if user not admin

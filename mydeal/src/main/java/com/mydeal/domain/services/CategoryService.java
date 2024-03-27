@@ -12,9 +12,6 @@ public class CategoryService {
         EntityManager em = JpaUtil.createEntityManager();
         CategoryRepository categoryRepository = new CategoryRepository();
         List<String> categories = categoryRepository.getAllCategories(em);
-        for(String cat:categories){
-            System.out.println(cat);
-        }
         em.close();
         return categories;
     }

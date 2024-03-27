@@ -10,8 +10,6 @@ deleteProductBtn.addEventListener('click', function () {
     customConfirm('Are you sure you want to delete this product?', function (confirmed) {
         if (confirmed) {
             deleteProduct();
-        } else {
-            console.log('Product deletion cancelled.');
         }
     });
 });

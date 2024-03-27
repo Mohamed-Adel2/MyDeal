@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
-    console.log("listener");
-  //  getDetailFromServlet();
+    //  getDetailFromServlet();
     var addToCartBtn = document.getElementById('addToCartBtn');
 
     addToCartBtn.addEventListener('click', function (event) {
         event.preventDefault();
         var quantity = parseInt(document.getElementById("product-quantity").value);
-        console.log("quantity equal" + " " + quantity);
         addToCart(quantity);
     });
     var backBtn = document.getElementById('backBtn');
@@ -24,7 +22,6 @@ function getDetailFromServlet() {
             if (xhr.status === 200) {
                 var jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
-                console.log("response" + " " + response);
                 if (response === "removed") {
                     document.getElementById("body").innerHTML = '';
                     customAlert('The product is no longer available!', true);
@@ -33,8 +30,6 @@ function getDetailFromServlet() {
                     customAlert('The product you are looking for is not available!', true);
                 } else
                     displayProduct(response);
-            } else {
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };
@@ -112,7 +107,6 @@ document.getElementById('product-quantity').addEventListener('input', function (
 });
 
 function addToCart(val) {
-    console.log("function invoked");
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {

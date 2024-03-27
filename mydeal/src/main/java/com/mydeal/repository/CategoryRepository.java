@@ -19,7 +19,6 @@ public class CategoryRepository extends CrudRepository<Category> {
     }
 
     public Integer getCategoryByName(EntityManager em, String categoryName) {
-        System.out.println(categoryName);
         TypedQuery<Integer> query = em.createQuery("SELECT c.id FROM Category c " +
                 (!categoryName.equals("All") ? " WHERE c.categoryName = :categoryName" : "") + " and c.isRemoved = 0", Integer.class);
         if (!categoryName.equals("All"))
@@ -30,7 +29,6 @@ public class CategoryRepository extends CrudRepository<Category> {
     }
 
     public Category getCategory(EntityManager em, String categoryName) {
-        System.out.println(categoryName);
         TypedQuery<Category> query = em.createQuery("SELECT c FROM Category c " +
                 (!categoryName.equals("All") ? " WHERE c.categoryName = :categoryName" : "") + " and c.isRemoved = 0", Category.class);
         if (!categoryName.equals("All"))
@@ -59,7 +57,6 @@ public class CategoryRepository extends CrudRepository<Category> {
         query.setParameter("categoryName", categoryName);
         List<Integer> resultList = query.getResultList();
         if (!resultList.isEmpty()) {
-            System.out.println("Category Name " + categoryName);
             Integer categoryId = resultList.getFirst(); // Assuming there's only one category with the same name
             Category category = em.find(Category.class, categoryId);
             category.setIsRemoved(1);

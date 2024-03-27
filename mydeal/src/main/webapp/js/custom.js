@@ -276,6 +276,4 @@ inputNumber($('.input-number'));
 }(jQuery));
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("start get");
-    //getDataFromServlet();
 });

@@ -46,7 +46,6 @@ function displayImages(files) {
                 if (imageIndex !== -1) {
                     imagesList.splice(imageIndex, 1);
                 }
-                console.log("deleted");
                 removeFileFromFileInput(file);
             });
 
@@ -119,22 +118,15 @@ function makeGson(BytesArray) {
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             const responseData = JSON.parse(xhr.responseText);
-            console.log('Response from server:', responseData);
-
             if (responseData.success) {
                 customAlert('Product has been added successfully', true);
             } else {
                 customAlert('Failed to add the product', false);
             }
-        } else {
-            console.error('Request failed with status:', xhr.status);
         }
     };
 
     xhr.onerror = function () {
-        //   console.log(jsonData);
-
-        console.error('Request failed');
     };
     //  console.log("Data "+JSON.stringify(jsonData));
     xhr.send(JSON.stringify(jsonData));

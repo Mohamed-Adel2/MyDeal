@@ -23,7 +23,6 @@ public class DeleteProductServlet extends HttpServlet {
         int productId = Integer.parseInt(req.getParameter("Id"));
         ProductService productService = new ProductService();
         boolean isDeleted = productService.deleteProduct(productId);
-        System.out.println(isDeleted);
         PrintWriter wr = resp.getWriter();
         if (isDeleted) {
             wr.write("Product deleted successfully");

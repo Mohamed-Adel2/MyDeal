@@ -19,12 +19,10 @@ public class UpdateProductModelToProductMap {
         product.setProductName(updateProductModel.getProductName());
         CategoryService categoryService = new CategoryService();
         Category category = categoryService.getCategoryByName(updateProductModel.getCategory());
-        System.out.println(category);
         product.setCategory(category);
         product.setDescription(updateProductModel.getDescription());
         product.setAvailableQuantity(updateProductModel.getQuantity());
         product.setPrice(updateProductModel.getPrice());
-        System.out.println(product);
         return product;
     }
 

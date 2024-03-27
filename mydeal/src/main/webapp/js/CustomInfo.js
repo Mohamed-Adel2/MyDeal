@@ -165,7 +165,6 @@ $(document).ready(function () {
     $('#confirmationValidity').hide();
 
     $('#phoneNumber').on('blur', function () {
-        console.log('blur');
         validatePhone();
     });
 

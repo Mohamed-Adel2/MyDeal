@@ -6,7 +6,6 @@ var selectedCategoryNow;
 let cnt = 0;
 document.addEventListener('DOMContentLoaded', function () {
     checkAuth();
-    console.log("listener");
     const updateForm = document.getElementById('update-form');
     updateForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
             selectedFiles.push(files[i]);
             ++cnt;
             validateProductImage();
-            console.log("image from upload: " + cnt);
         }
     });
 });
@@ -28,36 +26,29 @@ const UpdateProductButton = document.getElementById('UpdateProductButton');
 UpdateProductButton.addEventListener('click', function () {
     const isProductNameValid = validateProductName();
     if (!isProductNameValid) {
-        console.log('Validation failed: Product Name is invalid');
         return;
     }
     const isProductDescriptionValid = validateProductDescription();
     if (!isProductDescriptionValid) {
-        console.log('Validation failed: Product Description is invalid');
         return;
     }
     const isProductPriceValid = validateProductPrice();
     if (!isProductPriceValid) {
-        console.log('Validation failed: Product Price is invalid');
         return;
     }
     const isProductQuantityValid = validateQuantity();
     if (!isProductQuantityValid) {
-        console.log('Validation failed: Product Quantity is invalid');
         return;
     }
     const isCategoryValid = categoryValidation();
     if (!isCategoryValid) {
-        console.log('Validation failed: Category is invalid');
         return;
     }
     const isProductImageValid = validateProductImage();
     if (!isProductImageValid) {
-        console.log('Validation failed: Product Image is invalid');
         return;
     }
     if (!isProductNameValid || !isProductDescriptionValid || !isProductPriceValid || !isProductQuantityValid || !isCategoryValid || !isProductImageValid) {
-        console.log('Validation failed');
         return;
     }
     updateDataOnServlet();

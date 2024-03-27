@@ -6,10 +6,7 @@ function getCartItemsFromServlet() {
                 var jsonResponse = xhr.responseText;
                 var decodedString = atob(jsonResponse);
                 var products = JSON.parse(decodedString);
-                console.log(products);
                 displayProduct(products);
-            } else {
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };

@@ -29,7 +29,6 @@ public class AdminAddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Gson gson = new Gson();
         AddProductModel addProductModel = gson.fromJson(req.getReader(), AddProductModel.class);
-        System.out.println(addProductModel);
         ProductService productService = new ProductService();
         int id = productService.addProduct(addProductModel);
         JsonObject jsonResponse = new JsonObject();
@@ -75,14 +74,4 @@ public class AdminAddProductServlet extends HttpServlet {
         }
         return images;
     }
-
 }
-        /*BufferedReader reader = req.getReader();
-        StringBuilder jsonBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonBuilder.append(line);
-        }
-        String jsonData = jsonBuilder.toString();
-        System.out.println("Received JSON data: " + jsonData);
-*/

@@ -39,16 +39,12 @@ public class ProductImageService {
         return ImagesAdded;
     }
     public int addNewImagesToProduct(UpdateProductModel updateProductModel){
-        //System.out.println("Invoked Repo");
         EntityManager em = JpaUtil.createEntityManager();
         int ImagesAdded = 0;
         ProductImagesRepository productImagesRepository = new ProductImagesRepository();
         UpdateProductModelToImageMap updateProductModelToImageMap = new UpdateProductModelToImageMap();
         List<ProductImages> productImages = updateProductModelToImageMap.getAddedImages(updateProductModel);
         for(int i=0;i<productImages.size();i++){
-
-            System.out.println("Images "+productImages.get(i));
-
             int Id = productImagesRepository.add(em , productImages.get(i));
             if(Id>0){
                 ImagesAdded++;

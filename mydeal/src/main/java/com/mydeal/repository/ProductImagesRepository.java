@@ -17,7 +17,6 @@ public class ProductImagesRepository extends CrudRepository<ProductImages>{
         em.getTransaction().commit();
     }
     public int add(EntityManager em , ProductImages productImages){
-        System.out.println("From repo "+ productImages.getId());
         em.getTransaction().begin();
         em.persist(productImages);
         em.getTransaction().commit();

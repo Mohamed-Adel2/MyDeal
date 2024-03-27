@@ -1,9 +1,6 @@
 var selectedCategoryNow;
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("listener");
-    //getCategoreiesFromServlet();
     checkAuth();
-
 });
 const DeleteCategoryButton = document.getElementById('DeleteCategory');
 const AddCategoryButton = document.getElementById('AddCategory');
@@ -61,7 +58,6 @@ function appearCategories(categories) {
         categoryContainer.querySelector('fieldset').appendChild(div);
         radioButton.addEventListener('change', function () {
             const selectedCategory = this.value;
-            console.log('Selected category:', selectedCategory);
             selectedCategoryNow = selectedCategory;
 
         });

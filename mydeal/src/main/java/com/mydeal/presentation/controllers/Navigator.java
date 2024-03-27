@@ -12,7 +12,6 @@ public class Navigator extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         String destination = req.getParameter("page");
-        System.out.println("navigation to " + destination);
         if (destination != null) {
             resp.sendRedirect(destination);
         }

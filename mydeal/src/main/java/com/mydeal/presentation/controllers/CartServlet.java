@@ -37,7 +37,6 @@ public class CartServlet extends HttpServlet {
             }
             updateOfflineCart(offlineCartModel, cart);
             Cookie newCookie = new Cookie("cart", Base64.getEncoder().encodeToString(new Gson().toJson(offlineCartModel).getBytes()));
-            System.out.println(newCookie.getValue());
             newCookie.setMaxAge(60 * 60 * 24 * 30);
             response.addCookie(newCookie);
         } else {

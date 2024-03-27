@@ -1,6 +1,5 @@
 // This function checks if the user is logged in or not
 function checkUserStatus(status) {
-    console.log(status);
     var homeTab = document.getElementById('homeTab');
     var aboutTab = document.getElementById('aboutTab');
     var contactTab = document.getElementById('contactTab');
@@ -53,14 +52,11 @@ function checkUserStatus(status) {
         contactTab.style.display = 'none';
         cartIcon.style.display = 'none';
         var addProductLink = document.getElementById("addProductLink");
-        if (addProductLink === null)
-            console.log("error");
         addProductLink.href = 'adminHome.html';
     }
 }
 
 function checkStatus() {
-    console.log('Checking user status');
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -68,8 +64,6 @@ function checkStatus() {
                 var jsonResponse = xhr.responseText;
                 var response = JSON.parse(jsonResponse);
                 checkUserStatus(response);
-            } else {
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };
@@ -89,8 +83,6 @@ function logOut() {
                 } else {
                     customAlert("Something went wrong, please try again later");
                 }
-            } else {
-                console.error('Request failed: ' + xhr.status);
             }
         }
     };

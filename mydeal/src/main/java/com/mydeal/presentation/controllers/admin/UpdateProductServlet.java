@@ -21,7 +21,6 @@ public class UpdateProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Gson gson = new Gson();
         UpdateProductModel updateProductModel = gson.fromJson(req.getReader(), UpdateProductModel.class);
-        System.out.println(updateProductModel);
         ProductService productService = new ProductService();
         ProductImageService productImageService = new ProductImageService();
 
@@ -32,9 +31,6 @@ public class UpdateProductServlet extends HttpServlet {
         if (updateProductModel.getAdded().length > 0) {
             productImageService.addNewImagesToProduct(updateProductModel);
         }
-
-        System.out.println(dataUpdated);
-
         JsonObject jsonResponse = new JsonObject();
         if (dataUpdated) {
             jsonResponse.addProperty("success", true);

@@ -34,8 +34,6 @@ public class JpaUtil {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds = new HikariDataSource(config);
-        System.out.println(config.getUsername());
-        System.out.println(config.getPassword());
         return ds;
     }
 

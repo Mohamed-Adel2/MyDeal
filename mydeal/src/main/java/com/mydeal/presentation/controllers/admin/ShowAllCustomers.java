@@ -26,7 +26,6 @@ public class ShowAllCustomers extends HttpServlet {
 
         CustomerDataService customerDataService = new CustomerDataService();
         List<CustomerDataModel> customersDataModels = customerDataService.getAllCustomers(email, startIdx, limit);
-        System.out.println("Size of customersDataModels: " + customersDataModels.size());
         Gson gson = new Gson();
         String json = gson.toJson(customersDataModels);
 
