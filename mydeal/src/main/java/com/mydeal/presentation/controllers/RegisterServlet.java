@@ -22,6 +22,7 @@ public class RegisterServlet extends HttpServlet {
             CustomerRegistrationService customerRegistrationService = new CustomerRegistrationService();
             AddressService addressService = new AddressService();
             addressService.createAddress(customer.getAddress());
+            customer.setIsAdmin(0);
             customerRegistrationService.register(customer);
             resp.getWriter().write(new Gson().toJson("success"));
         }

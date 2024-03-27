@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             CustomerLoginService customerLoginService = new CustomerLoginService();
             Customer customer = null;
-            if (req.getParameter(RequestKey.RQ_CustomerEmail) != null || req.getParameter(RequestKey.RQ_CustomerPassword) != null) {
+            if (req.getParameter(RequestKey.RQ_CustomerEmail) != null && req.getParameter(RequestKey.RQ_CustomerPassword) != null) {
                 customer = customerLoginService.login(req.getParameter(RequestKey.RQ_CustomerEmail), req.getParameter(RequestKey.RQ_CustomerPassword));
             } else {
                 AuthenticationModel authenticationModel = getAuthenticationModel(req);

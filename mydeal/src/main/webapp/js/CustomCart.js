@@ -109,6 +109,7 @@ function displayProduct(products) {
         var blob = new Blob([new Uint8Array(product.images[0])], {type: 'image/jpeg'});
         tableDataProductMediaImage.src = URL.createObjectURL(blob);
         tableDataProductMediaImage.alt = 'Product Image';
+        tableDataProductMediaImage.className = 'cart_image';
         tableDataProductMediaDiv.appendChild(tableDataProductMediaImage);
         tableDataProductMedia.appendChild(tableDataProductMediaDiv);
         var tableDataProductMediaBody = document.createElement('div');
