@@ -25,9 +25,6 @@ public class CheckOutService {
         for (CustomerCart customerCart : cart) {
             if (customerCart.getProduct().getIsDeleted() == 1) {
                 em.getTransaction().rollback();
-//                em.getTransaction().begin();
-//                System.out.println(customerCartRepository.deleteProductFromCustomerCart(em, customerCart.getId().getProductId(), customerId) + ": col are updated");
-//                em.getTransaction().commit();
                 em.close();
                 return false;
             }

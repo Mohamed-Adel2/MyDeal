@@ -32,7 +32,6 @@ public class OrderService {
         EntityManager em = JpaUtil.createEntityManager();
         List<OrderItemModel> orderItems = new ArrayList<>();
         List<OrderDetails> orderDetails = orderRepository.getOrderDetails(em, orderId);
-        System.out.println("Size of orderDetails: " + orderDetails.size());
         for (OrderDetails od : orderDetails) {
             orderItems.add(OrderDetailsMapping.convertEntityToModel(od));
         }

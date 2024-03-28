@@ -24,9 +24,10 @@ public class CheckOutServlet extends HttpServlet {
         double cartItemsPrice = getCartItemsPrice(customerId);
         if (customerBalance >= cartItemsPrice) {
             CheckOutService checkOutService = new CheckOutService();
-            if (checkOutService.makeOrder(customerId, cartItemsPrice))
+            if (checkOutService.makeOrder(customerId, cartItemsPrice)) {
                 response.getWriter().write(new Gson().toJson("success"));
-            else
+                ((Customer) request.getSession(false).getAttribute("user")).setCreditLimit(customerBalance - cartItemsPrice);
+            } else
                 response.getWriter().write(new Gson().toJson("quantityFailure"));
         } else {
             response.getWriter().write(new Gson().toJson("balanceFailure"));

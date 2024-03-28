@@ -57,7 +57,7 @@ public class CustomerRepository extends CrudRepository<Customer> {
     }
 
     public List<Customer> getAllCustomer(EntityManager em, String email, int startIdx, int limit){
-        TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer c WHERE c.email LIKE :email", Customer.class);
+        TypedQuery<Customer> query = em.createQuery("SELECT c FROM Customer c WHERE c.email LIKE :email AND c.isAdmin=0", Customer.class);
         query.setParameter("email", "%" + email + "%");
         query.setFirstResult(startIdx);
         query.setMaxResults(limit);

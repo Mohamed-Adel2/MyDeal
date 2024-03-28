@@ -16,12 +16,10 @@ public class CategoryServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CategoryService categoryService = new CategoryService();
         List<String> categories = categoryService.getAllCategories();
-        System.out.println(categories);
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
                 .create();
         String jsonCategories = gson.toJson(categories);
-        System.out.println(jsonCategories);
         resp.setContentType("application/json");
         resp.getWriter().write(jsonCategories);
     }

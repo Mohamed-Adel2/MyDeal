@@ -39,8 +39,7 @@ public class CartUpdateServlet extends HttpServlet {
             updateOfflineCart(offlineCartModel, cart);
         } else {
             deleteFromOfflineCart(offlineCartModel, cart.getProductId());
-        }
-        System.out.println("last update: " + offlineCartModel);
+        };
         Cookie newCookie = new Cookie("cart", Base64.getEncoder().encodeToString(new Gson().toJson(offlineCartModel).getBytes()));
         newCookie.setMaxAge(60 * 60 * 24 * 30);
         response.addCookie(newCookie);

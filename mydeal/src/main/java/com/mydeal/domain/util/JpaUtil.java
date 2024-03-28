@@ -20,9 +20,9 @@ public class JpaUtil {
 //        AppConfig.load();
         HikariConfig config = new HikariConfig();
         HikariDataSource ds;
-        /*config.setJdbcUrl("jdbc:mysql://node593116-mydeal.j.layershift.co.uk:3306/mydeal");
-        config.setUsername("root");
-        config.setPassword("BMAmed66661");*/
+//        config.setJdbcUrl("jdbc:mysql://node593549-mydeal2.j.layershift.co.uk:3306/mydeal");
+//        config.setUsername("root");
+//        config.setPassword("EAChqg13635");
         config.setJdbcUrl("jdbc:mysql://localhost:3306/mydeal");
         config.setUsername("root");
         config.setPassword("1234");
@@ -34,8 +34,6 @@ public class JpaUtil {
         config.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds = new HikariDataSource(config);
-        System.out.println(config.getUsername());
-        System.out.println(config.getPassword());
         return ds;
     }
 

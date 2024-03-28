@@ -43,7 +43,6 @@ public class OrderItemsServlet extends HttpServlet {
         CustomerOrderModel customerOrderModel = OrderCustomerMapping.EntityToModel(customer);
         ret.add(customerOrderModel);
         ret.add(orderItems);
-        System.out.println("Size of orderItems: " + orderItems.size());
         response.getWriter().write(Base64.getEncoder().encodeToString(new Gson().toJson(ret).getBytes()));
     }
 }

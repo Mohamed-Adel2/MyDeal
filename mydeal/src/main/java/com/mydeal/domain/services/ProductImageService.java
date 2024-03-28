@@ -1,12 +1,10 @@
 package com.mydeal.domain.services;
 
-import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.entities.ProductImages;
 import com.mydeal.domain.mapping.ProductImageMap;
-import com.mydeal.domain.mapping.admin.UpdateProductModelToImageMap;
+import com.mydeal.domain.mapping.UpdateProductModelToImageMap;
 import com.mydeal.domain.models.ProductImageModel;
-import com.mydeal.domain.models.admin.AddImageModel;
-import com.mydeal.domain.models.admin.UpdateProductModel;
+import com.mydeal.domain.models.UpdateProductModel;
 import com.mydeal.domain.util.JpaUtil;
 import com.mydeal.repository.ProductImagesRepository;
 import jakarta.persistence.EntityManager;
@@ -39,16 +37,12 @@ public class ProductImageService {
         return ImagesAdded;
     }
     public int addNewImagesToProduct(UpdateProductModel updateProductModel){
-        //System.out.println("Invoked Repo");
         EntityManager em = JpaUtil.createEntityManager();
         int ImagesAdded = 0;
         ProductImagesRepository productImagesRepository = new ProductImagesRepository();
         UpdateProductModelToImageMap updateProductModelToImageMap = new UpdateProductModelToImageMap();
         List<ProductImages> productImages = updateProductModelToImageMap.getAddedImages(updateProductModel);
         for(int i=0;i<productImages.size();i++){
-
-            System.out.println("Images "+productImages.get(i));
-
             int Id = productImagesRepository.add(em , productImages.get(i));
             if(Id>0){
                 ImagesAdded++;
