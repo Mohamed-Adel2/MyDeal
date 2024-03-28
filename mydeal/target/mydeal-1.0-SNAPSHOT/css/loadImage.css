@@ -1,0 +1,64 @@
+/* Optional CSS for image preview */
+#imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-container {
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.image-container img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+}
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: transparent; /* Set background to transparent */
+    color: #007bff; /* Set text color to #007bff */
+    border-radius: 5px;
+    border: 1px solid #007bff; /* Set border color to #007bff */
+    transition: background-color 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #007bff; /* Change background color on hover */
+    color: #fff; /* Change text color on hover */
+}
+
+
+#fileInput {
+    display: none; /* Hide the file input */
+}
+#addProductButton {
+    display: block;
+    margin: 0 auto; /* Center the button horizontally */
+    width: 200px; /* Set width */
+    height: 50px; /* Set height */
+    font-size: 18px; /* Increase font size */
+    border-radius: 10px; /* Add rounded corners */
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove border */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#addProductButton:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+

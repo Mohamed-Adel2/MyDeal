@@ -1,12 +1,10 @@
 package com.mydeal.domain.services;
 
-import com.mydeal.domain.entities.Product;
 import com.mydeal.domain.entities.ProductImages;
 import com.mydeal.domain.mapping.ProductImageMap;
-import com.mydeal.domain.mapping.admin.UpdateProductModelToImageMap;
+import com.mydeal.domain.mapping.UpdateProductModelToImageMap;
 import com.mydeal.domain.models.ProductImageModel;
-import com.mydeal.domain.models.admin.AddImageModel;
-import com.mydeal.domain.models.admin.UpdateProductModel;
+import com.mydeal.domain.models.UpdateProductModel;
 import com.mydeal.domain.util.JpaUtil;
 import com.mydeal.repository.ProductImagesRepository;
 import jakarta.persistence.EntityManager;
