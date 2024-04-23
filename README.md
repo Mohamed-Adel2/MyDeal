@@ -15,7 +15,7 @@
 <br>
 
 <!-- Features -->
-### :dart: Features
+## :dart: Features
 
 ### 🛡️ User Authentication and Authorization:
 - Upon signing in, users are redirected based on their privileges.
@@ -48,11 +48,14 @@
   - Reset the user's shopping cart.
 <br>
 
-### Database Schema
+## 📫 Database Schema
+
 ![Schema](MyDeal-Schema.JPG)
 
+<br>
+
 <!-- TechStack -->
-### 🛠️ Technologies Used
+## 🛠️ Technologies Used
 
 
 [![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
